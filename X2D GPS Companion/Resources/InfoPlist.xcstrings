@@ -1,0 +1,254 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS 伴侣"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS Companion"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X2D GPS 伴侣"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2025 Lakr233. Alle Rechte vorbehalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Copyright © 2025 Lakr233. All rights reserved."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2025 Lakr233. Tous droits réservés."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2025 Lakr233. 著作権所有"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2025 Lakr233. 保留所有权利。"
+          }
+        }
+      }
+    },
+    "NSLocationAlwaysAndWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location Always and When In Use Usage Description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Berechtigung für ständigen Zugriff ermöglicht die Standortverfolgung im Hintergrund für das kontinuierliche Tagging Ihrer Fotos. Sämtliche Standortdaten werden ausschließlich lokal verarbeitet und verwaltet."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This permission enables background location tracking to continuously tag your photos with geolocation data. All location information is processed and stored locally on your device."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette autorisation active le suivi de la localisation en arrière-plan pour étiqueter vos photos de façon continue. Toutes les données de localisation sont traitées et conservées localement sur votre appareil."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリは、バックグラウンドで位置情報を取得し、写真に自動的に地理情報タグを付与します。すべての位置情報データはデバイス上でのみ処理・保管されます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该应用需要获得定位权限以在后台持续收集位置信息，并为您的照片自动添加地理标签。所有位置数据仅在您的设备本地处理和保存。"
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location When In Use Usage Description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Berechtigung ermöglicht das automatische Taggen Ihrer Fotos mit Ihrem aktuellen Standort. Alle erfassten Standortdaten werden ausschließlich lokal auf Ihrem Gerät verarbeitet und gespeichert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This permission allows the app to automatically tag your photos with geolocation information. All location data is processed and retained locally on your device only."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette autorisation permet d'étiqueter automatiquement vos photos avec votre localisation actuelle. Les données de localisation sont traitées et conservées exclusivement sur votre appareil."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリが現在地を使用してお客様の写真に自動的に地理情報を付与できるようにします。すべての位置情報はデバイス上でのみ処理・保管されます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该应用需要获得定位权限，以便为您的照片自动添加地理位置信息。所有位置数据仅在您的设备本地处理和保存。"
+          }
+        }
+      }
+    },
+    "NSPhotoLibraryAddUsageDescription" : {
+      "comment" : "Privacy - Photo Library Additions Usage Description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Berechtigung ist erforderlich, um Geolocation-Metadaten in Ihre Fotos zu schreiben. Alle GPS-Daten werden ausschließlich lokal verarbeitet und verwaltet."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This permission is required to write geolocation metadata to your photos. All GPS data is processed and managed locally on your device."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette autorisation est nécessaire pour enregistrer les métadonnées de géolocalisation dans vos photos. Toutes les données GPS sont traitées et gérées localement sur votre appareil."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリが写真にGPS地理情報メタデータを書き込むために必要です。すべてのGPSデータはデバイス上でのみ処理・管理されます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该应用需要此权限以将地理位置元数据写入您的照片。所有GPS数据仅在您的设备本地处理和管理。"
+          }
+        }
+      }
+    },
+    "NSPhotoLibraryUsageDescription" : {
+      "comment" : "Privacy - Photo Library Usage Description",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Berechtigung ist erforderlich, um die Fotobibliothek nach neuen Fotos zu durchsuchen und diese mit Geolocation-Informationen zu versehen. Der Zugriff auf die Fotobibliothek erfolgt ausschließlich lokal auf Ihrem Gerät."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This permission allows the app to scan your photo library for new images to tag with location information. Photo library access is performed locally and only on your device."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette autorisation permet à l'application de parcourir votre photothèque pour trouver les nouvelles photos à étiqueter. L'accès à la photothèque se fait exclusivement en local sur votre appareil."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリがお客様のフォトライブラリをスキャンして新しい写真を特定し、地理情報をタグ付けするために必要です。フォトライブラリへのアクセスはデバイス上でのみ行われます。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该应用需要此权限以扫描您的照片库，识别新照片并添加地理位置标签。照片库的访问仅在您的设备上本地执行。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

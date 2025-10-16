@@ -1,0 +1,1 @@
+../X2D GPS Companion/Backend/GPSActivityAttributes.swift

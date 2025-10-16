@@ -1,0 +1,703 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		502795C42EA2C69400D20067 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502795C32EA2C69400D20067 /* WidgetKit.framework */; };
+		502795C62EA2C69500D20067 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502795C52EA2C69400D20067 /* SwiftUI.framework */; };
+		502795D32EA2C69600D20067 /* X2D GPS Companion WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 502795C12EA2C69400D20067 /* X2D GPS Companion WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		502795D12EA2C69600D20067 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50EBD4DE2EA115B200CA3A91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 502795C02EA2C69400D20067;
+			remoteInfo = "X2D GPS Companion WidgetsExtension";
+		};
+		508C55ED2EA12631001658F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50EBD4DE2EA115B200CA3A91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50EBD4E52EA115B200CA3A91;
+			remoteInfo = "X2D GPS Companion";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		502795D42EA2C69600D20067 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				502795D32EA2C69600D20067 /* X2D GPS Companion WidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		502795C12EA2C69400D20067 /* X2D GPS Companion WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "X2D GPS Companion WidgetsExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		502795C32EA2C69400D20067 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		502795C52EA2C69400D20067 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		508C55E92EA12631001658F6 /* X2D GPS CompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "X2D GPS CompanionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50EBD4E62EA115B200CA3A91 /* X2D GPS Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "X2D GPS Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5021ECFD2EA417A500F16958 /* Exceptions for "X2D GPS Companion Widgets" folder in "X2D GPS Companion WidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 502795C02EA2C69400D20067 /* X2D GPS Companion WidgetsExtension */;
+		};
+		5021ECFE2EA417A900F16958 /* Exceptions for "X2D GPS Companion" folder in "X2D GPS Companion" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 50EBD4E52EA115B200CA3A91 /* X2D GPS Companion */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		502795C72EA2C69500D20067 /* X2D GPS Companion Widgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5021ECFD2EA417A500F16958 /* Exceptions for "X2D GPS Companion Widgets" folder in "X2D GPS Companion WidgetsExtension" target */,
+			);
+			path = "X2D GPS Companion Widgets";
+			sourceTree = "<group>";
+		};
+		508C55EA2EA12631001658F6 /* X2D GPS CompanionTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "X2D GPS CompanionTests";
+			sourceTree = "<group>";
+		};
+		50C8BC352EA117CE0058EBE5 /* X2D GPS Companion */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5021ECFE2EA417A900F16958 /* Exceptions for "X2D GPS Companion" folder in "X2D GPS Companion" target */,
+			);
+			path = "X2D GPS Companion";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		502795BE2EA2C69400D20067 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				502795C62EA2C69500D20067 /* SwiftUI.framework in Frameworks */,
+				502795C42EA2C69400D20067 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		508C55E62EA12631001658F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50EBD4E32EA115B200CA3A91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		502795C22EA2C69400D20067 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				502795C32EA2C69400D20067 /* WidgetKit.framework */,
+				502795C52EA2C69400D20067 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		50EBD4DD2EA115B200CA3A91 = {
+			isa = PBXGroup;
+			children = (
+				50C8BC352EA117CE0058EBE5 /* X2D GPS Companion */,
+				502795C72EA2C69500D20067 /* X2D GPS Companion Widgets */,
+				508C55EA2EA12631001658F6 /* X2D GPS CompanionTests */,
+				502795C22EA2C69400D20067 /* Frameworks */,
+				50EBD4E72EA115B200CA3A91 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		50EBD4E72EA115B200CA3A91 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				50EBD4E62EA115B200CA3A91 /* X2D GPS Companion.app */,
+				508C55E92EA12631001658F6 /* X2D GPS CompanionTests.xctest */,
+				502795C12EA2C69400D20067 /* X2D GPS Companion WidgetsExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		502795C02EA2C69400D20067 /* X2D GPS Companion WidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 502795D72EA2C69600D20067 /* Build configuration list for PBXNativeTarget "X2D GPS Companion WidgetsExtension" */;
+			buildPhases = (
+				502795BD2EA2C69400D20067 /* Sources */,
+				502795BE2EA2C69400D20067 /* Frameworks */,
+				502795BF2EA2C69400D20067 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				502795C72EA2C69500D20067 /* X2D GPS Companion Widgets */,
+			);
+			name = "X2D GPS Companion WidgetsExtension";
+			packageProductDependencies = (
+			);
+			productName = "X2D GPS Companion WidgetsExtension";
+			productReference = 502795C12EA2C69400D20067 /* X2D GPS Companion WidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		508C55E82EA12631001658F6 /* X2D GPS CompanionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 508C55EF2EA12631001658F6 /* Build configuration list for PBXNativeTarget "X2D GPS CompanionTests" */;
+			buildPhases = (
+				508C55E52EA12631001658F6 /* Sources */,
+				508C55E62EA12631001658F6 /* Frameworks */,
+				508C55E72EA12631001658F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				508C55EE2EA12631001658F6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				508C55EA2EA12631001658F6 /* X2D GPS CompanionTests */,
+			);
+			name = "X2D GPS CompanionTests";
+			packageProductDependencies = (
+			);
+			productName = "X2D GPS CompanionTests";
+			productReference = 508C55E92EA12631001658F6 /* X2D GPS CompanionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		50EBD4E52EA115B200CA3A91 /* X2D GPS Companion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50EBD4F12EA115B300CA3A91 /* Build configuration list for PBXNativeTarget "X2D GPS Companion" */;
+			buildPhases = (
+				50EBD4E22EA115B200CA3A91 /* Sources */,
+				50EBD4E32EA115B200CA3A91 /* Frameworks */,
+				50EBD4E42EA115B200CA3A91 /* Resources */,
+				502795D42EA2C69600D20067 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				502795D22EA2C69600D20067 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				50C8BC352EA117CE0058EBE5 /* X2D GPS Companion */,
+			);
+			name = "X2D GPS Companion";
+			packageProductDependencies = (
+			);
+			productName = "X2D GPS Companion";
+			productReference = 50EBD4E62EA115B200CA3A91 /* X2D GPS Companion.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		50EBD4DE2EA115B200CA3A91 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					502795C02EA2C69400D20067 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					508C55E82EA12631001658F6 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 50EBD4E52EA115B200CA3A91;
+					};
+					50EBD4E52EA115B200CA3A91 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+				};
+			};
+			buildConfigurationList = 50EBD4E12EA115B200CA3A91 /* Build configuration list for PBXProject "X2D GPS Companion" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+				fr,
+				ja,
+				de,
+			);
+			mainGroup = 50EBD4DD2EA115B200CA3A91;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				50EBD4E52EA115B200CA3A91 /* X2D GPS Companion */,
+				502795C02EA2C69400D20067 /* X2D GPS Companion WidgetsExtension */,
+				508C55E82EA12631001658F6 /* X2D GPS CompanionTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		502795BF2EA2C69400D20067 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		508C55E72EA12631001658F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50EBD4E42EA115B200CA3A91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		502795BD2EA2C69400D20067 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		508C55E52EA12631001658F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50EBD4E22EA115B200CA3A91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		502795D22EA2C69600D20067 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 502795C02EA2C69400D20067 /* X2D GPS Companion WidgetsExtension */;
+			targetProxy = 502795D12EA2C69600D20067 /* PBXContainerItemProxy */;
+		};
+		508C55EE2EA12631001658F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50EBD4E52EA115B200CA3A91 /* X2D GPS Companion */;
+			targetProxy = 508C55ED2EA12631001658F6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		502795D52EA2C69600D20067 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "X2D GPS Companion Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "X2D GPS Companion Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Lakr233. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "wiki.qaq.X2D-GPS-Companion.X2D-GPS-Companion-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		502795D62EA2C69600D20067 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "X2D GPS Companion Widgets/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "X2D GPS Companion Widgets";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Lakr233. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "wiki.qaq.X2D-GPS-Companion.X2D-GPS-Companion-Widgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		508C55F02EA12631001658F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wiki.qaq.X2D-GPS-CompanionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/X2D GPS Companion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/X2D GPS Companion";
+			};
+			name = Debug;
+		};
+		508C55F12EA12631001658F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wiki.qaq.X2D-GPS-CompanionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/X2D GPS Companion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/X2D GPS Companion";
+			};
+			name = Release;
+		};
+		50EBD4EF2EA115B300CA3A91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		50EBD4F02EA115B300CA3A91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		50EBD4F22EA115B300CA3A91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "X2D GPS Companion/X2D GPS Companion.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				ENABLE_ENHANCED_SECURITY = YES;
+				ENABLE_POINTER_AUTHENTICATION = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "X2D GPS Companion/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "X2D GPS Companion";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Lakr233. All rights reserved.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Always access enables background location for continuous tagging.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow to tag your photos with your current location.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Needed to write GPS info back to your photos.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Needed to scan for new photos to tag.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "wiki.qaq.X2D-GPS-Companion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		50EBD4F32EA115B300CA3A91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "X2D GPS Companion/X2D GPS Companion.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = 964G86XT2P;
+				ENABLE_ENHANCED_SECURITY = YES;
+				ENABLE_POINTER_AUTHENTICATION = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "X2D GPS Companion/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "X2D GPS Companion";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Lakr233. All rights reserved.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Always access enables background location for continuous tagging.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow to tag your photos with your current location.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Needed to write GPS info back to your photos.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Needed to scan for new photos to tag.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "wiki.qaq.X2D-GPS-Companion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		502795D72EA2C69600D20067 /* Build configuration list for PBXNativeTarget "X2D GPS Companion WidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				502795D52EA2C69600D20067 /* Debug */,
+				502795D62EA2C69600D20067 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		508C55EF2EA12631001658F6 /* Build configuration list for PBXNativeTarget "X2D GPS CompanionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				508C55F02EA12631001658F6 /* Debug */,
+				508C55F12EA12631001658F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50EBD4E12EA115B200CA3A91 /* Build configuration list for PBXProject "X2D GPS Companion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50EBD4EF2EA115B300CA3A91 /* Debug */,
+				50EBD4F02EA115B300CA3A91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50EBD4F12EA115B300CA3A91 /* Build configuration list for PBXNativeTarget "X2D GPS Companion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50EBD4F22EA115B300CA3A91 /* Debug */,
+				50EBD4F32EA115B300CA3A91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 50EBD4DE2EA115B200CA3A91 /* Project object */;
+}
