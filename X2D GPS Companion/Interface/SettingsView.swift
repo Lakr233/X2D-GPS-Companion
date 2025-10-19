@@ -45,7 +45,46 @@ struct SettingsView: View {
                         .foregroundStyle(.accent)
                 }
             }
+
+            Section("DATABASE_MANAGEMENT") {
+                Menu {
+                    ForEach(ViewModel.FillMode.allCases) { mode in
+                        Button(mode.title) {
+                            Task { await model.fillPhotos(using: mode) }
+                        }
+                    }
+                } label: {
+                    if model.fillInProgress {
+                        ProgressView()
+                    } else {
+                        Label("FILL_IN_MENU_TITLE", systemImage: "mappin.and.ellipse")
+                    }
+                }
+                .disabled(model.fillInProgress)
+
+                Button(role: .destructive) {
+                    Task { await model.resetLocationDatabase() }
+                } label: {
+                    Label("RESET_LOCATION_DATABASE", systemImage: "trash")
+                }
+                .disabled(model.fillInProgress)
+
+                Text("RESET_LOCATION_DATABASE_DESCRIPTION")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
         .navigationTitle("SETTINGS")
+        .sheet(isPresented: $model.showFillSheet) {
+            VStack {
+                if model.fillInProgress {
+                    ProgressView()
+                        .padding()
+                }
+                Text(model.fillSheetMessage)
+                    .padding()
+            }
+            .presentationDetents([.fraction(0.3)])
+        }
     }
 }

@@ -38,7 +38,7 @@ struct HomePageView: View {
             }
             .mapControlVisibility(.hidden)
             .mapStyle(.standard)
-            .frame(height: 128)
+            .frame(maxHeight: .infinity)
             .padding(.horizontal, -16)
             .padding(.bottom, -16)
         }
@@ -53,7 +53,6 @@ struct HomePageView: View {
 
     var footer: some View {
         let location = model.locationService.location ?? .init()
-        print(location)
         let lat = String(format: "%.5f", location.coordinate.latitude)
         let lon = String(format: "%.5f", location.coordinate.longitude)
         let acc = String(format: "%.0f", location.horizontalAccuracy)
@@ -61,6 +60,7 @@ struct HomePageView: View {
         // y-axis relates to latitude
         // (x,y) order is usually preferred
         let text = String(format: "(%@, %@) ±%@m", lon, lat, acc)
+        print("ℹ️ \(text)")
         return Text(text)
             .contentTransition(.numericText())
             .font(.footnote.monospaced())
@@ -69,15 +69,13 @@ struct HomePageView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 32) {
-                header
-                card
-                button
-                footer
-            }
-            .padding(16)
+        VStack(alignment: .leading, spacing: 32) {
+            header
+            card
+            button
+            footer
         }
+        .padding(16)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {

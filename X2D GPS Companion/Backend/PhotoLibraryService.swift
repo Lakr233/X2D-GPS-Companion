@@ -80,9 +80,15 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
             print("❌ \(error.localizedDescription)")
         }
     }
+
+    func incrementProcessedCount(by value: Int) {
+        guard value > 0 else { return }
+        photoProcessedCount += value
+        delegate?.photoLibraryService(self, didUpdatePhotoProcessedCount: photoProcessedCount)
+    }
 }
 
-private extension PHAsset {
+extension PHAsset {
     func hasCameraEXIF() async -> Bool {
         await withCheckedContinuation { continuation in
             let options = PHImageRequestOptions()

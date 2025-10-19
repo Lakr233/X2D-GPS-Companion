@@ -36,6 +36,9 @@ extension ViewModel {
         try photoLibraryService.beginMonitoring()
         defer { isRecording = true }
         locationService.startUpdatingLocation()
+        if let location = locationService.location {
+            Task { await locationDatabase.record(location) }
+        }
         liveActivity.start()
     }
 

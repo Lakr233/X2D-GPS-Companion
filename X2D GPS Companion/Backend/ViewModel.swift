@@ -20,6 +20,10 @@ final class ViewModel: NSObject {
     var isRecording: Bool = false
     var photoAccess: AuthStatus = .unknown
     var locationAccess: AuthStatus = .unknown
+    var fillInProgress: Bool = false
+    var fillResultMessage: String?
+    var showFillSheet: Bool = false
+    var fillSheetMessage: String = ""
 
     var autoStartRecording: Bool = UserDefaults.standard.bool(forKey: autoStartRecordingKey) {
         didSet {
@@ -30,6 +34,7 @@ final class ViewModel: NSObject {
     let locationService = LocationService.shared
     let liveActivity = LiveActivityManager.shared
     let photoLibraryService = PhotoLibraryService.shared
+    let locationDatabase = LocationDatabase.shared
 
     override private init() {
         super.init()

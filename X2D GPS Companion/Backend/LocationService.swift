@@ -100,5 +100,6 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         status = "(\(lon), \(lat)) ±\(acc)m"
         location = newLocation
         delegate?.locationService(self, didUpdateLocation: newLocation)
+        Task { await LocationDatabase.shared.record(newLocation) }
     }
 }
