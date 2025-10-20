@@ -76,8 +76,9 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
             print("❌ Skipped photo [\(asset.localIdentifier)]: missing camera EXIF data")
             return
         }
-        guard asset.isCreationDateNearby() else {
-            print("⏱️ Skipped photo [\(asset.localIdentifier)]: creation time not within ±30s window")
+        let interval: TimeInterval = 60
+        guard asset.isCreationDateNearby(tolerance: interval) else {
+            print("⏱️ Skipped photo [\(asset.localIdentifier)]: creation time not within ±\(interval)s window")
             return
         }
 
@@ -103,7 +104,7 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
 
 extension PHAsset {
     /// Check if the asset's creation date is within ±60 seconds of the current time
-    func isCreationDateNearby(tolerance: TimeInterval = 60) -> Bool {
+    func isCreationDateNearby(tolerance: TimeInterval) -> Bool {
         guard let creationDate else {
             print("⚠️ Asset [\(localIdentifier)] has no creation date, assuming it's nearby")
             return true
