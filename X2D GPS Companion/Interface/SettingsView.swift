@@ -11,7 +11,15 @@ import SwiftUI
 
 struct SettingsView: View {
     @Bindable var model: ViewModel
-    @State private var fillSelection: [PhotosPickerItem] = []
+    @State private var isPhotoPickerPresented: Bool = false
+
+    private func makePickerConfiguration() -> PHPickerConfiguration {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        configuration.selectionLimit = 0
+        configuration.filter = .images
+        configuration.preferredAssetRepresentationMode = .current
+        return configuration
+    }
 
     var body: some View {
         Form {
@@ -24,12 +32,9 @@ struct SettingsView: View {
 
             Section("MANUAL_FILL_SECTION_TITLE") {
                 let isInProgress = model.fillInProgress
-                PhotosPicker(
-                    selection: $fillSelection,
-                    maxSelectionCount: nil,
-                    selectionBehavior: .continuous,
-                    matching: .images
-                ) {
+                Button {
+                    isPhotoPickerPresented = true
+                } label: {
                     if isInProgress {
                         ProgressView()
                     } else {
@@ -37,12 +42,6 @@ struct SettingsView: View {
                     }
                 }
                 .disabled(isInProgress)
-                .onChange(of: fillSelection) { _, newItems in
-                    let identifiers = newItems.compactMap(\.itemIdentifier)
-                    guard !identifiers.isEmpty else { return }
-                    Task { await model.fillPhotos(using: identifiers) }
-                    fillSelection.removeAll()
-                }
 
                 Text("FILL_IN_PICKER_DESCRIPTION")
                     .font(.caption)
@@ -89,6 +88,20 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("SETTINGS")
+        .sheet(isPresented: $isPhotoPickerPresented) {
+            UIKitPhotoPicker(configuration: makePickerConfiguration()) { identifiers in
+                isPhotoPickerPresented = false
+                guard !identifiers.isEmpty else {
+                    print("ℹ️ Picker dismissed without selecting assets")
+                    return
+                }
+
+                print("🧭 Running fill for \(identifiers.count) assets after picker dismissal")
+                Task { @MainActor [model] in
+                    await model.fillPhotos(using: identifiers)
+                }
+            }
+        }
         .sheet(isPresented: $model.showFillSheet) {
             VStack {
                 if model.fillInProgress {

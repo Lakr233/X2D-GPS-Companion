@@ -18,7 +18,10 @@ extension ViewModel {
     }
 
     func fillPhotos(using identifiers: [String]) async {
-        guard !fillInProgress else { return }
+        guard !fillInProgress else {
+            print("⚠️ Fill request ignored because another fill is in progress")
+            return
+        }
         guard photoAccess == .granted || photoAccess == .limited else {
             presentResult(String(localized: "FILL_IN_REQUIRES_PHOTO_ACCESS"))
             return
@@ -28,23 +31,30 @@ extension ViewModel {
         showFillSheet = true
         fillSheetMessage = String(localized: "FILL_IN_PROGRESS")
         print("🧭 Begin filling locations for \(identifiers.count) selected assets")
-        defer { fillInProgress = false }
+        defer {
+            fillInProgress = false
+            print("🧭 Fill request finished")
+        }
 
         do {
             let records = try await locationDatabase.records(in: nil)
+            print("ℹ️ Loaded \(records.count) location records for matching")
             guard !records.isEmpty else {
                 presentResult(String(localized: "FILL_IN_NO_LOCATIONS"))
                 return
             }
 
             let assets = try await fetchAssets(identifiers: identifiers)
+            print("ℹ️ Resolved \(assets.count) assets from selection")
             guard !assets.isEmpty else {
                 presentResult(String(localized: "FILL_IN_NO_ASSETS"))
                 return
             }
 
             let updatedCount = await updateAssets(assets, with: records)
+            print("ℹ️ Updated \(updatedCount) assets with location metadata")
             if updatedCount == 0 {
+                print("⚠️ No assets matched within tolerance")
                 presentResult(String(localized: "FILL_IN_NO_MATCHES"))
             } else {
                 photoLibraryService.incrementProcessedCount(by: updatedCount)
