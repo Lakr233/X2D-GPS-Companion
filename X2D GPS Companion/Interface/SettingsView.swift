@@ -6,16 +6,44 @@
 //
 
 import Observation
+import PhotosUI
 import SwiftUI
 
 struct SettingsView: View {
     @Bindable var model: ViewModel
+    @State private var fillSelection: [PhotosPickerItem] = []
 
     var body: some View {
         Form {
             Section("GENERAL") {
                 Toggle("AUTO_START_RECORDING", isOn: $model.autoStartRecording)
                 Text("AUTOMATICALLY_START_RECORDING_WHEN_APP_OPENED")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            Section("MANUAL_FILL_SECTION_TITLE") {
+                PhotosPicker(
+                    selection: $fillSelection,
+                    maxSelectionCount: nil,
+                    selectionBehavior: .continuous,
+                    matching: .images
+                ) {
+                    if model.fillInProgress {
+                        ProgressView()
+                    } else {
+                        Label("FILL_IN_PICKER_BUTTON", systemImage: "sparkles.square.filled.on.square")
+                    }
+                }
+                .disabled(model.fillInProgress)
+                .onChange(of: fillSelection) { _, newItems in
+                    let identifiers = newItems.compactMap { $0.itemIdentifier }
+                    guard !identifiers.isEmpty else { return }
+                    Task { await model.fillPhotos(using: identifiers) }
+                    fillSelection.removeAll()
+                }
+
+                Text("FILL_IN_PICKER_DESCRIPTION")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -47,21 +75,6 @@ struct SettingsView: View {
             }
 
             Section("DATABASE_MANAGEMENT") {
-                Menu {
-                    ForEach(ViewModel.FillMode.allCases) { mode in
-                        Button(mode.title) {
-                            Task { await model.fillPhotos(using: mode) }
-                        }
-                    }
-                } label: {
-                    if model.fillInProgress {
-                        ProgressView()
-                    } else {
-                        Label("FILL_IN_MENU_TITLE", systemImage: "mappin.and.ellipse")
-                    }
-                }
-                .disabled(model.fillInProgress)
-
                 Button(role: .destructive) {
                     Task { await model.resetLocationDatabase() }
                 } label: {
@@ -84,7 +97,7 @@ struct SettingsView: View {
                 Text(model.fillSheetMessage)
                     .padding()
             }
-            .presentationDetents([.fraction(0.3)])
+            .presentationDetents([.fraction(0.5)])
         }
     }
 }

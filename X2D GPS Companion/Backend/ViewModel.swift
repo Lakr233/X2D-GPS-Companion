@@ -21,7 +21,6 @@ final class ViewModel: NSObject {
     var photoAccess: AuthStatus = .unknown
     var locationAccess: AuthStatus = .unknown
     var fillInProgress: Bool = false
-    var fillResultMessage: String?
     var showFillSheet: Bool = false
     var fillSheetMessage: String = ""
 

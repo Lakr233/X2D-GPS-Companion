@@ -17,34 +17,7 @@ extension ViewModel {
         )
     }
 
-    enum FillMode: String, CaseIterable, Identifiable {
-        case halfHour
-        case twoHours
-        case oneDay
-        case all
-
-        var id: String { rawValue }
-
-        var title: String {
-            switch self {
-            case .halfHour: String(localized: "FILL_MODE_HALF_HOUR")
-            case .twoHours: String(localized: "FILL_MODE_TWO_HOURS")
-            case .oneDay: String(localized: "FILL_MODE_ONE_DAY")
-            case .all: String(localized: "FILL_MODE_ALL")
-            }
-        }
-
-        var interval: TimeInterval? {
-            switch self {
-            case .halfHour: 30 * 60
-            case .twoHours: 2 * 60 * 60
-            case .oneDay: 24 * 60 * 60
-            case .all: nil
-            }
-        }
-    }
-
-    func fillPhotos(using mode: FillMode) async {
+    func fillPhotos(using identifiers: [String]) async {
         guard !fillInProgress else { return }
         guard photoAccess == .granted || photoAccess == .limited else {
             presentResult(String(localized: "FILL_IN_REQUIRES_PHOTO_ACCESS"))
@@ -54,17 +27,17 @@ extension ViewModel {
         fillInProgress = true
         showFillSheet = true
         fillSheetMessage = String(localized: "FILL_IN_PROGRESS")
+        print("🧭 Begin filling locations for \(identifiers.count) selected assets")
         defer { fillInProgress = false }
 
         do {
-            let interval = makeDateInterval(from: mode.interval)
-            let records = try await locationDatabase.records(in: interval)
+            let records = try await locationDatabase.records(in: nil)
             guard !records.isEmpty else {
                 presentResult(String(localized: "FILL_IN_NO_LOCATIONS"))
                 return
             }
 
-            let assets = try await fetchAssets(in: interval)
+            let assets = try await fetchAssets(identifiers: identifiers)
             guard !assets.isEmpty else {
                 presentResult(String(localized: "FILL_IN_NO_ASSETS"))
                 return
@@ -80,6 +53,7 @@ extension ViewModel {
                 presentResult(message)
             }
         } catch {
+            print("❌ Fill operation failed: \(error.localizedDescription)")
             presentResult(error.localizedDescription)
         }
     }
@@ -97,26 +71,14 @@ extension ViewModel {
         }
     }
 
-    private func makeDateInterval(from interval: TimeInterval?) -> DateInterval? {
-        guard let interval else { return nil }
-        let now = Date()
-        return DateInterval(start: now.addingTimeInterval(-interval), end: now)
-    }
-
-    private func fetchAssets(in interval: DateInterval?) async throws -> [PHAsset] {
+    private func fetchAssets(identifiers: [String]) async throws -> [PHAsset] {
         try await withCheckedThrowingContinuation { continuation in
             Task.detached(priority: .userInitiated) {
-                let options = PHFetchOptions()
-                options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-                if let interval {
-                    options.predicate = NSPredicate(
-                        format: "creationDate >= %@ AND creationDate <= %@",
-                        interval.start as NSDate,
-                        interval.end as NSDate
-                    )
+                guard !identifiers.isEmpty else {
+                    continuation.resume(returning: [])
+                    return
                 }
-
-                let assets = PHAsset.fetchAssets(with: .image, options: options)
+                let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
                 var result: [PHAsset] = []
                 result.reserveCapacity(assets.count)
                 assets.enumerateObjects { asset, _, _ in
@@ -130,7 +92,7 @@ extension ViewModel {
     private func updateAssets(_ assets: [PHAsset], with records: [LocationRecord]) async -> Int {
         let tolerance: TimeInterval = 5 * 60
         var updatedCount = 0
-        for asset in assets {
+        for (index, asset) in assets.enumerated() {
             guard asset.location == nil else { continue }
             guard let captureDate = asset.creationDate else { continue }
             guard let record = locationDatabase.nearestRecord(
@@ -142,6 +104,11 @@ extension ViewModel {
             do {
                 try await asset.writeGPSLocation(record.location)
                 updatedCount += 1
+                fillSheetMessage = String(
+                    format: String(localized: "FILL_IN_PROGRESS_COUNT_%@"),
+                    arguments: ["\(index + 1)/\(assets.count)"]
+                )
+                print("✅ Updated asset \(index + 1)/\(assets.count)")
             } catch {
                 print("❌ Failed to fill GPS for asset: \(error.localizedDescription)")
             }
