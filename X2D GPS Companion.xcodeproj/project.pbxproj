@@ -47,7 +47,6 @@
 		502795C12EA2C69400D20067 /* X2D GPS Companion WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "X2D GPS Companion WidgetsExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		502795C32EA2C69400D20067 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		502795C52EA2C69400D20067 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		507DE7D02EA654B9001CC9E7 /* X2D GPS Companion.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "X2D GPS Companion.xctestplan"; sourceTree = "<group>"; };
 		508C55E92EA12631001658F6 /* X2D GPS CompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "X2D GPS CompanionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50EBD4E62EA115B200CA3A91 /* X2D GPS Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "X2D GPS Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -132,7 +131,6 @@
 		50EBD4DD2EA115B200CA3A91 = {
 			isa = PBXGroup;
 			children = (
-				507DE7D02EA654B9001CC9E7 /* X2D GPS Companion.xctestplan */,
 				50C8BC352EA117CE0058EBE5 /* X2D GPS Companion */,
 				502795C72EA2C69500D20067 /* X2D GPS Companion Widgets */,
 				508C55EA2EA12631001658F6 /* X2D GPS CompanionTests */,
