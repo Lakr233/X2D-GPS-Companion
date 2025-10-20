@@ -102,8 +102,8 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
 }
 
 extension PHAsset {
-    /// Check if the asset's creation date is within ±30 seconds of the current time
-    func isCreationDateNearby(tolerance: TimeInterval = 30) -> Bool {
+    /// Check if the asset's creation date is within ±60 seconds of the current time
+    func isCreationDateNearby(tolerance: TimeInterval = 60) -> Bool {
         guard let creationDate else {
             print("⚠️ Asset [\(localIdentifier)] has no creation date, assuming it's nearby")
             return true
