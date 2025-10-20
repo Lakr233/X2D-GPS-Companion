@@ -36,9 +36,8 @@ extension ViewModel {
         try photoLibraryService.beginMonitoring()
         defer { isRecording = true }
         locationService.startUpdatingLocation()
-        if let location = locationService.location {
-            Task { await locationDatabase.record(location) }
-        }
+        startPeriodicRecordTimer()
+        Task { await locationDatabase.persistLastLocationIfNeeded() }
         liveActivity.start()
     }
 
@@ -47,6 +46,7 @@ extension ViewModel {
         locationService.stopBackgroundSessions()
         locationService.stopUpdatingLocation()
         photoLibraryService.stopMonitoring()
+        stopPeriodicRecordTimer()
         liveActivity.terminate()
     }
 }

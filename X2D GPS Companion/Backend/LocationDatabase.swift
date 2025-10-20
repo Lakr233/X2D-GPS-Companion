@@ -50,6 +50,8 @@ final class LocationDatabase {
     private let container: NSPersistentContainer
     private let backgroundContext: NSManagedObjectContext
     private var lastPersistedLocation: CLLocation?
+    private var lastRecordedTimestamp: Date?
+    private var lastTimerPersistedTimestamp: Date?
 
     private let timeEpsilon: TimeInterval = 20
     private let distanceEpsilon: CLLocationDistance = 5
@@ -88,8 +90,22 @@ final class LocationDatabase {
     func record(_ location: CLLocation) async {
         guard shouldPersist(location: location) else { return }
         lastPersistedLocation = location
+        lastRecordedTimestamp = location.timestamp
+        lastTimerPersistedTimestamp = location.timestamp
 
-        let snapshot = LocationSnapshot(location: location)
+        await persistSnapshot(LocationSnapshot(location: location))
+    }
+
+    func persistLastLocationIfNeeded() async {
+        guard let lastPersistedLocation else { return }
+        let now = Date()
+        let lastTimerPersistedTimestamp = lastTimerPersistedTimestamp ?? lastRecordedTimestamp ?? now
+        guard now.timeIntervalSince(lastTimerPersistedTimestamp) >= 60 else { return }
+        await persistSnapshot(LocationSnapshot(location: lastPersistedLocation))
+        self.lastTimerPersistedTimestamp = now
+    }
+
+    private func persistSnapshot(_ snapshot: LocationSnapshot) async {
         await backgroundContext.perform {
             let sample = LocationSample(context: self.backgroundContext)
             sample.timestamp = snapshot.timestamp
