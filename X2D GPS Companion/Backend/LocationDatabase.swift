@@ -220,7 +220,7 @@ final class LocationDatabase {
         }
     }
 
-    private func nearestRecords(to date: Date, tolerance: TimeInterval, records: [LocationRecord]) -> (before: LocationRecord?, after: LocationRecord?) {
+    func nearestRecords(to date: Date, tolerance: TimeInterval, records: [LocationRecord]) -> (before: LocationRecord?, after: LocationRecord?) {
         guard !records.isEmpty else { return (nil, nil) }
 
         var lower = 0

@@ -48,7 +48,7 @@ final class DatabaseTests: XCTestCase {
 
         // Record all locations
         for location in locations {
-            await database.recordUnfiltered(location)
+            await database.record(location)
         }
 
         // Retrieve all records
@@ -67,7 +67,7 @@ final class DatabaseTests: XCTestCase {
         let locations = generateTestLocations(count: 20, startDate: baseDate, interval: 30)
 
         for location in locations {
-            await database.recordUnfiltered(location)
+            await database.record(location)
         }
 
         // Query for middle 10 records (5 minutes to 10 minutes)
@@ -86,7 +86,7 @@ final class DatabaseTests: XCTestCase {
         let locations = generateTestLocations(count: 5, startDate: baseDate, interval: 60)
 
         for location in locations {
-            await database.recordUnfiltered(location)
+            await database.record(location)
         }
 
         var records = try await database.records(in: nil)
@@ -99,104 +99,117 @@ final class DatabaseTests: XCTestCase {
         XCTAssertEqual(records.count, 0, "Should have no records after reset")
     }
 
-    // MARK: - Nearest Record Tests
+    // MARK: - Location Query Tests
 
     @MainActor
-    func testNearestRecordWithinTolerance() async throws {
+    func testLocationAtWithInterpolation() async throws {
         let baseDate = Date()
-        let locations = generateTestLocations(count: 10, startDate: baseDate, interval: 60)
+        // Create two locations 2 minutes apart
+        let location1 = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
+            altitude: 10.0,
+            horizontalAccuracy: 5.0,
+            verticalAccuracy: 10.0,
+            course: 0,
+            speed: 1.0,
+            timestamp: baseDate
+        )
+        let location2 = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 37.7759, longitude: -122.4184),
+            altitude: 20.0,
+            horizontalAccuracy: 5.0,
+            verticalAccuracy: 10.0,
+            course: 90,
+            speed: 2.0,
+            timestamp: baseDate.addingTimeInterval(120)
+        )
 
-        for location in locations {
-            await database.recordUnfiltered(location)
-        }
+        await database.record(location1)
+        await database.record(location2)
 
-        let records = try await database.records(in: nil)
+        // Query for a time exactly in the middle (1 minute after first location)
+        let queryDate = baseDate.addingTimeInterval(60)
+        let result = try await database.location(at: queryDate)
 
-        // Query for a time 30 seconds after the 5th record
-        let queryDate = baseDate.addingTimeInterval(5 * 60 + 30)
-        let nearest = database.nearestRecord(to: queryDate, tolerance: 5 * 60, records: records)
-
-        XCTAssertNotNil(nearest)
-        XCTAssertEqual(nearest?.latitude ?? 0, 37.7753, accuracy: 0.0001)
+        XCTAssertNotNil(result)
+        // Should be interpolated halfway between the two locations
+        XCTAssertEqual(result?.coordinate.latitude ?? 0, 37.7754, accuracy: 0.0001)
+        XCTAssertEqual(result?.coordinate.longitude ?? 0, -122.4189, accuracy: 0.0001)
+        XCTAssertEqual(result?.altitude ?? 0, 15.0, accuracy: 0.1)
+        XCTAssertEqual(result?.speed ?? 0, 1.5, accuracy: 0.1)
     }
 
     @MainActor
-    func testNearestRecordOutsideTolerance() async throws {
+    func testLocationAtWithOnlyBefore() async throws {
         let baseDate = Date()
-        let locations = generateTestLocations(count: 5, startDate: baseDate, interval: 60)
+        let location = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
+            altitude: 10.0,
+            horizontalAccuracy: 5.0,
+            verticalAccuracy: 10.0,
+            timestamp: baseDate
+        )
 
-        for location in locations {
-            await database.recordUnfiltered(location)
-        }
+        await database.record(location)
 
-        let records = try await database.records(in: nil)
+        // Query for a time 2 minutes after (within 5 min tolerance)
+        let queryDate = baseDate.addingTimeInterval(120)
+        let result = try await database.location(at: queryDate)
 
-        // Query for a time 10 minutes after the last record (outside 5 min tolerance)
-        let queryDate = baseDate.addingTimeInterval(15 * 60)
-        let nearest = database.nearestRecord(to: queryDate, tolerance: 5 * 60, records: records)
-
-        XCTAssertNil(nearest, "Should not find record outside tolerance")
-    }
-
-    // MARK: - Interpolation Tests
-
-    @MainActor
-    func testNearestRecordsBeforeAndAfter() async throws {
-        let baseDate = Date()
-        let locations = generateTestLocations(count: 10, startDate: baseDate, interval: 60)
-
-        for location in locations {
-            await database.recordUnfiltered(location)
-        }
-
-        let records = try await database.records(in: nil)
-
-        // Query for a time between 5th and 6th record
-        let queryDate = baseDate.addingTimeInterval(5 * 60 + 30)
-        let (before, after) = database.nearestRecords(to: queryDate, tolerance: 5 * 60, records: records)
-
-        XCTAssertNotNil(before)
-        XCTAssertNotNil(after)
-        XCTAssertEqual(before?.latitude ?? 0, 37.7753, accuracy: 0.0001)
-        XCTAssertEqual(after?.latitude ?? 0, 37.7754, accuracy: 0.0001)
+        XCTAssertNotNil(result)
+        // Should return the only available location
+        XCTAssertEqual(result?.coordinate.latitude ?? 0, 37.7749, accuracy: 0.0001)
+        XCTAssertEqual(result?.coordinate.longitude ?? 0, -122.4194, accuracy: 0.0001)
     }
 
     @MainActor
-    func testNearestRecordsOnlyBefore() async throws {
+    func testLocationAtWithOnlyAfter() async throws {
         let baseDate = Date()
-        let locations = generateTestLocations(count: 5, startDate: baseDate, interval: 60)
+        let location = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
+            altitude: 10.0,
+            horizontalAccuracy: 5.0,
+            verticalAccuracy: 10.0,
+            timestamp: baseDate.addingTimeInterval(120)
+        )
 
-        for location in locations {
-            await database.recordUnfiltered(location)
-        }
+        await database.record(location)
 
-        let records = try await database.records(in: nil)
+        // Query for a time 2 minutes before (within 5 min tolerance)
+        let queryDate = baseDate
+        let result = try await database.location(at: queryDate)
 
-        // Query for a time after all records but within tolerance
-        let queryDate = baseDate.addingTimeInterval(5 * 60 + 30)
-        let (before, after) = database.nearestRecords(to: queryDate, tolerance: 5 * 60, records: records)
-
-        XCTAssertNotNil(before)
-        XCTAssertNil(after)
+        XCTAssertNotNil(result)
+        // Should return the only available location
+        XCTAssertEqual(result?.coordinate.latitude ?? 0, 37.7749, accuracy: 0.0001)
     }
 
     @MainActor
-    func testNearestRecordsOnlyAfter() async throws {
+    func testLocationAtOutsideTolerance() async throws {
         let baseDate = Date()
-        let locations = generateTestLocations(count: 5, startDate: baseDate.addingTimeInterval(60), interval: 60)
+        let location = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
+            altitude: 10.0,
+            horizontalAccuracy: 5.0,
+            verticalAccuracy: 10.0,
+            timestamp: baseDate
+        )
 
-        for location in locations {
-            await database.recordUnfiltered(location)
-        }
+        await database.record(location)
 
-        let records = try await database.records(in: nil)
+        // Query for a time 10 minutes after (outside 5 min tolerance)
+        let queryDate = baseDate.addingTimeInterval(600)
+        let result = try await database.location(at: queryDate)
 
-        // Query for a time before all records but within tolerance
-        let queryDate = baseDate.addingTimeInterval(30)
-        let (before, after) = database.nearestRecords(to: queryDate, tolerance: 5 * 60, records: records)
+        XCTAssertNil(result, "Should not find location outside tolerance")
+    }
 
-        XCTAssertNil(before)
-        XCTAssertNotNil(after)
+    @MainActor
+    func testLocationAtNoData() async throws {
+        let queryDate = Date()
+        let result = try await database.location(at: queryDate)
+
+        XCTAssertNil(result, "Should return nil when no data exists")
     }
 
     // MARK: - Performance Tests
@@ -209,7 +222,7 @@ final class DatabaseTests: XCTestCase {
         measure {
             Task { @MainActor in
                 for location in locations {
-                    await database.recordUnfiltered(location)
+                    await database.record(location)
                 }
             }
         }
@@ -221,14 +234,14 @@ final class DatabaseTests: XCTestCase {
         let locations = generateTestLocations(count: 1000, startDate: baseDate, interval: 10)
 
         for location in locations {
-            await database.recordUnfiltered(location)
+            await database.record(location)
         }
 
-        let records = try await database.records(in: nil)
-
         measure {
-            let queryDate = baseDate.addingTimeInterval(5000)
-            _ = database.nearestRecord(to: queryDate, tolerance: 5 * 60, records: records)
+            Task { @MainActor in
+                let queryDate = baseDate.addingTimeInterval(5000)
+                _ = try await database.location(at: queryDate)
+            }
         }
     }
 
@@ -336,44 +349,38 @@ final class LocationInterpolationTests: XCTestCase {
         let baseDate = Date()
         let location1 = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
-            altitude: 0,
+            altitude: 10.0,
             horizontalAccuracy: 5,
-            verticalAccuracy: -1,
-            course: -1,
-            speed: -1,
+            verticalAccuracy: 10,
+            course: 0,
+            speed: 1.0,
             timestamp: baseDate
         )
 
         let location2 = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 37.7849, longitude: -122.4094),
-            altitude: 0,
+            altitude: 20.0,
             horizontalAccuracy: 5,
-            verticalAccuracy: -1,
-            course: -1,
-            speed: -1,
+            verticalAccuracy: 10,
+            course: 90,
+            speed: 2.0,
             timestamp: baseDate.addingTimeInterval(120)
         )
 
-        await database.recordUnfiltered(location1)
-        await database.recordUnfiltered(location2)
-
-        let records = try await database.records(in: nil)
+        await database.record(location1)
+        await database.record(location2)
 
         // Query for a time exactly in the middle (1 minute)
         let queryDate = baseDate.addingTimeInterval(60)
-        let (before, after) = database.nearestRecords(to: queryDate, tolerance: 5 * 60, records: records)
+        let result = try await database.location(at: queryDate)
 
-        XCTAssertNotNil(before)
-        XCTAssertNotNil(after)
+        XCTAssertNotNil(result)
 
         // The interpolated location should be approximately halfway
-        if let before, let after {
-            let expectedLat = (before.latitude + after.latitude) / 2
-            let expectedLon = (before.longitude + after.longitude) / 2
-
-            XCTAssertEqual(expectedLat, 37.7799, accuracy: 0.0001)
-            XCTAssertEqual(expectedLon, -122.4144, accuracy: 0.0001)
-        }
+        XCTAssertEqual(result?.coordinate.latitude ?? 0, 37.7799, accuracy: 0.0001)
+        XCTAssertEqual(result?.coordinate.longitude ?? 0, -122.4144, accuracy: 0.0001)
+        XCTAssertEqual(result?.altitude ?? 0, 15.0, accuracy: 0.1)
+        XCTAssertEqual(result?.speed ?? 0, 1.5, accuracy: 0.1)
 
         _ = try await database.reset()
     }
@@ -397,15 +404,15 @@ final class LocationInterpolationTests: XCTestCase {
 
             let location = CLLocation(
                 coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
-                altitude: 0,
+                altitude: Double(i * 10),
                 horizontalAccuracy: 5,
-                verticalAccuracy: -1,
-                course: -1,
-                speed: -1,
+                verticalAccuracy: 10,
+                course: Double(i * 10),
+                speed: Double(i),
                 timestamp: baseDate.addingTimeInterval(TimeInterval(i * 60))
             )
 
-            await database.recordUnfiltered(location)
+            await database.record(location)
         }
 
         let records = try await database.records(in: nil)

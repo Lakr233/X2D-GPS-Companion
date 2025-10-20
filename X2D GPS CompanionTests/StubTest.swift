@@ -38,8 +38,8 @@ final class LocationDatabaseTests: XCTestCase {
         )
 
         try! await database.reset()
-        await database.recordUnfiltered(locationA)
-        await database.recordUnfiltered(locationB)
+        await database.record(locationA)
+        await database.record(locationB)
 
         let interval = DateInterval(start: baseDate.addingTimeInterval(-120), end: baseDate)
         let results = try await database.records(in: interval)
