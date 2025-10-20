@@ -17,17 +17,17 @@ final class DatabaseTests: XCTestCase {
     var database: LocationDatabase!
 
     @MainActor
-    override func setUp() throws {
-        try super.setUp()
+    override func setUp() {
+        super.setUp()
         ViewModel.shared.stopRecording()
         database = LocationDatabase.shared
-        try database.reset()
+        try! database.reset()
     }
 
     @MainActor
-    override func tearDown() throws {
-        _ = try database.reset()
-        try super.tearDown()
+    override func tearDown() {
+        try! database.reset()
+        super.tearDown()
     }
 
     // MARK: - Basic Database Operations
