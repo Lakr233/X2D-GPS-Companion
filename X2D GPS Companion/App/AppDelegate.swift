@@ -37,7 +37,9 @@ extension ViewModel {
         ].allSatisfy(\.self)
 
         guard shouldAutoStart else {
-            print("⚠️ Cannot auto-start recording: permissions not fully granted")
+            if !viewModel.autoStartRecording {
+                print("⚠️ Cannot auto-start recording: permissions not fully granted")
+            }
             return
         }
 

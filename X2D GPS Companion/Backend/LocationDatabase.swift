@@ -220,6 +220,7 @@ final class LocationDatabase {
         return (before, after)
     }
 
+    @discardableResult
     func reset() async throws -> Int {
         let deletedCount = try await backgroundContext.perform {
             let countRequest = NSFetchRequest<LocationSample>(entityName: "LocationSample")
