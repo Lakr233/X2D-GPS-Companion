@@ -36,7 +36,9 @@ final class DatabaseTests: XCTestCase {
         try await database.reset()
         let baseDate = Date()
         let locations = generateTestLocations(count: 10, startDate: baseDate, interval: 60)
-        for location in locations { await database.record(location) }
+        for location in locations {
+            await database.record(location)
+        }
         let records = try await database.records(in: nil)
         XCTAssertEqual(records.count, 10, "Should have 10 records, but got \(records.count)")
         if records.count >= 10 {

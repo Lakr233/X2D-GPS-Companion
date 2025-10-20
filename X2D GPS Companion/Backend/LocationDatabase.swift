@@ -58,6 +58,9 @@ final class LocationDatabase {
     private let container: NSPersistentContainer
     private let backgroundContext: NSManagedObjectContext
 
+    // Model version identifier - increment this when the data model changes
+    private static let currentModelVersion = 2
+
     private init() {
         let model = LocationDatabase.makeModel()
         container = NSPersistentContainer(name: "LocationStore", managedObjectModel: model)
@@ -72,6 +75,9 @@ final class LocationDatabase {
             print("❌ Failed to create directory for CoreData store: \(error.localizedDescription)")
         }
 
+        // Check if we need to reset the database due to model version change
+        Self.checkAndResetIfNeeded(storeURL: storeURL)
+
         let description = NSPersistentStoreDescription(url: storeURL)
         description.type = NSSQLiteStoreType
         description.shouldMigrateStoreAutomatically = true
@@ -82,15 +88,19 @@ final class LocationDatabase {
             if let error {
                 // If migration fails, delete the old store and try again
                 print("⚠️ Failed to load location store, attempting to recreate: \(error.localizedDescription)")
-                try? FileManager.default.removeItem(at: storeURL)
-                try? FileManager.default.removeItem(at: storeURL.deletingPathExtension().appendingPathExtension("sqlite-shm"))
-                try? FileManager.default.removeItem(at: storeURL.deletingPathExtension().appendingPathExtension("sqlite-wal"))
+                Self.deleteStore(at: storeURL)
 
                 container?.loadPersistentStores { _, retryError in
                     if let retryError {
                         fatalError("Failed to load location store after retry: \(retryError)")
+                    } else {
+                        // Save the new model version after successful recreation
+                        Self.saveModelVersion()
                     }
                 }
+            } else {
+                // Save the current model version on successful load
+                Self.saveModelVersion()
             }
         }
 
@@ -102,8 +112,8 @@ final class LocationDatabase {
     // MARK: - Public API
 
     /// Record a location to the database. All locations are saved without filtering.
-    func record(_ location: CLLocation) async {
-        await persistSnapshot(LocationSnapshot(location: location))
+    func record(_ location: CLLocation) {
+        persistSnapshot(LocationSnapshot(location: location))
     }
 
     /// Get the location at a specific date with interpolation support.
@@ -148,7 +158,7 @@ final class LocationDatabase {
     /// - Returns: Array of location records sorted by timestamp
     func records(in interval: DateInterval? = nil) async throws -> [LocationRecord] {
         let context = container.viewContext
-        return try await context.perform {
+        return try context.performAndWait {
             let request = LocationSample.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LocationSample.timestamp), ascending: true)]
             if let interval {
@@ -179,8 +189,8 @@ final class LocationDatabase {
     /// Delete all location records from the database.
     /// - Returns: The number of records deleted
     @discardableResult
-    func reset() async throws -> Int {
-        let deletedCount = try await backgroundContext.perform {
+    func reset() throws -> Int {
+        let deletedCount = try backgroundContext.performAndWait {
             let countRequest = NSFetchRequest<LocationSample>(entityName: "LocationSample")
             let count = try self.backgroundContext.count(for: countRequest)
 
@@ -195,10 +205,20 @@ final class LocationDatabase {
                 )
             }
             self.backgroundContext.reset()
+
+            do {
+                if self.backgroundContext.hasChanges {
+                    try self.backgroundContext.save()
+                    self.backgroundContext.reset()
+                }
+            } catch {
+                print("❌ Failed to save location sample: \(error.localizedDescription)")
+            }
+
             return count
         }
 
-        await container.viewContext.perform {
+        container.viewContext.performAndWait {
             self.container.viewContext.reset()
         }
 
@@ -207,8 +227,8 @@ final class LocationDatabase {
 
     // MARK: - Private Methods
 
-    private func persistSnapshot(_ snapshot: LocationSnapshot) async {
-        await backgroundContext.perform {
+    private func persistSnapshot(_ snapshot: LocationSnapshot) {
+        backgroundContext.performAndWait {
             let sample = LocationSample(context: self.backgroundContext)
             sample.timestamp = snapshot.timestamp
             sample.latitude = snapshot.latitude
@@ -391,5 +411,40 @@ final class LocationDatabase {
     private static func storeURL() -> URL {
         let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         return url.appendingPathComponent("LocationStore.sqlite")
+    }
+
+    private static func modelVersionURL() -> URL {
+        let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return url.appendingPathComponent("LocationStore.version")
+    }
+
+    private static func deleteStore(at storeURL: URL) {
+        try? FileManager.default.removeItem(at: storeURL)
+        try? FileManager.default.removeItem(at: storeURL.deletingPathExtension().appendingPathExtension("sqlite-shm"))
+        try? FileManager.default.removeItem(at: storeURL.deletingPathExtension().appendingPathExtension("sqlite-wal"))
+    }
+
+    private static func checkAndResetIfNeeded(storeURL: URL) {
+        let versionURL = modelVersionURL()
+        let savedVersion: Int = if let versionData = try? Data(contentsOf: versionURL),
+                                   let version = try? JSONDecoder().decode(Int.self, from: versionData)
+        {
+            version
+        } else {
+            0
+        }
+
+        if savedVersion != currentModelVersion {
+            print("ℹ️ Model version changed from \(savedVersion) to \(currentModelVersion), resetting database")
+            deleteStore(at: storeURL)
+            saveModelVersion()
+        }
+    }
+
+    private static func saveModelVersion() {
+        let versionURL = modelVersionURL()
+        if let versionData = try? JSONEncoder().encode(currentModelVersion) {
+            try? versionData.write(to: versionURL)
+        }
     }
 }
