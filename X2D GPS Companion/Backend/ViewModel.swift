@@ -28,8 +28,6 @@ final class ViewModel: NSObject {
     var resetAlertMessage: String = ""
     var showResetAlert: Bool = false
 
-    private var periodicRecordTimer: Timer?
-
     var autoStartRecording: Bool = UserDefaults.standard.bool(forKey: autoStartRecordingKey) {
         didSet {
             UserDefaults.standard.set(autoStartRecording, forKey: autoStartRecordingKey)
@@ -52,21 +50,5 @@ final class ViewModel: NSObject {
         locationService.delegate = self
         photoLibraryService.delegate = self
         startPermissionCheck()
-    }
-
-    func startPeriodicRecordTimer() {
-        stopPeriodicRecordTimer()
-        periodicRecordTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                guard self.isRecording else { return }
-                await self.locationDatabase.persistLastLocationIfNeeded()
-            }
-        }
-    }
-
-    func stopPeriodicRecordTimer() {
-        periodicRecordTimer?.invalidate()
-        periodicRecordTimer = nil
     }
 }

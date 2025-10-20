@@ -14,16 +14,20 @@ struct LocationRecord: Identifiable {
     let timestamp: Date
     let latitude: Double
     let longitude: Double
+    let altitude: Double
     let horizontalAccuracy: Double
+    let verticalAccuracy: Double
+    let speed: Double
+    let course: Double
 
     var location: CLLocation {
         CLLocation(
             coordinate: .init(latitude: latitude, longitude: longitude),
-            altitude: 0,
+            altitude: altitude,
             horizontalAccuracy: horizontalAccuracy,
-            verticalAccuracy: -1,
-            course: -1,
-            speed: -1,
+            verticalAccuracy: verticalAccuracy,
+            course: course,
+            speed: speed,
             timestamp: timestamp
         )
     }
@@ -34,7 +38,11 @@ final class LocationSample: NSManagedObject {
     @NSManaged var timestamp: Date
     @NSManaged var latitude: Double
     @NSManaged var longitude: Double
+    @NSManaged var altitude: Double
     @NSManaged var horizontalAccuracy: Double
+    @NSManaged var verticalAccuracy: Double
+    @NSManaged var speed: Double
+    @NSManaged var course: Double
 }
 
 extension LocationSample {
@@ -49,12 +57,6 @@ final class LocationDatabase {
 
     private let container: NSPersistentContainer
     private let backgroundContext: NSManagedObjectContext
-    private var lastPersistedLocation: CLLocation?
-    private var lastRecordedTimestamp: Date?
-    private var lastTimerPersistedTimestamp: Date?
-
-    private let timeEpsilon: TimeInterval = 20
-    private let distanceEpsilon: CLLocationDistance = 5
 
     private init() {
         let model = LocationDatabase.makeModel()
@@ -87,44 +89,54 @@ final class LocationDatabase {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
-    func record(_ location: CLLocation) async {
-        guard shouldPersist(location: location) else { return }
-        lastPersistedLocation = location
-        lastRecordedTimestamp = location.timestamp
-        lastTimerPersistedTimestamp = location.timestamp
+    // MARK: - Public API
 
+    /// Record a location to the database. All locations are saved without filtering.
+    func record(_ location: CLLocation) async {
         await persistSnapshot(LocationSnapshot(location: location))
     }
 
-    func persistLastLocationIfNeeded() async {
-        guard let lastPersistedLocation else { return }
-        let now = Date()
-        let lastTimerPersistedTimestamp = lastTimerPersistedTimestamp ?? lastRecordedTimestamp ?? now
-        guard now.timeIntervalSince(lastTimerPersistedTimestamp) >= 60 else { return }
-        await persistSnapshot(LocationSnapshot(location: lastPersistedLocation))
-        self.lastTimerPersistedTimestamp = now
-    }
+    /// Get the location at a specific date with interpolation support.
+    /// - Parameters:
+    ///   - date: The target date to search for
+    ///   - tolerance: Maximum time difference allowed (default: 5 minutes)
+    /// - Returns: The interpolated or nearest location, or nil if none found
+    /// - Throws: Error if no location is available within tolerance
+    ///
+    /// This method attempts to find locations before and after the target date.
+    /// If both are found within tolerance, it interpolates between them.
+    /// If only one is found, it returns that location.
+    /// If none are found, it returns nil.
+    func location(at date: Date, tolerance: TimeInterval = 5 * 60) async throws -> CLLocation? {
+        let interval = DateInterval(
+            start: date.addingTimeInterval(-tolerance),
+            end: date.addingTimeInterval(tolerance)
+        )
+        let records = try await records(in: interval)
 
-    private func persistSnapshot(_ snapshot: LocationSnapshot) async {
-        await backgroundContext.perform {
-            let sample = LocationSample(context: self.backgroundContext)
-            sample.timestamp = snapshot.timestamp
-            sample.latitude = snapshot.latitude
-            sample.longitude = snapshot.longitude
-            sample.horizontalAccuracy = snapshot.horizontalAccuracy
+        let (before, after) = nearestRecords(to: date, tolerance: tolerance, records: records)
 
-            do {
-                if self.backgroundContext.hasChanges {
-                    try self.backgroundContext.save()
-                    self.backgroundContext.reset()
-                }
-            } catch {
-                print("❌ Failed to save location sample: \(error.localizedDescription)")
-            }
+        // If we have both before and after, interpolate
+        if let before, let after {
+            return interpolate(from: before, to: after, at: date)
         }
+
+        // If we only have one, return it
+        if let before {
+            return before.location
+        }
+        if let after {
+            return after.location
+        }
+
+        // No location found
+        return nil
     }
 
-    func records(in interval: DateInterval?) async throws -> [LocationRecord] {
+    /// Get all location records within a date interval.
+    /// - Parameter interval: The date interval to query, or nil for all records
+    /// - Returns: Array of location records sorted by timestamp
+    func records(in interval: DateInterval? = nil) async throws -> [LocationRecord] {
         let context = container.viewContext
         return try await context.perform {
             let request = LocationSample.fetchRequest()
@@ -144,46 +156,71 @@ final class LocationDatabase {
                     timestamp: sample.timestamp,
                     latitude: sample.latitude,
                     longitude: sample.longitude,
-                    horizontalAccuracy: sample.horizontalAccuracy
+                    altitude: sample.altitude,
+                    horizontalAccuracy: sample.horizontalAccuracy,
+                    verticalAccuracy: sample.verticalAccuracy,
+                    speed: sample.speed,
+                    course: sample.course
                 )
             }
         }
     }
 
-    func nearestRecord(to date: Date, tolerance: TimeInterval, records: [LocationRecord]) -> LocationRecord? {
-        guard !records.isEmpty else { return nil }
+    /// Delete all location records from the database.
+    /// - Returns: The number of records deleted
+    @discardableResult
+    func reset() async throws -> Int {
+        let deletedCount = try await backgroundContext.perform {
+            let countRequest = NSFetchRequest<LocationSample>(entityName: "LocationSample")
+            let count = try self.backgroundContext.count(for: countRequest)
 
-        var lower = 0
-        var upper = records.count - 1
-        while lower < upper {
-            let mid = (lower + upper) / 2
-            if records[mid].timestamp < date {
-                lower = mid + 1
-            } else {
-                upper = mid
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationSample")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            deleteRequest.resultType = .resultTypeObjectIDs
+            let result = try self.backgroundContext.execute(deleteRequest) as? NSBatchDeleteResult
+            if let objectIDs = result?.result as? [NSManagedObjectID] {
+                NSManagedObjectContext.mergeChanges(
+                    fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
+                    into: [self.container.viewContext]
+                )
             }
+            self.backgroundContext.reset()
+            return count
         }
 
-        var candidates: [LocationRecord] = []
-        let idx = lower
-        if idx < records.count {
-            candidates.append(records[idx])
-        }
-        if idx > 0 {
-            candidates.append(records[idx - 1])
+        await container.viewContext.perform {
+            self.container.viewContext.reset()
         }
 
-        let best = candidates.min { lhs, rhs in
-            abs(lhs.timestamp.timeIntervalSince(date)) < abs(rhs.timestamp.timeIntervalSince(date))
-        }
-
-        guard let best else { return nil }
-        let delta = abs(best.timestamp.timeIntervalSince(date))
-        guard delta <= tolerance else { return nil }
-        return best
+        return deletedCount
     }
 
-    func nearestRecords(to date: Date, tolerance: TimeInterval, records: [LocationRecord]) -> (before: LocationRecord?, after: LocationRecord?) {
+    // MARK: - Private Methods
+
+    private func persistSnapshot(_ snapshot: LocationSnapshot) async {
+        await backgroundContext.perform {
+            let sample = LocationSample(context: self.backgroundContext)
+            sample.timestamp = snapshot.timestamp
+            sample.latitude = snapshot.latitude
+            sample.longitude = snapshot.longitude
+            sample.altitude = snapshot.altitude
+            sample.horizontalAccuracy = snapshot.horizontalAccuracy
+            sample.verticalAccuracy = snapshot.verticalAccuracy
+            sample.speed = snapshot.speed
+            sample.course = snapshot.course
+
+            do {
+                if self.backgroundContext.hasChanges {
+                    try self.backgroundContext.save()
+                    self.backgroundContext.reset()
+                }
+            } catch {
+                print("❌ Failed to save location sample: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func nearestRecords(to date: Date, tolerance: TimeInterval, records: [LocationRecord]) -> (before: LocationRecord?, after: LocationRecord?) {
         guard !records.isEmpty else { return (nil, nil) }
 
         var lower = 0
@@ -220,55 +257,66 @@ final class LocationDatabase {
         return (before, after)
     }
 
-    @discardableResult
-    func reset() async throws -> Int {
-        let deletedCount = try await backgroundContext.perform {
-            let countRequest = NSFetchRequest<LocationSample>(entityName: "LocationSample")
-            let count = try self.backgroundContext.count(for: countRequest)
+    private func interpolate(from before: LocationRecord, to after: LocationRecord, at date: Date) -> CLLocation {
+        let totalInterval = after.timestamp.timeIntervalSince(before.timestamp)
+        let targetInterval = date.timeIntervalSince(before.timestamp)
+        let ratio = totalInterval > 0 ? targetInterval / totalInterval : 0.5
 
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationSample")
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            deleteRequest.resultType = .resultTypeObjectIDs
-            let result = try self.backgroundContext.execute(deleteRequest) as? NSBatchDeleteResult
-            if let objectIDs = result?.result as? [NSManagedObjectID] {
-                NSManagedObjectContext.mergeChanges(
-                    fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
-                    into: [self.container.viewContext]
-                )
-            }
-            self.backgroundContext.reset()
-            return count
-        }
-        lastPersistedLocation = nil
-        return deletedCount
-    }
+        let latitude = before.latitude + (after.latitude - before.latitude) * ratio
+        let longitude = before.longitude + (after.longitude - before.longitude) * ratio
+        let altitude = before.altitude + (after.altitude - before.altitude) * ratio
+        let horizontalAccuracy = before.horizontalAccuracy + (after.horizontalAccuracy - before.horizontalAccuracy) * ratio
+        let verticalAccuracy = before.verticalAccuracy + (after.verticalAccuracy - before.verticalAccuracy) * ratio
 
-    private func shouldPersist(location: CLLocation) -> Bool {
-        guard let lastPersistedLocation else { return true }
-        let delta = location.timestamp.timeIntervalSince(lastPersistedLocation.timestamp)
-        if abs(delta) > timeEpsilon { return true }
-
-        let distance = location.distance(from: lastPersistedLocation)
-        if distance > distanceEpsilon { return true }
-
-        if location.horizontalAccuracy + 1 < lastPersistedLocation.horizontalAccuracy {
-            return true
+        // For speed and course, use the average if both are valid, otherwise use the valid one
+        var speed: Double = -1
+        if before.speed >= 0, after.speed >= 0 {
+            speed = before.speed + (after.speed - before.speed) * ratio
+        } else if before.speed >= 0 {
+            speed = before.speed
+        } else if after.speed >= 0 {
+            speed = after.speed
         }
 
-        return false
+        var course: Double = -1
+        if before.course >= 0, after.course >= 0 {
+            course = before.course + (after.course - before.course) * ratio
+        } else if before.course >= 0 {
+            course = before.course
+        } else if after.course >= 0 {
+            course = after.course
+        }
+
+        return CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude),
+            altitude: altitude,
+            horizontalAccuracy: horizontalAccuracy,
+            verticalAccuracy: verticalAccuracy,
+            course: course,
+            speed: speed,
+            timestamp: date
+        )
     }
 
     private struct LocationSnapshot {
         let timestamp: Date
         let latitude: Double
         let longitude: Double
+        let altitude: Double
         let horizontalAccuracy: Double
+        let verticalAccuracy: Double
+        let speed: Double
+        let course: Double
 
         init(location: CLLocation) {
             timestamp = location.timestamp
             latitude = location.coordinate.latitude
             longitude = location.coordinate.longitude
+            altitude = location.altitude
             horizontalAccuracy = max(location.horizontalAccuracy, 0)
+            verticalAccuracy = max(location.verticalAccuracy, 0)
+            speed = max(location.speed, -1)
+            course = max(location.course, -1)
         }
     }
 
@@ -294,12 +342,32 @@ final class LocationDatabase {
         longitude.attributeType = .doubleAttributeType
         longitude.isOptional = false
 
-        let accuracy = NSAttributeDescription()
-        accuracy.name = "horizontalAccuracy"
-        accuracy.attributeType = .doubleAttributeType
-        accuracy.isOptional = false
+        let altitude = NSAttributeDescription()
+        altitude.name = "altitude"
+        altitude.attributeType = .doubleAttributeType
+        altitude.isOptional = false
 
-        entity.properties = [timestamp, latitude, longitude, accuracy]
+        let horizontalAccuracy = NSAttributeDescription()
+        horizontalAccuracy.name = "horizontalAccuracy"
+        horizontalAccuracy.attributeType = .doubleAttributeType
+        horizontalAccuracy.isOptional = false
+
+        let verticalAccuracy = NSAttributeDescription()
+        verticalAccuracy.name = "verticalAccuracy"
+        verticalAccuracy.attributeType = .doubleAttributeType
+        verticalAccuracy.isOptional = false
+
+        let speed = NSAttributeDescription()
+        speed.name = "speed"
+        speed.attributeType = .doubleAttributeType
+        speed.isOptional = false
+
+        let course = NSAttributeDescription()
+        course.name = "course"
+        course.attributeType = .doubleAttributeType
+        course.isOptional = false
+
+        entity.properties = [timestamp, latitude, longitude, altitude, horizontalAccuracy, verticalAccuracy, speed, course]
 
         let timestampIndex = NSFetchIndexDescription(name: "timestampIndex", elements: [
             NSFetchIndexElementDescription(property: timestamp, collationType: .binary),
