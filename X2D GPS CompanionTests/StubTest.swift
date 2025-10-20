@@ -5,10 +5,10 @@
 //  Created by qaq on 16/10/2025.
 //
 
-import XCTest
-import CoreLocation
 import CoreData
+import CoreLocation
 @testable import X2D_GPS_Companion
+import XCTest
 
 final class LocationDatabaseTests: XCTestCase {
     @MainActor

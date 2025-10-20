@@ -23,21 +23,22 @@ struct SettingsView: View {
             }
 
             Section("MANUAL_FILL_SECTION_TITLE") {
+                let isInProgress = model.fillInProgress
                 PhotosPicker(
                     selection: $fillSelection,
                     maxSelectionCount: nil,
                     selectionBehavior: .continuous,
                     matching: .images
                 ) {
-                    if model.fillInProgress {
+                    if isInProgress {
                         ProgressView()
                     } else {
                         Label("FILL_IN_PICKER_BUTTON", systemImage: "sparkles.square.filled.on.square")
                     }
                 }
-                .disabled(model.fillInProgress)
+                .disabled(isInProgress)
                 .onChange(of: fillSelection) { _, newItems in
-                    let identifiers = newItems.compactMap { $0.itemIdentifier }
+                    let identifiers = newItems.compactMap(\.itemIdentifier)
                     guard !identifiers.isEmpty else { return }
                     Task { await model.fillPhotos(using: identifiers) }
                     fillSelection.removeAll()
