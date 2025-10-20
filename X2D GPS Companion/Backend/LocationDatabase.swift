@@ -127,12 +127,12 @@ final class LocationDatabase {
     /// If both are found within tolerance, it interpolates between them.
     /// If only one is found, it returns that location.
     /// If none are found, it returns nil.
-    func location(at date: Date, tolerance: TimeInterval = 5 * 60) async throws -> CLLocation? {
+    func location(at date: Date, tolerance: TimeInterval = 5 * 60) throws -> CLLocation? {
         let interval = DateInterval(
             start: date.addingTimeInterval(-tolerance),
             end: date.addingTimeInterval(tolerance)
         )
-        let records = try await records(in: interval)
+        let records = try records(in: interval)
 
         let (before, after) = nearestRecords(to: date, tolerance: tolerance, records: records)
 
@@ -156,7 +156,7 @@ final class LocationDatabase {
     /// Get all location records within a date interval.
     /// - Parameter interval: The date interval to query, or nil for all records
     /// - Returns: Array of location records sorted by timestamp
-    func records(in interval: DateInterval? = nil) async throws -> [LocationRecord] {
+    func records(in interval: DateInterval? = nil) throws -> [LocationRecord] {
         let context = container.viewContext
         return try context.performAndWait {
             let request = LocationSample.fetchRequest()

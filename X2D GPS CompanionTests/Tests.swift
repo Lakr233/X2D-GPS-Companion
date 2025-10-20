@@ -17,29 +17,30 @@ final class DatabaseTests: XCTestCase {
     var database: LocationDatabase!
 
     @MainActor
-    override func setUp() async throws {
-        try await super.setUp()
+    override func setUp() throws {
+        try super.setUp()
+        ViewModel.shared.stopRecording()
         database = LocationDatabase.shared
-        try await database.reset()
+        try database.reset()
     }
 
     @MainActor
-    override func tearDown() async throws {
-        _ = try await database.reset()
-        try await super.tearDown()
+    override func tearDown() throws {
+        _ = try database.reset()
+        try super.tearDown()
     }
 
     // MARK: - Basic Database Operations
 
     @MainActor
-    func testDatabaseRecordAndRetrieve() async throws {
-        try await database.reset()
+    func testDatabaseRecordAndRetrieve() throws {
+        try database.reset()
         let baseDate = Date()
         let locations = generateTestLocations(count: 10, startDate: baseDate, interval: 60)
         for location in locations {
-            await database.record(location)
+            database.record(location)
         }
-        let records = try await database.records(in: nil)
+        let records = try database.records(in: nil)
         XCTAssertEqual(records.count, 10, "Should have 10 records, but got \(records.count)")
         if records.count >= 10 {
             XCTAssertEqual(records.first?.latitude ?? 0, 37.7749, accuracy: 0.0001)
@@ -48,42 +49,42 @@ final class DatabaseTests: XCTestCase {
     }
 
     @MainActor
-    func testDatabaseFilterByInterval() async throws {
-        try await database.reset()
+    func testDatabaseFilterByInterval() throws {
+        try database.reset()
         let baseDate = Date()
         let locations = generateTestLocations(count: 20, startDate: baseDate, interval: 30)
         for location in locations {
-            await database.record(location)
+            database.record(location)
         }
         let interval = DateInterval(
             start: baseDate.addingTimeInterval(5 * 60),
             end: baseDate.addingTimeInterval(10 * 60)
         )
-        let records = try await database.records(in: interval)
+        let records = try database.records(in: interval)
         XCTAssertEqual(records.count, 10, "Should have 10 records in the interval")
     }
 
     @MainActor
-    func testDatabaseReset() async throws {
-        try await database.reset()
+    func testDatabaseReset() throws {
+        try database.reset()
         let baseDate = Date()
         let locations = generateTestLocations(count: 5, startDate: baseDate, interval: 60)
         for location in locations {
-            await database.record(location)
+            database.record(location)
         }
-        var records = try await database.records(in: nil)
+        var records = try database.records(in: nil)
         XCTAssertEqual(records.count, 5)
-        let deletedCount = try await database.reset()
+        let deletedCount = try database.reset()
         XCTAssertEqual(deletedCount, 5, "Should delete 5 records")
-        records = try await database.records(in: nil)
+        records = try database.records(in: nil)
         XCTAssertEqual(records.count, 0, "Should have no records after reset")
     }
 
     // MARK: - Location Query Tests
 
     @MainActor
-    func testLocationAtWithInterpolation() async throws {
-        try await database.reset()
+    func testLocationAtWithInterpolation() throws {
+        try database.reset()
         let baseDate = Date()
         let location1 = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
@@ -104,11 +105,11 @@ final class DatabaseTests: XCTestCase {
             timestamp: baseDate.addingTimeInterval(120)
         )
 
-        await database.record(location1)
-        await database.record(location2)
+        database.record(location1)
+        database.record(location2)
 
         let queryDate = baseDate.addingTimeInterval(60)
-        let result = try await database.location(at: queryDate)
+        let result = try database.location(at: queryDate)
         XCTAssertNotNil(result)
         XCTAssertEqual(result?.coordinate.latitude ?? 0, 37.7754, accuracy: 0.0001)
         XCTAssertEqual(result?.coordinate.longitude ?? 0, -122.4189, accuracy: 0.0001)
@@ -117,8 +118,8 @@ final class DatabaseTests: XCTestCase {
     }
 
     @MainActor
-    func testLocationAtWithOnlyBefore() async throws {
-        try await database.reset()
+    func testLocationAtWithOnlyBefore() throws {
+        try database.reset()
         let baseDate = Date()
         let location = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
@@ -127,17 +128,17 @@ final class DatabaseTests: XCTestCase {
             verticalAccuracy: 10.0,
             timestamp: baseDate
         )
-        await database.record(location)
+        database.record(location)
         let queryDate = baseDate.addingTimeInterval(120)
-        let result = try await database.location(at: queryDate)
+        let result = try database.location(at: queryDate)
         XCTAssertNotNil(result)
         XCTAssertEqual(result?.coordinate.latitude ?? 0, 37.7749, accuracy: 0.0001)
         XCTAssertEqual(result?.coordinate.longitude ?? 0, -122.4194, accuracy: 0.0001)
     }
 
     @MainActor
-    func testLocationAtWithOnlyAfter() async throws {
-        try await database.reset()
+    func testLocationAtWithOnlyAfter() throws {
+        try database.reset()
         let baseDate = Date()
         let location = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
@@ -147,16 +148,16 @@ final class DatabaseTests: XCTestCase {
             timestamp: baseDate.addingTimeInterval(120)
         )
 
-        await database.record(location)
+        database.record(location)
         let queryDate = baseDate
-        let result = try await database.location(at: queryDate)
+        let result = try database.location(at: queryDate)
         XCTAssertNotNil(result)
         XCTAssertEqual(result?.coordinate.latitude ?? 0, 37.7749, accuracy: 0.0001)
     }
 
     @MainActor
-    func testLocationAtOutsideTolerance() async throws {
-        try await database.reset()
+    func testLocationAtOutsideTolerance() throws {
+        try database.reset()
         let baseDate = Date()
         let location = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
@@ -166,52 +167,48 @@ final class DatabaseTests: XCTestCase {
             timestamp: baseDate
         )
 
-        await database.record(location)
+        database.record(location)
         let queryDate = baseDate.addingTimeInterval(600)
-        let result = try await database.location(at: queryDate)
+        let result = try database.location(at: queryDate)
         XCTAssertNil(result, "Should not find location outside tolerance")
     }
 
     @MainActor
-    func testLocationAtNoData() async throws {
-        try await database.reset()
+    func testLocationAtNoData() throws {
+        try database.reset()
         let queryDate = Date()
-        let result = try await database.location(at: queryDate)
+        let result = try database.location(at: queryDate)
         XCTAssertNil(result, "Should return nil when no data exists")
     }
 
     // MARK: - Performance Tests
 
     @MainActor
-    func testDatabasePerformanceWithLargeDataset() async throws {
-        try await database.reset()
+    func testDatabasePerformanceWithLargeDataset() throws {
+        try database.reset()
         let baseDate = Date()
         let locations = generateTestLocations(count: 1000, startDate: baseDate, interval: 10)
 
         measure {
-            Task { @MainActor in
-                for location in locations {
-                    await database.record(location)
-                }
+            for location in locations {
+                database.record(location)
             }
         }
     }
 
     @MainActor
-    func testQueryPerformanceWithLargeDataset() async throws {
-        try await database.reset()
+    func testQueryPerformanceWithLargeDataset() throws {
+        try database.reset()
         let baseDate = Date()
         let locations = generateTestLocations(count: 1000, startDate: baseDate, interval: 10)
 
         for location in locations {
-            await database.record(location)
+            database.record(location)
         }
 
         measure {
-            Task { @MainActor in
-                let queryDate = baseDate.addingTimeInterval(5000)
-                _ = try await database.location(at: queryDate)
-            }
+            let queryDate = baseDate.addingTimeInterval(5000)
+            _ = try? database.location(at: queryDate)
         }
     }
 
@@ -308,9 +305,9 @@ final class ImageGenerationTests: XCTestCase {
 
 final class LocationInterpolationTests: XCTestCase {
     @MainActor
-    func testLinearInterpolation() async throws {
+    func testLinearInterpolation() throws {
         let database = LocationDatabase.shared
-        _ = try await database.reset()
+        _ = try database.reset()
 
         let baseDate = Date()
         let location1 = CLLocation(
@@ -333,11 +330,11 @@ final class LocationInterpolationTests: XCTestCase {
             timestamp: baseDate.addingTimeInterval(120)
         )
 
-        await database.record(location1)
-        await database.record(location2)
+        database.record(location1)
+        database.record(location2)
 
         let queryDate = baseDate.addingTimeInterval(60)
-        let result = try await database.location(at: queryDate)
+        let result = try database.location(at: queryDate)
 
         XCTAssertNotNil(result)
 
@@ -346,13 +343,13 @@ final class LocationInterpolationTests: XCTestCase {
         XCTAssertEqual(result?.altitude ?? 0, 15.0, accuracy: 0.1)
         XCTAssertEqual(result?.speed ?? 0, 1.5, accuracy: 0.1)
 
-        _ = try await database.reset()
+        _ = try database.reset()
     }
 
     @MainActor
-    func testInterpolationWithMultiplePoints() async throws {
+    func testInterpolationWithMultiplePoints() throws {
         let database = LocationDatabase.shared
-        _ = try await database.reset()
+        _ = try database.reset()
 
         // Create a path with 10 points over 10 minutes
         let baseDate = Date()
@@ -376,10 +373,10 @@ final class LocationInterpolationTests: XCTestCase {
                 timestamp: baseDate.addingTimeInterval(TimeInterval(i * 60))
             )
 
-            await database.record(location)
+            database.record(location)
         }
 
-        let records = try await database.records(in: nil)
+        let records = try database.records(in: nil)
         XCTAssertEqual(records.count, 10)
 
         for i in 0 ..< 9 {
@@ -390,6 +387,6 @@ final class LocationInterpolationTests: XCTestCase {
             XCTAssertNotNil(after, "Should find after record at index \(i)")
         }
 
-        _ = try await database.reset()
+        _ = try database.reset()
     }
 }

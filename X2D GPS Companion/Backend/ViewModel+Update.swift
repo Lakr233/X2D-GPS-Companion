@@ -44,7 +44,7 @@ extension ViewModel {
                 return
             }
 
-            let records = try await locationDatabase.records(in: nil)
+            let records = try locationDatabase.records(in: nil)
             print("ℹ️ Loaded \(records.count) location records for matching")
 
             let (updatedCount, skippedCount) = await updateAssets(assets, with: records)
@@ -74,13 +74,13 @@ extension ViewModel {
         }
     }
 
-    func resetLocationDatabase() async {
+    func resetLocationDatabase() {
         guard !fillInProgress else { return }
         fillInProgress = true
         defer { fillInProgress = false }
 
         do {
-            let deletedCount = try await locationDatabase.reset()
+            let deletedCount = try locationDatabase.reset()
             let template = String(localized: "DELETED_%@_RECORDS")
             let message = String(format: template, deletedCount.description)
             resetAlertMessage = message

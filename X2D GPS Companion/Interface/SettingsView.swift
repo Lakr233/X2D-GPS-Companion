@@ -119,7 +119,7 @@ struct SettingsView: View {
         .alert("RESET_LOCATION_DATABASE", isPresented: $showResetConfirmation) {
             Button("CANCEL", role: .cancel) {}
             Button("RESET", role: .destructive) {
-                Task { await model.resetLocationDatabase() }
+                model.resetLocationDatabase()
             }
         } message: {
             Text("RESET_LOCATION_DATABASE_CONFIRMATION")
