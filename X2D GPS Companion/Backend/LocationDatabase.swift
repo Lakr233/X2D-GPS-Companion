@@ -187,7 +187,7 @@ final class LocationDatabase {
         let deletedCount = try await backgroundContext.perform {
             let countRequest = NSFetchRequest<LocationSample>(entityName: "LocationSample")
             let count = try self.backgroundContext.count(for: countRequest)
-            
+
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationSample")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             deleteRequest.resultType = .resultTypeObjectIDs
