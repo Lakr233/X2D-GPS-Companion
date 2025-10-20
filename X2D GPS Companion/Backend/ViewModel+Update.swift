@@ -111,28 +111,84 @@ extension ViewModel {
                 guard asset.location == nil else { continue }
             }
             guard let captureDate = asset.creationDate else { continue }
-            guard let record = locationDatabase.nearestRecord(
+            
+            // Get the two nearest records (before and after)
+            let (before, after) = locationDatabase.nearestRecords(
                 to: captureDate,
                 tolerance: tolerance,
                 records: records
-            ) else { continue }
+            )
+            
+            guard before != nil || after != nil else { continue }
+            
+            let location: CLLocation
+            if let before, let after {
+                // Both records exist, check if we need interpolation
+                let timeDiff = abs(before.timestamp.timeIntervalSince(captureDate))
+                if timeDiff > 30 {
+                    // Interpolate between the two points
+                    location = interpolateLocation(from: before, to: after, at: captureDate)
+                    print("🔄 Interpolating location for asset [\(asset.localIdentifier)] between \(before.timestamp) and \(after.timestamp)")
+                } else {
+                    // Use the closer one
+                    let beforeDiff = abs(before.timestamp.timeIntervalSince(captureDate))
+                    let afterDiff = abs(after.timestamp.timeIntervalSince(captureDate))
+                    location = beforeDiff < afterDiff ? before.location : after.location
+                }
+            } else if let before {
+                location = before.location
+            } else if let after {
+                location = after.location
+            } else {
+                continue
+            }
 
             do {
-                try await asset.writeGPSLocation(record.location)
+                try await asset.writeGPSLocation(location)
                 updatedCount += 1
                 fillSheetMessage = String(
                     format: String(localized: "FILL_IN_PROGRESS_COUNT_%@"),
                     arguments: ["\(index + 1)/\(assets.count)"]
                 )
-                let lat = String(format: "%.6f", record.location.coordinate.latitude)
-                let lon = String(format: "%.6f", record.location.coordinate.longitude)
-                let acc = String(format: "%.0f", record.location.horizontalAccuracy)
+                let lat = String(format: "%.6f", location.coordinate.latitude)
+                let lon = String(format: "%.6f", location.coordinate.longitude)
+                let acc = String(format: "%.0f", location.horizontalAccuracy)
                 print("✅ Updated asset [\(asset.localIdentifier)] \(index + 1)/\(assets.count) with location: (\(lat), \(lon)) ±\(acc)m")
             } catch {
                 print("❌ Failed to fill GPS for asset [\(asset.localIdentifier)]: \(error.localizedDescription)")
             }
         }
         return updatedCount
+    }
+
+    private func interpolateLocation(from start: LocationRecord, to end: LocationRecord, at targetDate: Date) -> CLLocation {
+        let startTime = start.timestamp.timeIntervalSince1970
+        let endTime = end.timestamp.timeIntervalSince1970
+        let targetTime = targetDate.timeIntervalSince1970
+        
+        // Calculate the interpolation factor (0.0 to 1.0)
+        let totalDuration = endTime - startTime
+        guard totalDuration > 0 else { return start.location }
+        
+        let factor = (targetTime - startTime) / totalDuration
+        let clampedFactor = max(0.0, min(1.0, factor))
+        
+        // Interpolate latitude and longitude
+        let lat = start.latitude + (end.latitude - start.latitude) * clampedFactor
+        let lon = start.longitude + (end.longitude - start.longitude) * clampedFactor
+        
+        // Use the worse (larger) accuracy of the two points
+        let accuracy = max(start.horizontalAccuracy, end.horizontalAccuracy)
+        
+        return CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
+            altitude: 0,
+            horizontalAccuracy: accuracy,
+            verticalAccuracy: -1,
+            course: -1,
+            speed: -1,
+            timestamp: targetDate
+        )
     }
 
     private func presentResult(_ message: String) {

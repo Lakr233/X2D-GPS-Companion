@@ -183,6 +183,43 @@ final class LocationDatabase {
         return best
     }
 
+    func nearestRecords(to date: Date, tolerance: TimeInterval, records: [LocationRecord]) -> (before: LocationRecord?, after: LocationRecord?) {
+        guard !records.isEmpty else { return (nil, nil) }
+
+        var lower = 0
+        var upper = records.count - 1
+        while lower < upper {
+            let mid = (lower + upper) / 2
+            if records[mid].timestamp < date {
+                lower = mid + 1
+            } else {
+                upper = mid
+            }
+        }
+
+        let idx = lower
+        var before: LocationRecord?
+        var after: LocationRecord?
+
+        // Find the record before the target date
+        if idx > 0 {
+            let candidate = records[idx - 1]
+            if abs(candidate.timestamp.timeIntervalSince(date)) <= tolerance {
+                before = candidate
+            }
+        }
+
+        // Find the record after the target date
+        if idx < records.count {
+            let candidate = records[idx]
+            if abs(candidate.timestamp.timeIntervalSince(date)) <= tolerance {
+                after = candidate
+            }
+        }
+
+        return (before, after)
+    }
+
     func reset() async throws -> Int {
         let deletedCount = try await backgroundContext.perform {
             let countRequest = NSFetchRequest<LocationSample>(entityName: "LocationSample")
