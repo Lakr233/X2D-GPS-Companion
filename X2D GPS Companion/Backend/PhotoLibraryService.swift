@@ -75,9 +75,12 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
             try await asset.writeGPSLocation(location)
             photoProcessedCount += 1
             delegate?.photoLibraryService(self, didUpdatePhotoProcessedCount: photoProcessedCount)
-            print("📍 Tagged photo with location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+            let lat = String(format: "%.6f", location.coordinate.latitude)
+            let lon = String(format: "%.6f", location.coordinate.longitude)
+            let acc = String(format: "%.0f", location.horizontalAccuracy)
+            print("📍 Tagged photo [\(asset.localIdentifier)] with location: (\(lat), \(lon)) ±\(acc)m")
         } catch {
-            print("❌ \(error.localizedDescription)")
+            print("❌ Failed to tag photo [\(asset.localIdentifier)]: \(error.localizedDescription)")
         }
     }
 

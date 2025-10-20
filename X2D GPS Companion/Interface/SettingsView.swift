@@ -12,6 +12,7 @@ import SwiftUI
 struct SettingsView: View {
     @Bindable var model: ViewModel
     @State private var isPhotoPickerPresented: Bool = false
+    @State private var showResetConfirmation: Bool = false
 
     private func makePickerConfiguration() -> PHPickerConfiguration {
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
@@ -38,7 +39,7 @@ struct SettingsView: View {
                     if isInProgress {
                         ProgressView()
                     } else {
-                        Label("FILL_IN_PICKER_BUTTON", systemImage: "sparkles.square.filled.on.square")
+                        AlignedLabel(icon: "sparkles.square.filled.on.square", text: "FILL_IN_PICKER_BUTTON")
                     }
                 }
                 .disabled(isInProgress)
@@ -76,9 +77,9 @@ struct SettingsView: View {
 
             Section("DATABASE_MANAGEMENT") {
                 Button(role: .destructive) {
-                    Task { await model.resetLocationDatabase() }
+                    showResetConfirmation = true
                 } label: {
-                    Label("RESET_LOCATION_DATABASE", systemImage: "trash")
+                    AlignedLabel(icon: "trash", text: "RESET_LOCATION_DATABASE")
                 }
                 .disabled(model.fillInProgress)
 
@@ -112,6 +113,19 @@ struct SettingsView: View {
                     .padding()
             }
             .presentationDetents([.fraction(0.5)])
+        }
+        .alert("RESET_LOCATION_DATABASE", isPresented: $showResetConfirmation) {
+            Button("CANCEL", role: .cancel) {}
+            Button("RESET", role: .destructive) {
+                Task { await model.resetLocationDatabase() }
+            }
+        } message: {
+            Text("RESET_LOCATION_DATABASE_CONFIRMATION")
+        }
+        .alert("DATABASE_RESET_COMPLETE", isPresented: $model.showResetAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(model.resetAlertMessage)
         }
     }
 }

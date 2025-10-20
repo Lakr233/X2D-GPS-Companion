@@ -1019,31 +1019,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete all stored location samples. Data cannot be exported."
+            "value": "Delete all stored location samples. Data cannot be exported for security reasons."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete all stored location samples. Data cannot be exported."
+            "value": "Delete all stored location samples. Data cannot be exported for security reasons."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete all stored location samples. Data cannot be exported."
+            "value": "Delete all stored location samples. Data cannot be exported for security reasons."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete all stored location samples. Data cannot be exported."
+            "value": "Delete all stored location samples. Data cannot be exported for security reasons."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "删除所有已保存的定位样本。数据不可导出。"
+            "value": "删除所有已保存的定位样本。出于安全原因，数据不可导出。"
           }
         }
       }
@@ -1639,6 +1639,216 @@
           "stringUnit": {
             "state": "translated",
             "value": "正在处理%@"
+          }
+        }
+      }
+    },
+    "CANCEL": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abbrechen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuler"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消"
+          }
+        }
+      }
+    },
+    "RESET": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurücksetzen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リセット"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置"
+          }
+        }
+      }
+    },
+    "OK": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确定"
+          }
+        }
+      }
+    },
+    "RESET_LOCATION_DATABASE_CONFIRMATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sind Sie sicher, dass Sie alle gespeicherten Standortdaten löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Are you sure you want to delete all stored location data? This action cannot be undone."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Êtes-vous sûr de vouloir supprimer toutes les données de localisation stockées ? Cette action ne peut pas être annulée."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存されているすべての位置情報データを削除してもよろしいですか？この操作は元に戻せません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确定要删除所有已保存的位置数据吗？此操作无法撤销。"
+          }
+        }
+      }
+    },
+    "DATABASE_RESET_COMPLETE": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenbank zurückgesetzt"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Database Reset"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Base de données réinitialisée"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データベースをリセットしました"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "数据库已重置"
+          }
+        }
+      }
+    },
+    "DELETED_%@_RECORDS": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Datensätze gelöscht"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deleted %@ records"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ enregistrements supprimés"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@件のレコードを削除しました"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已删除 %@ 条记录"
           }
         }
       }

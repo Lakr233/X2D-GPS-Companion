@@ -183,8 +183,11 @@ final class LocationDatabase {
         return best
     }
 
-    func reset() async throws {
-        try await backgroundContext.perform {
+    func reset() async throws -> Int {
+        let deletedCount = try await backgroundContext.perform {
+            let countRequest = NSFetchRequest<LocationSample>(entityName: "LocationSample")
+            let count = try self.backgroundContext.count(for: countRequest)
+            
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationSample")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             deleteRequest.resultType = .resultTypeObjectIDs
@@ -196,8 +199,10 @@ final class LocationDatabase {
                 )
             }
             self.backgroundContext.reset()
+            return count
         }
         lastPersistedLocation = nil
+        return deletedCount
     }
 
     private func shouldPersist(location: CLLocation) -> Bool {

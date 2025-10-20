@@ -74,10 +74,14 @@ extension ViewModel {
         defer { fillInProgress = false }
 
         do {
-            try await locationDatabase.reset()
-            presentResult(String(localized: "RESET_LOCATION_DATABASE_SUCCESS"))
+            let deletedCount = try await locationDatabase.reset()
+            let template = String(localized: "DELETED_%@_RECORDS")
+            let message = String(format: template, deletedCount.description)
+            resetAlertMessage = message
+            showResetAlert = true
         } catch {
-            presentResult(error.localizedDescription)
+            resetAlertMessage = error.localizedDescription
+            showResetAlert = true
         }
     }
 
@@ -118,9 +122,12 @@ extension ViewModel {
                     format: String(localized: "FILL_IN_PROGRESS_COUNT_%@"),
                     arguments: ["\(index + 1)/\(assets.count)"]
                 )
-                print("✅ Updated asset \(index + 1)/\(assets.count)")
+                let lat = String(format: "%.6f", record.location.coordinate.latitude)
+                let lon = String(format: "%.6f", record.location.coordinate.longitude)
+                let acc = String(format: "%.0f", record.location.horizontalAccuracy)
+                print("✅ Updated asset [\(asset.localIdentifier)] \(index + 1)/\(assets.count) with location: (\(lat), \(lon)) ±\(acc)m")
             } catch {
-                print("❌ Failed to fill GPS for asset: \(error.localizedDescription)")
+                print("❌ Failed to fill GPS for asset [\(asset.localIdentifier)]: \(error.localizedDescription)")
             }
         }
         return updatedCount
