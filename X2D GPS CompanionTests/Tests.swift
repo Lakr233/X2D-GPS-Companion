@@ -19,12 +19,12 @@ final class DatabaseTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         database = LocationDatabase.shared
-        try await database.reset()
+        _ = try await database.reset()
     }
 
     @MainActor
     override func tearDown() async throws {
-        try await database.reset()
+        _ = try await database.reset()
         try await super.tearDown()
     }
 
@@ -45,8 +45,8 @@ final class DatabaseTests: XCTestCase {
         let records = try await database.records(in: nil)
 
         XCTAssertEqual(records.count, 10, "Should have 10 records")
-        XCTAssertEqual(records.first?.latitude, 37.7749, accuracy: 0.0001)
-        XCTAssertEqual(records.last?.latitude, 37.7758, accuracy: 0.0001)
+        XCTAssertEqual(records.first?.latitude ?? 0, 37.7749, accuracy: 0.0001)
+        XCTAssertEqual(records.last?.latitude ?? 0, 37.7758, accuracy: 0.0001)
     }
 
     @MainActor
@@ -105,7 +105,7 @@ final class DatabaseTests: XCTestCase {
         let nearest = database.nearestRecord(to: queryDate, tolerance: 5 * 60, records: records)
 
         XCTAssertNotNil(nearest)
-        XCTAssertEqual(nearest?.latitude, 37.7753, accuracy: 0.0001)
+        XCTAssertEqual(nearest?.latitude ?? 0, 37.7753, accuracy: 0.0001)
     }
 
     @MainActor
@@ -145,8 +145,8 @@ final class DatabaseTests: XCTestCase {
 
         XCTAssertNotNil(before)
         XCTAssertNotNil(after)
-        XCTAssertEqual(before?.latitude, 37.7753, accuracy: 0.0001)
-        XCTAssertEqual(after?.latitude, 37.7754, accuracy: 0.0001)
+        XCTAssertEqual(before?.latitude ?? 0, 37.7753, accuracy: 0.0001)
+        XCTAssertEqual(after?.latitude ?? 0, 37.7754, accuracy: 0.0001)
     }
 
     @MainActor
@@ -326,7 +326,7 @@ final class LocationInterpolationTests: XCTestCase {
     @MainActor
     func testLinearInterpolation() async throws {
         let database = LocationDatabase.shared
-        try await database.reset()
+        _ = try await database.reset()
 
         // Create two locations 2 minutes apart
         let baseDate = Date()
@@ -371,13 +371,13 @@ final class LocationInterpolationTests: XCTestCase {
             XCTAssertEqual(expectedLon, -122.4144, accuracy: 0.0001)
         }
 
-        try await database.reset()
+        _ = try await database.reset()
     }
 
     @MainActor
     func testInterpolationWithMultiplePoints() async throws {
         let database = LocationDatabase.shared
-        try await database.reset()
+        _ = try await database.reset()
 
         // Create a path with 10 points over 10 minutes
         let baseDate = Date()
@@ -416,6 +416,6 @@ final class LocationInterpolationTests: XCTestCase {
             XCTAssertNotNil(after, "Should find after record at index \(i)")
         }
 
-        try await database.reset()
+        _ = try await database.reset()
     }
 }
