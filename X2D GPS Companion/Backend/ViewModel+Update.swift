@@ -37,13 +37,6 @@ extension ViewModel {
         }
 
         do {
-            let records = try await locationDatabase.records(in: nil)
-            print("ℹ️ Loaded \(records.count) location records for matching")
-            guard !records.isEmpty else {
-                presentResult(String(localized: "FILL_IN_NO_LOCATIONS"))
-                return
-            }
-
             let assets = try await fetchAssets(identifiers: identifiers)
             print("ℹ️ Resolved \(assets.count) assets from selection")
             guard !assets.isEmpty else {
@@ -51,11 +44,19 @@ extension ViewModel {
                 return
             }
 
+            let records = try await locationDatabase.records(in: nil)
+            print("ℹ️ Loaded \(records.count) location records for matching")
+
             let updatedCount = await updateAssets(assets, with: records)
             print("ℹ️ Updated \(updatedCount) assets with location metadata")
             if updatedCount == 0 {
-                print("⚠️ No assets matched within tolerance")
-                presentResult(String(localized: "FILL_IN_NO_MATCHES"))
+                if records.isEmpty {
+                    print("⚠️ No location records available")
+                    presentResult(String(localized: "FILL_IN_NO_LOCATIONS"))
+                } else {
+                    print("⚠️ No assets matched within tolerance or required updates")
+                    presentResult(String(localized: "FILL_IN_NO_MATCHES"))
+                }
             } else {
                 photoLibraryService.incrementProcessedCount(by: updatedCount)
                 let template = String(localized: "FILL_IN_SUCCESS_%@")
