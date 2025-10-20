@@ -106,6 +106,43 @@ echo "  MARKETING_VERSION: $MAIN_MARKETING_VERSION"
 echo "  CURRENT_PROJECT_VERSION: $MAIN_BUILD_VERSION"
 echo ""
 
+WIDGET_MARKETING_VERSION=$(awk -v id="$WIDGET_DEBUG_ID" '
+    $0 ~ id " /\\* Debug \\*/" { in_config=1; next }
+    in_config && /MARKETING_VERSION = / { 
+        match($0, /MARKETING_VERSION = [^;]+/)
+        version = substr($0, RSTART, RLENGTH)
+        sub(/MARKETING_VERSION = /, "", version)
+        print version
+        exit
+    }
+    in_config && /^[ \t]*};$/ { exit }
+' "$PROJECT_FILE")
+
+WIDGET_BUILD_VERSION=$(awk -v id="$WIDGET_DEBUG_ID" '
+    $0 ~ id " /\\* Debug \\*/" { in_config=1; next }
+    in_config && /CURRENT_PROJECT_VERSION = / { 
+        match($0, /CURRENT_PROJECT_VERSION = [^;]+/)
+        version = substr($0, RSTART, RLENGTH)
+        sub(/CURRENT_PROJECT_VERSION = /, "", version)
+        print version
+        exit
+    }
+    in_config && /^[ \t]*};$/ { exit }
+' "$PROJECT_FILE")
+
+echo "Widget Extension current version:"
+echo "  MARKETING_VERSION: $WIDGET_MARKETING_VERSION"
+echo "  CURRENT_PROJECT_VERSION: $WIDGET_BUILD_VERSION"
+echo ""
+
+if [[ "$MAIN_MARKETING_VERSION" == "$WIDGET_MARKETING_VERSION" ]] && \
+   [[ "$MAIN_BUILD_VERSION" == "$WIDGET_BUILD_VERSION" ]]; then
+    echo "✅ Versions are already synchronized, no changes needed"
+    echo ""
+    echo "Sync complete!"
+    exit 0
+fi
+
 echo "Updating Widget Extension versions..."
 
 TMP_FILE=$(mktemp)

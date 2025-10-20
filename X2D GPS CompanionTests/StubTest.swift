@@ -6,9 +6,12 @@
 //
 
 import XCTest
+import CoreLocation
+import CoreData
 @testable import X2D_GPS_Companion
 
 final class LocationDatabaseTests: XCTestCase {
+    @MainActor
     func testRecordsFilteringByInterval() async throws {
         let database = LocationDatabase.shared
 
@@ -34,7 +37,7 @@ final class LocationDatabaseTests: XCTestCase {
             timestamp: baseDate.addingTimeInterval(-60)
         )
 
-        await database.reset()
+        try! await database.reset()
         await database.record(locationA)
         await database.record(locationB)
 

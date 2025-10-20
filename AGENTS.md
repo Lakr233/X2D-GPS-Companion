@@ -58,6 +58,10 @@ X2D GPS Companion is an iOS application that automatically geotags photos from H
 ### Code Quality
 - `swiftformat .` - Format Swift files (install via Homebrew)
 - `swiftlint` - Enforce lint rules (if configured)
+- `python3 Resources/Scripts/check_translations.py [path]` - Validate translation completeness
+  - Checks all localizations (en, de, fr, ja, zh-Hans) in `.xcstrings` files
+  - Verifies translation state is 'translated' and values are non-empty
+  - Default path: `Resources/Localizable.xcstrings`; accepts custom path as argument
 
 ## Project Structure & Module Organization
 - `X2D GPS Companion/` holds the Swift sources organized by domain (`App`, `Backend`, `Interface`, `Extension`).

@@ -1506,10 +1506,28 @@
     "MANUAL_FILL_SECTION_TITLE": {
       "extractionState": "manual",
       "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manuelles Ausfüllen"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Manual Fill"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remplissage manuel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手動入力"
           }
         },
         "zh-Hans": {
@@ -1523,10 +1541,28 @@
     "FILL_IN_PICKER_BUTTON": {
       "extractionState": "manual",
       "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotos zum Ausfüllen auswählen"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Select Photos to Fill"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionner les photos à remplir"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "入力する写真を選択"
           }
         },
         "zh-Hans": {
@@ -1540,10 +1576,28 @@
     "FILL_IN_PICKER_DESCRIPTION": {
       "extractionState": "manual",
       "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wählen Sie Fotos aus, um GPS-Daten nachzutragen."
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Pick photos to backfill GPS data."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez des photos pour remplir les données GPS."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS情報を補完する写真を選択してください。"
           }
         },
         "zh-Hans": {
@@ -1557,10 +1611,28 @@
     "FILL_IN_PROGRESS_COUNT_%@": {
       "extractionState": "manual",
       "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verarbeite %@"
+          }
+        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Processing %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traitement de %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@を処理中"
           }
         },
         "zh-Hans": {
