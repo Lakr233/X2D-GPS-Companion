@@ -68,8 +68,18 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
     }
 
     func handle(asset: PHAsset, location: CLLocation) async {
-        guard asset.location == nil else { return }
-        guard await asset.hasCameraEXIF() else { return }
+        guard asset.location == nil else {
+            print("❌ Skipped photo [\(asset.localIdentifier)]: already has location data")
+            return
+        }
+        guard await asset.hasCameraEXIF() else {
+            print("❌ Skipped photo [\(asset.localIdentifier)]: missing camera EXIF data")
+            return
+        }
+        guard asset.isCreationDateNearby() else {
+            print("⏱️ Skipped photo [\(asset.localIdentifier)]: creation time not within ±30s window")
+            return
+        }
 
         do {
             try await asset.writeGPSLocation(location)
@@ -92,6 +102,17 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
 }
 
 extension PHAsset {
+    /// Check if the asset's creation date is within ±30 seconds of the current time
+    func isCreationDateNearby(tolerance: TimeInterval = 30) -> Bool {
+        guard let creationDate else {
+            print("⚠️ Asset [\(localIdentifier)] has no creation date, assuming it's nearby")
+            return true
+        }
+        let now = Date()
+        let timeDifference = abs(now.timeIntervalSince(creationDate))
+        return timeDifference <= tolerance
+    }
+
     func hasCameraEXIF() async -> Bool {
         await withCheckedContinuation { continuation in
             let options = PHImageRequestOptions()
