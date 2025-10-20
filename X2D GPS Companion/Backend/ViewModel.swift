@@ -11,6 +11,7 @@ import Observation
 import SwiftUI
 
 private let autoStartRecordingKey = "AutoStartRecording"
+private let overwriteExistingLocationKey = "OverwriteExistingLocation"
 
 @MainActor
 @Observable
@@ -32,6 +33,12 @@ final class ViewModel: NSObject {
     var autoStartRecording: Bool = UserDefaults.standard.bool(forKey: autoStartRecordingKey) {
         didSet {
             UserDefaults.standard.set(autoStartRecording, forKey: autoStartRecordingKey)
+        }
+    }
+
+    var overwriteExistingLocation: Bool = UserDefaults.standard.bool(forKey: overwriteExistingLocationKey) {
+        didSet {
+            UserDefaults.standard.set(overwriteExistingLocation, forKey: overwriteExistingLocationKey)
         }
     }
 

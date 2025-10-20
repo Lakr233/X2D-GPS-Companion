@@ -1643,6 +1643,76 @@
         }
       }
     },
+    "OVERWRITE_EXISTING_LOCATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorhandene Standortdaten überschreiben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overwrite Existing Location Data"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écraser les données de localisation existantes"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "既存の位置情報を上書き"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覆盖已有位置数据"
+          }
+        }
+      }
+    },
+    "FILL_IN_DETAILED_EXPLANATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Funktion durchsucht Ihre gespeicherten Standortaufzeichnungen und gleicht sie mit den Aufnahmezeiten Ihrer ausgewählten Fotos ab. Wenn eine Übereinstimmung innerhalb von 5 Minuten gefunden wird, werden die GPS-Koordinaten automatisch in die EXIF-Daten des Fotos geschrieben. Standardmäßig werden nur Fotos ohne vorhandene Standortdaten aktualisiert. Aktivieren Sie die obige Option, um auch Fotos mit bereits vorhandenen Standortdaten zu überschreiben."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This feature searches your saved location records and matches them with the capture times of your selected photos. When a match is found within 5 minutes, GPS coordinates are automatically written to the photo's EXIF data. By default, only photos without existing location data are updated. Enable the option above to also overwrite photos that already have location data."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette fonction recherche dans vos enregistrements de localisation sauvegardés et les fait correspondre avec les heures de capture de vos photos sélectionnées. Lorsqu'une correspondance est trouvée dans un délai de 5 minutes, les coordonnées GPS sont automatiquement écrites dans les données EXIF de la photo. Par défaut, seules les photos sans données de localisation existantes sont mises à jour. Activez l'option ci-dessus pour également écraser les photos qui ont déjà des données de localisation."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この機能は、保存された位置情報記録を検索し、選択した写真の撮影時刻と照合します。5分以内に一致が見つかると、GPS座標が自動的に写真のEXIFデータに書き込まれます。デフォルトでは、既存の位置情報データがない写真のみが更新されます。上記のオプションを有効にすると、既に位置情報データがある写真も上書きされます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此功能会搜索您保存的位置记录，并将其与所选照片的拍摄时间进行匹配。当在5分钟内找到匹配项时，GPS坐标会自动写入照片的EXIF数据中。默认情况下，仅更新没有现有位置数据的照片。启用上述选项可同时覆盖已有位置数据的照片。"
+          }
+        }
+      }
+    },
     "CANCEL": {
       "extractionState": "manual",
       "localizations": {

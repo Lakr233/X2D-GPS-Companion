@@ -107,7 +107,9 @@ extension ViewModel {
         let tolerance: TimeInterval = 5 * 60
         var updatedCount = 0
         for (index, asset) in assets.enumerated() {
-            guard asset.location == nil else { continue }
+            if !overwriteExistingLocation {
+                guard asset.location == nil else { continue }
+            }
             guard let captureDate = asset.creationDate else { continue }
             guard let record = locationDatabase.nearestRecord(
                 to: captureDate,

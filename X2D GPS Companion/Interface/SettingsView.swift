@@ -44,9 +44,17 @@ struct SettingsView: View {
                 }
                 .disabled(isInProgress)
 
-                Text("FILL_IN_PICKER_DESCRIPTION")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                Toggle("OVERWRITE_EXISTING_LOCATION", isOn: $model.overwriteExistingLocation)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("FILL_IN_PICKER_DESCRIPTION")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    Text("FILL_IN_DETAILED_EXPLANATION")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             Section("WHY_ARENT_MY_PHOTOS_BEING_UPDATED") {
