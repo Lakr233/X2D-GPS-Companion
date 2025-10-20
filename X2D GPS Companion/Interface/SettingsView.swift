@@ -111,16 +111,10 @@ struct SettingsView: View {
                 }
             }
         }
-        .sheet(isPresented: $model.showFillSheet) {
-            VStack {
-                if model.fillInProgress {
-                    ProgressView()
-                        .padding()
-                }
-                Text(model.fillSheetMessage)
-                    .padding()
-            }
-            .presentationDetents([.fraction(0.5)])
+        .alert("FILL_COMPLETE", isPresented: $model.showFillAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(model.fillAlertMessage)
         }
         .alert("RESET_LOCATION_DATABASE", isPresented: $showResetConfirmation) {
             Button("CANCEL", role: .cancel) {}

@@ -23,13 +23,12 @@ extension ViewModel {
             return
         }
         guard photoAccess == .granted || photoAccess == .limited else {
-            presentResult(String(localized: "FILL_IN_REQUIRES_PHOTO_ACCESS"))
+            fillAlertMessage = String(localized: "FILL_IN_REQUIRES_PHOTO_ACCESS")
+            showFillAlert = true
             return
         }
 
         fillInProgress = true
-        showFillSheet = true
-        fillSheetMessage = String(localized: "FILL_IN_PROGRESS")
         print("🧭 Begin filling locations for \(identifiers.count) selected assets")
         defer {
             fillInProgress = false
@@ -40,32 +39,38 @@ extension ViewModel {
             let assets = try await fetchAssets(identifiers: identifiers)
             print("ℹ️ Resolved \(assets.count) assets from selection")
             guard !assets.isEmpty else {
-                presentResult(String(localized: "FILL_IN_NO_ASSETS"))
+                fillAlertMessage = String(localized: "FILL_IN_NO_ASSETS")
+                showFillAlert = true
                 return
             }
 
             let records = try await locationDatabase.records(in: nil)
             print("ℹ️ Loaded \(records.count) location records for matching")
 
-            let updatedCount = await updateAssets(assets, with: records)
-            print("ℹ️ Updated \(updatedCount) assets with location metadata")
+            let (updatedCount, skippedCount) = await updateAssets(assets, with: records)
+            print("ℹ️ Updated \(updatedCount) assets with location metadata, skipped \(skippedCount) assets")
             if updatedCount == 0 {
                 if records.isEmpty {
                     print("⚠️ No location records available")
-                    presentResult(String(localized: "FILL_IN_NO_LOCATIONS"))
+                    fillAlertMessage = String(localized: "FILL_IN_NO_LOCATIONS")
+                } else if skippedCount > 0 {
+                    print("⚠️ All assets already have location or don't need updates")
+                    fillAlertMessage = String(localized: "FILL_IN_NO_MATCHES")
                 } else {
-                    print("⚠️ No assets matched within tolerance or required updates")
-                    presentResult(String(localized: "FILL_IN_NO_MATCHES"))
+                    print("⚠️ No assets matched within tolerance")
+                    fillAlertMessage = String(localized: "FILL_IN_NO_MATCHES")
                 }
+                showFillAlert = true
             } else {
                 photoLibraryService.incrementProcessedCount(by: updatedCount)
                 let template = String(localized: "FILL_IN_SUCCESS_%@")
-                let message = String(format: template, updatedCount.description)
-                presentResult(message)
+                fillAlertMessage = String(format: template, updatedCount.description)
+                showFillAlert = true
             }
         } catch {
             print("❌ Fill operation failed: \(error.localizedDescription)")
-            presentResult(error.localizedDescription)
+            fillAlertMessage = error.localizedDescription
+            showFillAlert = true
         }
     }
 
@@ -104,12 +109,16 @@ extension ViewModel {
         }
     }
 
-    private func updateAssets(_ assets: [PHAsset], with records: [LocationRecord]) async -> Int {
+    private func updateAssets(_ assets: [PHAsset], with records: [LocationRecord]) async -> (updated: Int, skipped: Int) {
         let tolerance: TimeInterval = 5 * 60
         var updatedCount = 0
+        var skippedCount = 0
         for (index, asset) in assets.enumerated() {
             if !overwriteExistingLocation {
-                guard asset.location == nil else { continue }
+                guard asset.location == nil else {
+                    skippedCount += 1
+                    continue
+                }
             }
             guard let captureDate = asset.creationDate else { continue }
 
@@ -147,10 +156,6 @@ extension ViewModel {
             do {
                 try await asset.writeGPSLocation(location)
                 updatedCount += 1
-                fillSheetMessage = String(
-                    format: String(localized: "FILL_IN_PROGRESS_COUNT_%@"),
-                    arguments: ["\(index + 1)/\(assets.count)"]
-                )
                 let lat = String(format: "%.6f", location.coordinate.latitude)
                 let lon = String(format: "%.6f", location.coordinate.longitude)
                 let acc = String(format: "%.0f", location.horizontalAccuracy)
@@ -159,7 +164,7 @@ extension ViewModel {
                 print("❌ Failed to fill GPS for asset [\(asset.localIdentifier)]: \(error.localizedDescription)")
             }
         }
-        return updatedCount
+        return (updatedCount, skippedCount)
     }
 
     private func interpolateLocation(from start: LocationRecord, to end: LocationRecord, at targetDate: Date) -> CLLocation {
@@ -190,17 +195,5 @@ extension ViewModel {
             speed: -1,
             timestamp: targetDate
         )
-    }
-
-    private func presentResult(_ message: String) {
-        fillSheetMessage = message
-        Task { @MainActor [weak self] in
-            do {
-                try await Task.sleep(nanoseconds: 3_000_000_000)
-            } catch {}
-            guard let self else { return }
-            showFillSheet = false
-            fillSheetMessage = ""
-        }
     }
 }
