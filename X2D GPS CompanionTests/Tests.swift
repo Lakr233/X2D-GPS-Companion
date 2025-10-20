@@ -21,14 +21,16 @@ final class DatabaseTests: XCTestCase {
         database = LocationDatabase.shared
 
         // Reset multiple times to ensure clean state
-        for _ in 0 ..< 3 {
-            _ = try await database.reset()
-            try await Task.sleep(nanoseconds: 50_000_000) // 50ms
-        }
+        for attempt in 0 ..< 5 {
+            let count = try await database.reset()
+            print("🔄 Reset attempt \(attempt + 1): deleted \(count) records")
+            try await Task.sleep(nanoseconds: 100_000_000) // 100ms
 
-        let records = try await database.records(in: nil)
-        if records.count > 0 {
-            print("⚠️ Warning: Database still has \(records.count) records after reset")
+            let records = try await database.records(in: nil)
+            if records.count == 0 {
+                break
+            }
+            print("⚠️ Warning: Database still has \(records.count) records after reset attempt \(attempt + 1)")
         }
     }
 

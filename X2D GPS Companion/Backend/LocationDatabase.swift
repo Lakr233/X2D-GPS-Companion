@@ -78,9 +78,19 @@ final class LocationDatabase {
         description.shouldInferMappingModelAutomatically = true
         container.persistentStoreDescriptions = [description]
 
-        container.loadPersistentStores { _, error in
+        container.loadPersistentStores { [weak container] _, error in
             if let error {
-                fatalError("Failed to load location store: \(error)")
+                // If migration fails, delete the old store and try again
+                print("⚠️ Failed to load location store, attempting to recreate: \(error.localizedDescription)")
+                try? FileManager.default.removeItem(at: storeURL)
+                try? FileManager.default.removeItem(at: storeURL.deletingPathExtension().appendingPathExtension("sqlite-shm"))
+                try? FileManager.default.removeItem(at: storeURL.deletingPathExtension().appendingPathExtension("sqlite-wal"))
+
+                container?.loadPersistentStores { _, retryError in
+                    if let retryError {
+                        fatalError("Failed to load location store after retry: \(retryError)")
+                    }
+                }
             }
         }
 
