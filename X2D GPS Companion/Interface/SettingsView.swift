@@ -50,7 +50,7 @@ struct SettingsView: View {
                     Text("FILL_IN_PICKER_DESCRIPTION")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    
+
                     Text("FILL_IN_DETAILED_EXPLANATION")
                         .font(.caption)
                         .foregroundStyle(.secondary)

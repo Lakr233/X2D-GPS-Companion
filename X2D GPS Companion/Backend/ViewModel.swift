@@ -58,8 +58,10 @@ final class ViewModel: NSObject {
         stopPeriodicRecordTimer()
         periodicRecordTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             guard let self else { return }
-            guard isRecording else { return }
-            Task { await self.locationDatabase.persistLastLocationIfNeeded() }
+            Task { @MainActor in
+                guard self.isRecording else { return }
+                await self.locationDatabase.persistLastLocationIfNeeded()
+            }
         }
     }
 

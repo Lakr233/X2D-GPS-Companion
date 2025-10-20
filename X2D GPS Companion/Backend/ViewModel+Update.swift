@@ -111,16 +111,16 @@ extension ViewModel {
                 guard asset.location == nil else { continue }
             }
             guard let captureDate = asset.creationDate else { continue }
-            
+
             // Get the two nearest records (before and after)
             let (before, after) = locationDatabase.nearestRecords(
                 to: captureDate,
                 tolerance: tolerance,
                 records: records
             )
-            
+
             guard before != nil || after != nil else { continue }
-            
+
             let location: CLLocation
             if let before, let after {
                 // Both records exist, check if we need interpolation
@@ -165,21 +165,21 @@ extension ViewModel {
         let startTime = start.timestamp.timeIntervalSince1970
         let endTime = end.timestamp.timeIntervalSince1970
         let targetTime = targetDate.timeIntervalSince1970
-        
+
         // Calculate the interpolation factor (0.0 to 1.0)
         let totalDuration = endTime - startTime
         guard totalDuration > 0 else { return start.location }
-        
+
         let factor = (targetTime - startTime) / totalDuration
         let clampedFactor = max(0.0, min(1.0, factor))
-        
+
         // Interpolate latitude and longitude
         let lat = start.latitude + (end.latitude - start.latitude) * clampedFactor
         let lon = start.longitude + (end.longitude - start.longitude) * clampedFactor
-        
+
         // Use the worse (larger) accuracy of the two points
         let accuracy = max(start.horizontalAccuracy, end.horizontalAccuracy)
-        
+
         return CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
             altitude: 0,
