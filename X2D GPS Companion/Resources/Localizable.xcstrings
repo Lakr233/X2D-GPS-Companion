@@ -944,6 +944,76 @@
         }
       }
     },
+    "LIMITED_PHOTO_ACCESS_WARNING_MESSAGE": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bitte wählen Sie zuerst die Fotos aus, in die Sie Standortinformationen schreiben möchten, um sie zu autorisieren. Wählen Sie sie anschließend erneut aus, um die Aktualisierung zu bestätigen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please first select the photos you want to write location information to for authorization. Then select them again to confirm the update."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veuillez d'abord sélectionner les photos dans lesquelles vous souhaitez écrire des informations de localisation pour les autoriser. Ensuite, sélectionnez-les à nouveau pour confirmer la mise à jour."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置情報を書き込みたい写真を最初に選択して承認してください。その後、更新を確認するために再度選択してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请先选择需要写入位置信息的照片进行授权，稍后请再次选取它们以确认更新。"
+          }
+        }
+      }
+    },
+    "LIMITED_PHOTO_ACCESS_WARNING_TITLE": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eingeschränkter Fotobibliothekszugriff"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limited Photo Library Access"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accès limité à la bibliothèque de photos"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フォトライブラリへの制限付きアクセス"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "照片图库访问受限"
+          }
+        }
+      }
+    },
     "LOCATION_ACCESS": {
       "extractionState": "manual",
       "localizations": {
@@ -1504,6 +1574,40 @@
         }
       }
     },
+    "PHOTO_ACCESS_LIMITED_WRITE_EXPLANATION": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have selected a photo, but the app is not allowed to read or write this photo. Please go to System Settings to grant full access or access to this photo."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sie haben ein Foto ausgewählt, aber die App darf dieses Foto nicht lesen oder schreiben. Bitte gehen Sie zu den Systemeinstellungen, um vollen Zugriff oder Zugriff auf dieses Foto zu gewähren."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez sélectionné une photo, mais l'application n'est pas autorisée à lire ou écrire cette photo. Veuillez accéder aux Réglages système pour accorder un accès complet ou l'accès à cette photo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "写真を選択しましたが、アプリはこの写真の読み取りまたは書き込みが許可されていません。システム設定に移動して、フルアクセスまたはこの写真へのアクセスを許可してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "您已选中了照片，但软件不被允许读写这张照片。请前往系统设置授予完全访问权限或授予对此照片的访问权限。"
+          }
+        }
+      }
+    },
     "PHOTO_ACCESS_REQUIRED_FOR_MANUAL_TAG": {
       "extractionState": "manual",
       "localizations": {
@@ -1815,6 +1919,41 @@
           "stringUnit": {
             "state": "translated",
             "value": "屏幕截图、已编辑的图片，或缺少完整 EXIF 数据的照片将不会被标记。"
+          }
+        }
+      }
+    },
+    "SELECT_PHOTOS_TO_AUTHORIZE": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotos zur Autorisierung auswählen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select Photos to Authorize"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionner les photos à autoriser"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "承認する写真を選択"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择照片以授权"
           }
         }
       }
@@ -2235,111 +2374,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "X2D GPS 助手"
-          }
-        }
-      }
-    },
-    "LIMITED_PHOTO_ACCESS_WARNING_TITLE": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eingeschränkter Fotobibliothekszugriff"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Limited Photo Library Access"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Accès limité à la bibliothèque de photos"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォトライブラリへの制限付きアクセス"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "照片图库访问受限"
-          }
-        }
-      }
-    },
-    "LIMITED_PHOTO_ACCESS_WARNING_MESSAGE": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bitte wählen Sie zuerst die Fotos aus, in die Sie Standortinformationen schreiben möchten, um sie zu autorisieren. Wählen Sie sie anschließend erneut aus, um die Aktualisierung zu bestätigen."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Please first select the photos you want to write location information to for authorization. Then select them again to confirm the update."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Veuillez d'abord sélectionner les photos dans lesquelles vous souhaitez écrire des informations de localisation pour les autoriser. Ensuite, sélectionnez-les à nouveau pour confirmer la mise à jour."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "位置情報を書き込みたい写真を最初に選択して承認してください。その後、更新を確認するために再度選択してください。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请先选择需要写入位置信息的照片进行授权，稍后请再次选取它们以确认更新。"
-          }
-        }
-      }
-    },
-    "SELECT_PHOTOS_TO_AUTHORIZE": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fotos zur Autorisierung auswählen"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Select Photos to Authorize"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sélectionner les photos à autoriser"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "承認する写真を選択"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "选择照片以授权"
           }
         }
       }

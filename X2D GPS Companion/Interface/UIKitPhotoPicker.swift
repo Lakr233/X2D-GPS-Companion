@@ -12,7 +12,7 @@ struct UIKitPhotoPicker: UIViewControllerRepresentable {
     typealias UIViewControllerType = PHPickerViewController
 
     var configuration: PHPickerConfiguration
-    var completion: ([String]) -> Void
+    var completion: ([PHAsset]) -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -44,22 +44,28 @@ struct UIKitPhotoPicker: UIViewControllerRepresentable {
             }
 
             Task {
-                let identifiers = await self.resolveIdentifiers(from: results)
+                let assets = await self.resolveAssets(from: results)
                 await MainActor.run {
-                    self.parent.completion(identifiers)
+                    self.parent.completion(assets)
                 }
             }
         }
 
-        private func resolveIdentifiers(from results: [PHPickerResult]) async -> [String] {
-            var identifiers: [String] = []
-            identifiers.reserveCapacity(results.count)
-            for result in results {
-                if let identifier = result.assetIdentifier {
-                    identifiers.append(identifier)
+        private func resolveAssets(from results: [PHPickerResult]) async -> [PHAsset] {
+            let identifiers = results.compactMap { $0.assetIdentifier }
+            guard !identifiers.isEmpty else { return [] }
+            
+            return await withCheckedContinuation { continuation in
+                Task.detached(priority: .userInitiated) {
+                    let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+                    var assets: [PHAsset] = []
+                    assets.reserveCapacity(fetchResult.count)
+                    fetchResult.enumerateObjects { asset, _, _ in
+                        assets.append(asset)
+                    }
+                    continuation.resume(returning: assets)
                 }
             }
-            return identifiers
         }
     }
 }

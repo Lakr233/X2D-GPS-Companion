@@ -28,17 +28,13 @@ struct FillManuallyView<Content: View>: View {
     }
 
     private func handleManualTagPhotos() {
-        // Check photo access permission before proceeding
         switch model.photoAccess {
         case .granted, .limited:
-            // We have permission, show photo picker
             isPhotoPickerPresented = true
-        case .denied, .restricted:
-            // No permission, show error
+        case .denied:
             model.fillAlertMessage = String(localized: "PHOTO_ACCESS_REQUIRED_FOR_MANUAL_TAG")
             model.showFillAlert = true
-        case .notDetermined:
-            // Request permission first
+        case .unknown:
             Task {
                 await model.requestPhotos()
                 // After permission request, check again
@@ -55,17 +51,24 @@ struct FillManuallyView<Content: View>: View {
         } label: {
             content()
         }
+        .disabled(model.fillInProgress)
         .sheet(isPresented: $isPhotoPickerPresented) {
-            UIKitPhotoPicker(configuration: makePickerConfiguration()) { identifiers in
+            UIKitPhotoPicker(configuration: makePickerConfiguration()) { assets in
                 isPhotoPickerPresented = false
-                guard !identifiers.isEmpty else {
+                guard !assets.isEmpty else {
                     print("ℹ️ Picker dismissed without selecting assets")
+                    if model.photoAccess == .limited {
+                        // present error alert to warn user that selected photo is not granted for writing
+                        // please open systems settings to grant full access or grant access to this photo
+                        model.fillAlertMessage = String(localized: "PHOTO_ACCESS_LIMITED_WRITE_EXPLANATION")
+                        model.showFillAlert = true
+                    }
                     return
                 }
 
-                print("🧭 Running fill for \(identifiers.count) assets after picker dismissal")
+                print("🧭 Running fill for \(assets.count) assets after picker dismissal")
                 Task { @MainActor [model] in
-                    await model.fillPhotos(using: identifiers)
+                    await model.fillPhotos(using: assets)
                 }
             }
         }

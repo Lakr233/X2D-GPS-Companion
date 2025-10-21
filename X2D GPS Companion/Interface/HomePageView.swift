@@ -91,7 +91,6 @@ struct HomePageView: View {
         // y-axis relates to latitude
         // (x,y) order is usually preferred
         let text = String(format: "(%@, %@) ±%@m", lon, lat, acc)
-        print("ℹ️ \(text)")
         return Text(text)
             .contentTransition(.numericText())
             .font(.footnote.monospaced())

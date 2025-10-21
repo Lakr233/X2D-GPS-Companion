@@ -17,22 +17,15 @@ extension ViewModel {
         )
     }
 
-    func fillPhotos(using identifiers: [String]) async {
-        guard !fillInProgress else {
-            print("⚠️ Fill request ignored because another fill is in progress")
-            return
-        }
-
+    func fillPhotos(using assets: [PHAsset]) async {
         fillInProgress = true
-        print("🧭 Begin filling locations for \(identifiers.count) selected assets")
+        print("🧭 Begin filling locations for \(assets.count) selected assets")
         defer {
             fillInProgress = false
             print("🧭 Fill request finished")
         }
 
         do {
-            let assets = try await fetchAssets(identifiers: identifiers)
-            print("ℹ️ Resolved \(assets.count) assets from selection")
             guard !assets.isEmpty else {
                 fillAlertMessage = String(localized: "FILL_IN_NO_ASSETS")
                 showFillAlert = true

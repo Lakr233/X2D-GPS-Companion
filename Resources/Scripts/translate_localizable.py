@@ -31,7 +31,9 @@ strings = data['strings']
 # Add or update translations from the dictionary
 for key, langs in translations_to_add.items():
     if key not in strings:
-        strings[key] = {"localizations": {}}
+        strings[key] = {"extractionState": "manual", "localizations": {}}
+    if 'localizations' not in strings[key]:
+        strings[key]['localizations'] = {}
     locs = strings[key]['localizations']
     for lang, value in langs.items():
         locs[lang] = {
