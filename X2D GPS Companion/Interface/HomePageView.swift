@@ -11,15 +11,6 @@ import SwiftUI
 
 struct HomePageView: View {
     @State private var model = ViewModel.shared
-    @State private var isPhotoPickerPresented: Bool = false
-
-    private func makePickerConfiguration() -> PHPickerConfiguration {
-        var configuration = PHPickerConfiguration(photoLibrary: .shared())
-        configuration.selectionLimit = 0
-        configuration.filter = .images
-        configuration.preferredAssetRepresentationMode = .current
-        return configuration
-    }
 
     var header: some View {
         Text("START_RECORDING_TO_CAPTURE_GPS_AND_AUTO_TAG_NEW_PHOTOS_FROM_YOUR_X2D")
@@ -68,7 +59,7 @@ struct HomePageView: View {
                 .padding(.horizontal, -16)
                 .padding(.bottom, -16)
                 .transition(.opacity)
-                .frame(minHeight: 50, maxHeight: .infinity)
+                .frame(minHeight: 100, maxHeight: .infinity)
             }
         }
         .padding(16)
@@ -80,9 +71,7 @@ struct HomePageView: View {
         HStack(spacing: 12) {
             RecordingButton(model: model)
 
-            Button {
-                isPhotoPickerPresented = true
-            } label: {
+            FillManuallyView(model: model) {
                 AlignedLabel(icon: "photo.on.rectangle.angled", text: "MANUAL_TAG_PHOTOS")
                     .padding(8)
                     .frame(maxWidth: .infinity)
@@ -111,15 +100,18 @@ struct HomePageView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 0) {
             header
+            Spacer()
+                .frame(height: 16)
             card
                 .fixedSize(horizontal: false, vertical: true)
-            if model.locationAccess != .granted {
-                Spacer()
-                    .frame(minHeight: 0, maxHeight: .infinity)
-            }
+            Spacer()
+                .frame(height: 16)
+                .frame(maxHeight: .infinity)
             buttons
+            Spacer()
+                .frame(height: 16)
             footer
         }
         .padding(16)
@@ -135,20 +127,6 @@ struct HomePageView: View {
         }
         .navigationTitle("X2D_GPS_COMPANION")
         .background(BackgroundGradient().ignoresSafeArea())
-        .sheet(isPresented: $isPhotoPickerPresented) {
-            UIKitPhotoPicker(configuration: makePickerConfiguration()) { identifiers in
-                isPhotoPickerPresented = false
-                guard !identifiers.isEmpty else {
-                    print("ℹ️ Picker dismissed without selecting assets")
-                    return
-                }
-
-                print("🧭 Running fill for \(identifiers.count) assets after picker dismissal")
-                Task { @MainActor [model] in
-                    await model.fillPhotos(using: identifiers)
-                }
-            }
-        }
         .alert("FILL_COMPLETE", isPresented: $model.showFillAlert) {
             Button("OK", role: .cancel) {}
         } message: {

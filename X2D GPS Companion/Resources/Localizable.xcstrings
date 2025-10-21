@@ -176,6 +176,41 @@
         }
       }
     },
+    "CANCEL": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abbrechen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuler"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消"
+          }
+        }
+      }
+    },
     "DATABASE_MANAGEMENT": {
       "localizations": {
         "de": {
@@ -206,6 +241,76 @@
           "stringUnit": {
             "state": "translated",
             "value": "数据库管理"
+          }
+        }
+      }
+    },
+    "DATABASE_RESET_COMPLETE": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenbank zurückgesetzt"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Database Reset"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Base de données réinitialisée"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データベースをリセットしました"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "数据库已重置"
+          }
+        }
+      }
+    },
+    "DELETED_%@_RECORDS": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Datensätze gelöscht"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deleted %@ records"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ enregistrements supprimés"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@件のレコードを削除しました"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已删除 %@ 条记录"
           }
         }
       }
@@ -314,41 +419,6 @@
         }
       }
     },
-    "FILL_IN_PROGRESS": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Standorte werden ausgefüllt..."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Filling locations..."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remplissage des emplacements..."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "場所を埋めています..."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正在补写位置信息..."
-          }
-        }
-      }
-    },
     "FILL_COMPLETE": {
       "extractionState": "manual",
       "localizations": {
@@ -380,6 +450,41 @@
           "stringUnit": {
             "state": "translated",
             "value": "补写完成"
+          }
+        }
+      }
+    },
+    "FILL_IN_DETAILED_EXPLANATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Funktion durchsucht Ihre gespeicherten Standortaufzeichnungen und gleicht sie mit den Aufnahmezeiten Ihrer ausgewählten Fotos ab. Wenn eine Übereinstimmung innerhalb von 5 Minuten gefunden wird, werden die GPS-Koordinaten automatisch in die EXIF-Daten des Fotos geschrieben. Standardmäßig werden nur Fotos ohne vorhandene Standortdaten aktualisiert. Aktivieren Sie die obige Option, um auch Fotos mit bereits vorhandenen Standortdaten zu überschreiben."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This feature searches your saved location records and matches them with the capture times of your selected photos. When a match is found within 5 minutes, GPS coordinates are automatically written to the photo's EXIF data. By default, only photos without existing location data are updated. Enable the option above to also overwrite photos that already have location data."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette fonction recherche dans vos enregistrements de localisation sauvegardés et les fait correspondre avec les heures de capture de vos photos sélectionnées. Lorsqu'une correspondance est trouvée dans un délai de 5 minutes, les coordonnées GPS sont automatiquement écrites dans les données EXIF de la photo. Par défaut, seules les photos sans données de localisation existantes sont mises à jour. Activez l'option ci-dessus pour également écraser les photos qui ont déjà des données de localisation."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この機能は、保存された位置情報記録を検索し、選択した写真の撮影時刻と照合します。5分以内に一致が見つかると、GPS座標が自動的に写真のEXIFデータに書き込まれます。デフォルトでは、既存の位置情報データがない写真のみが更新されます。上記のオプションを有効にすると、既に位置情報データがある写真も上書きされます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此功能会搜索您保存的位置记录，并将其与所选照片的拍摄时间进行匹配。当在5分钟内找到匹配项时，GPS坐标会自动写入照片的EXIF数据中。默认情况下，仅更新没有现有位置数据的照片。启用上述选项可同时覆盖已有位置数据的照片。"
           }
         }
       }
@@ -489,37 +594,142 @@
         }
       }
     },
-    "FILL_IN_REQUIRES_PHOTO_ACCESS": {
+    "FILL_IN_PICKER_BUTTON": {
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grant photo access to fill locations."
+            "value": "Fotos zum Ausfüllen auswählen"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grant photo access to fill locations."
+            "value": "Select Photos to Fill"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grant photo access to fill locations."
+            "value": "Sélectionner les photos à remplir"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grant photo access to fill locations."
+            "value": "入力する写真を選択"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "请授予照片权限以补写位置信息。"
+            "value": "选择照片补写"
+          }
+        }
+      }
+    },
+    "FILL_IN_PICKER_DESCRIPTION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wählen Sie Fotos aus, um GPS-Daten nachzutragen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick photos to backfill GPS data."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez des photos pour remplir les données GPS."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS情報を補完する写真を選択してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择照片以补写GPS信息。"
+          }
+        }
+      }
+    },
+    "FILL_IN_PROGRESS": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standorte werden ausgefüllt..."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filling locations..."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remplissage des emplacements..."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "場所を埋めています..."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在补写位置信息..."
+          }
+        }
+      }
+    },
+    "FILL_IN_PROGRESS_COUNT_%@": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verarbeite %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processing %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traitement de %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@を処理中"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在处理%@"
           }
         }
       }
@@ -555,6 +765,41 @@
           "stringUnit": {
             "state": "translated",
             "value": "已为%@张照片补写位置。"
+          }
+        }
+      }
+    },
+    "FULL_PHOTO_ACCESS_REQUIRED_FOR_AUTO_RECORDING": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vollständiger Fotobibliothekszugriff ist erforderlich für automatische Hintergrund-Aktualisierung von Fotos. GPS-Aufzeichnung ist weiterhin verfügbar, und Sie können die Funktion 'Fotos manuell taggen' verwenden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full photo library access is required for automatic background photo updates. GPS recording is still available, and you can use the 'Manual Tag Photos' feature."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'accès complet à la bibliothèque de photos est requis pour les mises à jour automatiques des photos en arrière-plan. L'enregistrement GPS reste disponible et vous pouvez utiliser la fonction 'Taguer manuellement les photos'."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バックグラウンドでの自動写真更新には、フォトライブラリへの完全なアクセスが必要です。GPS記録は引き続き利用可能で、「手動で写真にタグ付け」機能を使用できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "后台自动标记照片位置需要完全访问照片库。GPS 记录功能仍可使用，您也可以使用「手动标记照片」功能。"
           }
         }
       }
@@ -660,6 +905,41 @@
           "stringUnit": {
             "state": "translated",
             "value": "受限访问：仅可访问您选择的照片。"
+          }
+        }
+      }
+    },
+    "LIMITED_PHOTO_ACCESS_RECORDING_INFO": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS-Aufzeichnung ist aktiv. Aufgrund des eingeschränkten Fotobibliothekszugriffs werden Fotos nicht automatisch im Hintergrund aktualisiert. Verwenden Sie nach der Aufnahme die Funktion 'Fotos manuell taggen', um GPS-Daten zu Ihren Fotos hinzuzufügen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS recording is active. Due to limited photo library access, photos will not be automatically updated in the background. After shooting, use the 'Manual Tag Photos' feature to add GPS data to your photos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'enregistrement GPS est actif. En raison de l'accès limité à la bibliothèque de photos, les photos ne seront pas automatiquement mises à jour en arrière-plan. Après la prise de vue, utilisez la fonction 'Taguer manuellement les photos' pour ajouter des données GPS à vos photos."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS記録がアクティブです。フォトライブラリへのアクセスが制限されているため、写真はバックグラウンドで自動的に更新されません。撮影後、「手動で写真にタグ付け」機能を使用して、写真にGPSデータを追加してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS 记录已激活。由于照片库访问权限有限，照片不会在后台自动标记位置。拍摄完成后，请使用「手动标记照片」功能为照片添加 GPS 位置信息。"
           }
         }
       }
@@ -804,6 +1084,76 @@
         }
       }
     },
+    "MANUAL_FILL_SECTION_TITLE": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manuelles Ausfüllen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual Fill"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remplissage manuel"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手動入力"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手动补写"
+          }
+        }
+      }
+    },
+    "MANUAL_TAG_PHOTOS": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotos manuell taggen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual Tag Photos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taguer manuellement les photos"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手動で写真にタグ付け"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手动标记照片"
+          }
+        }
+      }
+    },
     "OK": {
       "extractionState": "manual",
       "localizations": {
@@ -909,6 +1259,146 @@
         }
       }
     },
+    "OVERWRITE_EXISTING_LOCATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorhandene Standortdaten überschreiben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overwrite Existing Location Data"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écraser les données de localisation existantes"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "既存の位置情報を上書き"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覆盖已有位置数据"
+          }
+        }
+      }
+    },
+    "PERMISSION_DENIED_EXPLANATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um automatische Hintergrund-Aktualisierung von Fotos zu verwenden, muss diese Berechtigung in den Einstellungen aktiviert werden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To use automatic background photo updates, this permission must be enabled in Settings."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pour utiliser les mises à jour automatiques des photos en arrière-plan, cette autorisation doit être activée dans les Réglages."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バックグラウンドでの自動写真更新を使用するには、設定でこの権限を有効にする必要があります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "若要使用后台自动标记照片位置功能，请在设置中开启此权限。"
+          }
+        }
+      }
+    },
+    "PERMISSION_REQUIRED": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berechtigung erforderlich"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permission Required"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autorisation requise"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "権限が必要です"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "需要权限"
+          }
+        }
+      }
+    },
+    "PERMISSIONS_EXPLANATION_DETAIL": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotobibliothek: Ermöglicht das Scannen neuer Fotos und das Schreiben von GPS-Metadaten. Bei vollständigem Zugriff werden Fotos automatisch im Hintergrund getaggt. Standort (Immer): Erforderlich für kontinuierliche GPS-Aufzeichnung im Hintergrund, auch wenn die App nicht aktiv ist. Alle Daten werden ausschließlich lokal auf Ihrem Gerät verarbeitet."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo Library: Allows scanning for new photos and writing GPS metadata. With full access, photos are automatically tagged in the background. Location (Always): Required for continuous GPS recording in the background, even when the app is not active. All data is processed locally on your device only."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bibliothèque de photos : Permet de rechercher de nouvelles photos et d'écrire des métadonnées GPS. Avec un accès complet, les photos sont automatiquement étiquetées en arrière-plan. Localisation (Toujours) : Nécessaire pour l'enregistrement GPS continu en arrière-plan, même lorsque l'application n'est pas active. Toutes les données sont traitées localement sur votre appareil uniquement."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フォトライブラリ：新しい写真をスキャンし、GPSメタデータを書き込むために必要です。フルアクセスの場合、バックグラウンドで自動的にタグ付けされます。位置情報（常に）：アプリが非アクティブの場合でも、バックグラウンドでGPS記録を継続するために必要です。すべてのデータはデバイス上でのみローカルに処理されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "照片库：用于扫描新照片并写入 GPS 元数据。授予完全访问权限后，可在后台自动标记照片位置。位置（始终）：用于在后台持续记录 GPS 坐标，即使应用未在使用时也能记录。所有数据仅在您的设备本地处理，不会上传。"
+          }
+        }
+      }
+    },
     "PHOTO_ACCESS": {
       "extractionState": "manual",
       "localizations": {
@@ -979,6 +1469,181 @@
         }
       }
     },
+    "PHOTO_ACCESS_LIMITED_EXPLANATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eingeschränkter Zugriff ermöglicht GPS-Aufzeichnung und manuelle Foto-Markierung. Für automatische Hintergrund-Aktualisierung von Fotos wird voller Zugriff empfohlen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limited access allows GPS recording and manual photo tagging. Full access is recommended for automatic background photo updates."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'accès limité permet l'enregistrement GPS et le marquage manuel des photos. L'accès complet est recommandé pour les mises à jour automatiques des photos en arrière-plan."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "制限付きアクセスでは、GPS記録と手動写真タグ付けが可能です。バックグラウンドでの自動写真更新には、フルアクセスをお勧めします。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有限访问可以记录 GPS 并手动标记照片。若要启用后台自动标记照片位置，建议授予完全访问权限。"
+          }
+        }
+      }
+    },
+    "PHOTO_ACCESS_REQUIRED_FOR_MANUAL_TAG": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um GPS-Metadaten in ausgewählte Fotos zu schreiben, wird Fotobibliothekszugriff benötigt. Bitte gewähren Sie mindestens eingeschränkten Zugriff in den Einstellungen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo library access is required to write GPS metadata to selected photos. Please grant at least limited access in Settings."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'accès à la bibliothèque de photos est nécessaire pour écrire les métadonnées GPS dans les photos sélectionnées. Veuillez accorder au moins un accès limité dans les Réglages."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択した写真にGPSメタデータを書き込むには、フォトライブラリへのアクセスが必要です。設定で少なくとも制限付きアクセスを許可してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "需要照片库访问权限才能将 GPS 元数据写入所选照片。请在设置中至少授予有限访问权限。"
+          }
+        }
+      }
+    },
+    "RECORDING_STARTED_WITH_LIMITED_ACCESS": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufzeichnung mit eingeschränktem Zugriff gestartet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording Started with Limited Access"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrement démarré avec accès limité"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "制限付きアクセスで記録開始"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已开始记录（有限访问）"
+          }
+        }
+      }
+    },
+    "REQUEST_PERMISSION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berechtigung anfordern"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request Permission"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demander l'autorisation"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "権限をリクエスト"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请求权限"
+          }
+        }
+      }
+    },
+    "RESET": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurücksetzen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リセット"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置"
+          }
+        }
+      }
+    },
     "RESET_LOCATION_DATABASE": {
       "extractionState": "manual",
       "localizations": {
@@ -1010,6 +1675,41 @@
           "stringUnit": {
             "state": "translated",
             "value": "重置位置数据库"
+          }
+        }
+      }
+    },
+    "RESET_LOCATION_DATABASE_CONFIRMATION": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sind Sie sicher, dass Sie alle gespeicherten Standortdaten löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Are you sure you want to delete all stored location data? This action cannot be undone."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Êtes-vous sûr de vouloir supprimer toutes les données de localisation stockées ? Cette action ne peut pas être annulée."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存されているすべての位置情報データを削除してもよろしいですか？この操作は元に戻せません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确定要删除所有已保存的位置数据吗？此操作无法撤销。"
           }
         }
       }
@@ -1469,531 +2169,6 @@
         }
       }
     },
-    "X2D_GPS_COMPANION": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "X2D GPS Companion"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "X2D GPS Companion"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "X2D GPS Companion"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "X2D GPS Companion"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "X2D GPS 助手"
-          }
-        }
-      }
-    },
-    "MANUAL_FILL_SECTION_TITLE": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Manuelles Ausfüllen"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Manual Fill"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remplissage manuel"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "手動入力"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "手动补写"
-          }
-        }
-      }
-    },
-    "FILL_IN_PICKER_BUTTON": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fotos zum Ausfüllen auswählen"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Select Photos to Fill"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sélectionner les photos à remplir"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "入力する写真を選択"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "选择照片补写"
-          }
-        }
-      }
-    },
-    "FILL_IN_PICKER_DESCRIPTION": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Wählen Sie Fotos aus, um GPS-Daten nachzutragen."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pick photos to backfill GPS data."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sélectionnez des photos pour remplir les données GPS."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GPS情報を補完する写真を選択してください。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "选择照片以补写GPS信息。"
-          }
-        }
-      }
-    },
-    "FILL_IN_PROGRESS_COUNT_%@": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verarbeite %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Processing %@"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Traitement de %@"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@を処理中"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正在处理%@"
-          }
-        }
-      }
-    },
-    "OVERWRITE_EXISTING_LOCATION": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vorhandene Standortdaten überschreiben"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Overwrite Existing Location Data"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Écraser les données de localisation existantes"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "既存の位置情報を上書き"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "覆盖已有位置数据"
-          }
-        }
-      }
-    },
-    "FILL_IN_DETAILED_EXPLANATION": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Diese Funktion durchsucht Ihre gespeicherten Standortaufzeichnungen und gleicht sie mit den Aufnahmezeiten Ihrer ausgewählten Fotos ab. Wenn eine Übereinstimmung innerhalb von 5 Minuten gefunden wird, werden die GPS-Koordinaten automatisch in die EXIF-Daten des Fotos geschrieben. Standardmäßig werden nur Fotos ohne vorhandene Standortdaten aktualisiert. Aktivieren Sie die obige Option, um auch Fotos mit bereits vorhandenen Standortdaten zu überschreiben."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This feature searches your saved location records and matches them with the capture times of your selected photos. When a match is found within 5 minutes, GPS coordinates are automatically written to the photo's EXIF data. By default, only photos without existing location data are updated. Enable the option above to also overwrite photos that already have location data."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cette fonction recherche dans vos enregistrements de localisation sauvegardés et les fait correspondre avec les heures de capture de vos photos sélectionnées. Lorsqu'une correspondance est trouvée dans un délai de 5 minutes, les coordonnées GPS sont automatiquement écrites dans les données EXIF de la photo. Par défaut, seules les photos sans données de localisation existantes sont mises à jour. Activez l'option ci-dessus pour également écraser les photos qui ont déjà des données de localisation."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この機能は、保存された位置情報記録を検索し、選択した写真の撮影時刻と照合します。5分以内に一致が見つかると、GPS座標が自動的に写真のEXIFデータに書き込まれます。デフォルトでは、既存の位置情報データがない写真のみが更新されます。上記のオプションを有効にすると、既に位置情報データがある写真も上書きされます。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "此功能会搜索您保存的位置记录，并将其与所选照片的拍摄时间进行匹配。当在5分钟内找到匹配项时，GPS坐标会自动写入照片的EXIF数据中。默认情况下，仅更新没有现有位置数据的照片。启用上述选项可同时覆盖已有位置数据的照片。"
-          }
-        }
-      }
-    },
-    "CANCEL": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abbrechen"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancel"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Annuler"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "キャンセル"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "取消"
-          }
-        }
-      }
-    },
-    "RESET": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zurücksetzen"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reset"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réinitialiser"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "リセット"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "重置"
-          }
-        }
-      }
-    },
-    "RESET_LOCATION_DATABASE_CONFIRMATION": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sind Sie sicher, dass Sie alle gespeicherten Standortdaten löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Are you sure you want to delete all stored location data? This action cannot be undone."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Êtes-vous sûr de vouloir supprimer toutes les données de localisation stockées ? Cette action ne peut pas être annulée."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存されているすべての位置情報データを削除してもよろしいですか？この操作は元に戻せません。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "确定要删除所有已保存的位置数据吗？此操作无法撤销。"
-          }
-        }
-      }
-    },
-    "DATABASE_RESET_COMPLETE": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Datenbank zurückgesetzt"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Database Reset"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Base de données réinitialisée"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "データベースをリセットしました"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "数据库已重置"
-          }
-        }
-      }
-    },
-    "DELETED_%@_RECORDS": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ Datensätze gelöscht"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deleted %@ records"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ enregistrements supprimés"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@件のレコードを削除しました"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已删除 %@ 条记录"
-          }
-        }
-      }
-    },
-    "PERMISSION_DENIED_EXPLANATION": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Um automatische Hintergrund-Aktualisierung von Fotos zu verwenden, muss diese Berechtigung in den Einstellungen aktiviert werden."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "To use automatic background photo updates, this permission must be enabled in Settings."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pour utiliser les mises à jour automatiques des photos en arrière-plan, cette autorisation doit être activée dans les Réglages."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "バックグラウンドでの自動写真更新を使用するには、設定でこの権限を有効にする必要があります。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "若要使用后台自动标记照片位置功能，请在设置中开启此权限。"
-          }
-        }
-      }
-    },
-    "PERMISSION_REQUIRED": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Berechtigung erforderlich"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Permission Required"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Autorisation requise"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "権限が必要です"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "需要权限"
-          }
-        }
-      }
-    },
-    "REQUEST_PERMISSION": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Berechtigung anfordern"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Request Permission"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Demander l'autorisation"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "権限をリクエスト"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请求权限"
-          }
-        }
-      }
-    },
     "WHY_WE_NEED_THESE_PERMISSIONS": {
       "extractionState": "manual",
       "localizations": {
@@ -2029,212 +2204,142 @@
         }
       }
     },
-    "PERMISSIONS_EXPLANATION_DETAIL": {
+    "X2D_GPS_COMPANION": {
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fotobibliothek: Um GPS-Daten automatisch zu Ihren X2D-Fotos hinzuzufügen. Standort: Um Ihre GPS-Koordinaten während der Aufnahme zu erfassen, auch wenn die App im Hintergrund läuft."
+            "value": "X2D GPS Companion"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Photo Library: To automatically add GPS data to your X2D photos. Location: To capture your GPS coordinates while recording, even when the app is in the background."
+            "value": "X2D GPS Companion"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bibliothèque de photos : Pour ajouter automatiquement des données GPS à vos photos X2D. Localisation : Pour capturer vos coordonnées GPS pendant l'enregistrement, même lorsque l'application est en arrière-plan."
+            "value": "X2D GPS Companion"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "フォトライブラリ：X2D写真にGPSデータを自動的に追加するため。位置情報：アプリがバックグラウンドで実行されている場合でも、記録中にGPS座標を取得するため。"
+            "value": "X2D GPS Companion"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "照片库：自动为您的 X2D 照片添加 GPS 位置信息。位置：记录您的 GPS 坐标，即使应用在后台运行。"
+            "value": "X2D GPS 助手"
           }
         }
       }
     },
-    "PHOTO_ACCESS_LIMITED_EXPLANATION": {
+    "LIMITED_PHOTO_ACCESS_WARNING_TITLE": {
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eingeschränkter Zugriff ermöglicht GPS-Aufzeichnung und manuelle Foto-Markierung. Für automatische Hintergrund-Aktualisierung von Fotos wird voller Zugriff empfohlen."
+            "value": "Eingeschränkter Fotobibliothekszugriff"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Limited access allows GPS recording and manual photo tagging. Full access is recommended for automatic background photo updates."
+            "value": "Limited Photo Library Access"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'accès limité permet l'enregistrement GPS et le marquage manuel des photos. L'accès complet est recommandé pour les mises à jour automatiques des photos en arrière-plan."
+            "value": "Accès limité à la bibliothèque de photos"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "制限付きアクセスでは、GPS記録と手動写真タグ付けが可能です。バックグラウンドでの自動写真更新には、フルアクセスをお勧めします。"
+            "value": "フォトライブラリへの制限付きアクセス"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "有限访问可以记录 GPS 并手动标记照片。若要启用后台自动标记照片位置，建议授予完全访问权限。"
+            "value": "照片图库访问受限"
           }
         }
       }
     },
-    "MANUAL_TAG_PHOTOS": {
+    "LIMITED_PHOTO_ACCESS_WARNING_MESSAGE": {
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fotos manuell taggen"
+            "value": "Bitte wählen Sie zuerst die Fotos aus, in die Sie Standortinformationen schreiben möchten, um sie zu autorisieren. Wählen Sie sie anschließend erneut aus, um die Aktualisierung zu bestätigen."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Manual Tag Photos"
+            "value": "Please first select the photos you want to write location information to for authorization. Then select them again to confirm the update."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Taguer manuellement les photos"
+            "value": "Veuillez d'abord sélectionner les photos dans lesquelles vous souhaitez écrire des informations de localisation pour les autoriser. Ensuite, sélectionnez-les à nouveau pour confirmer la mise à jour."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "手動で写真にタグ付け"
+            "value": "位置情報を書き込みたい写真を最初に選択して承認してください。その後、更新を確認するために再度選択してください。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "手动标记照片"
+            "value": "请先选择需要写入位置信息的照片进行授权，稍后请再次选取它们以确认更新。"
           }
         }
       }
     },
-    "FULL_PHOTO_ACCESS_REQUIRED_FOR_AUTO_RECORDING": {
+    "SELECT_PHOTOS_TO_AUTHORIZE": {
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vollständiger Fotobibliothekszugriff ist erforderlich für automatische Hintergrund-Aktualisierung von Fotos. GPS-Aufzeichnung ist weiterhin verfügbar, und Sie können die Funktion 'Fotos manuell taggen' verwenden."
+            "value": "Fotos zur Autorisierung auswählen"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Full photo library access is required for automatic background photo updates. GPS recording is still available, and you can use the 'Manual Tag Photos' feature."
+            "value": "Select Photos to Authorize"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'accès complet à la bibliothèque de photos est requis pour les mises à jour automatiques des photos en arrière-plan. L'enregistrement GPS reste disponible et vous pouvez utiliser la fonction 'Taguer manuellement les photos'."
+            "value": "Sélectionner les photos à autoriser"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "バックグラウンドでの自動写真更新には、フォトライブラリへの完全なアクセスが必要です。GPS記録は引き続き利用可能で、「手動で写真にタグ付け」機能を使用できます。"
+            "value": "承認する写真を選択"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "后台自动标记照片位置需要完全访问照片库。GPS 记录功能仍可使用，您也可以使用「手动标记照片」功能。"
-          }
-        }
-      }
-    },
-    "RECORDING_STARTED_WITH_LIMITED_ACCESS": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aufzeichnung mit eingeschränktem Zugriff gestartet"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recording Started with Limited Access"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistrement démarré avec accès limité"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "制限付きアクセスで記録開始"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已开始记录（有限访问）"
-          }
-        }
-      }
-    },
-    "LIMITED_PHOTO_ACCESS_RECORDING_INFO": {
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GPS-Aufzeichnung ist aktiv. Aufgrund des eingeschränkten Fotobibliothekszugriffs werden Fotos nicht automatisch im Hintergrund aktualisiert. Verwenden Sie nach der Aufnahme die Funktion 'Fotos manuell taggen', um GPS-Daten zu Ihren Fotos hinzuzufügen."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GPS recording is active. Due to limited photo library access, photos will not be automatically updated in the background. After shooting, use the 'Manual Tag Photos' feature to add GPS data to your photos."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "L'enregistrement GPS est actif. En raison de l'accès limité à la bibliothèque de photos, les photos ne seront pas automatiquement mises à jour en arrière-plan. Après la prise de vue, utilisez la fonction 'Taguer manuellement les photos' pour ajouter des données GPS à vos photos."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GPS記録がアクティブです。フォトライブラリへのアクセスが制限されているため、写真はバックグラウンドで自動的に更新されません。撮影後、「手動で写真にタグ付け」機能を使用して、写真にGPSデータを追加してください。"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GPS 记录已激活。由于照片库访问权限有限，照片不会在后台自动标记位置。拍摄完成后，请使用「手动标记照片」功能为照片添加 GPS 位置信息。"
+            "value": "选择照片以授权"
           }
         }
       }

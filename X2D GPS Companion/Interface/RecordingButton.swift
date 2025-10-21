@@ -67,8 +67,9 @@ struct RecordingButton: View {
             Task {
                 if needsPhotoPermission { await model.requestPhotos() }
                 if needsLocationPermission {
+                    let isAlreadyLimited = model.locationAccess == .limited
                     model.requestLocationAlways()
-                    if model.locationAccess == .limited {
+                    if model.locationAccess == .limited, !isAlreadyLimited {
                         model.requestLocationAlways()
                     }
                 }

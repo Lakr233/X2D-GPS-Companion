@@ -22,11 +22,6 @@ extension ViewModel {
             print("⚠️ Fill request ignored because another fill is in progress")
             return
         }
-        guard photoAccess == .granted || photoAccess == .limited else {
-            fillAlertMessage = String(localized: "FILL_IN_REQUIRES_PHOTO_ACCESS")
-            showFillAlert = true
-            return
-        }
 
         fillInProgress = true
         print("🧭 Begin filling locations for \(identifiers.count) selected assets")

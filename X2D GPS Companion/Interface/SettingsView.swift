@@ -11,16 +11,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Bindable var model: ViewModel
-    @State private var isPhotoPickerPresented: Bool = false
     @State private var showResetConfirmation: Bool = false
-
-    private func makePickerConfiguration() -> PHPickerConfiguration {
-        var configuration = PHPickerConfiguration(photoLibrary: .shared())
-        configuration.selectionLimit = 0
-        configuration.filter = .images
-        configuration.preferredAssetRepresentationMode = .current
-        return configuration
-    }
 
     var body: some View {
         Form {
@@ -33,9 +24,7 @@ struct SettingsView: View {
 
             Section("MANUAL_FILL_SECTION_TITLE") {
                 let isInProgress = model.fillInProgress
-                Button {
-                    isPhotoPickerPresented = true
-                } label: {
+                FillManuallyView(model: model) {
                     if isInProgress {
                         ProgressView()
                     } else {
@@ -97,20 +86,6 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("SETTINGS")
-        .sheet(isPresented: $isPhotoPickerPresented) {
-            UIKitPhotoPicker(configuration: makePickerConfiguration()) { identifiers in
-                isPhotoPickerPresented = false
-                guard !identifiers.isEmpty else {
-                    print("ℹ️ Picker dismissed without selecting assets")
-                    return
-                }
-
-                print("🧭 Running fill for \(identifiers.count) assets after picker dismissal")
-                Task { @MainActor [model] in
-                    await model.fillPhotos(using: identifiers)
-                }
-            }
-        }
         .alert("FILL_COMPLETE", isPresented: $model.showFillAlert) {
             Button("OK", role: .cancel) {}
         } message: {
