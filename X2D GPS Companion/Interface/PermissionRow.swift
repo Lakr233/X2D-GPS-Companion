@@ -20,7 +20,7 @@ struct PermissionRow: View {
         title: LocalizedStringKey,
         status: AuthStatus,
         requestAction: @escaping () -> Void,
-        limitedExplanation: LocalizedStringKey? = "LIMITED_PHOTO_ACCESS_EXPLANATION"
+        limitedExplanation: LocalizedStringKey? = nil
     ) {
         self.icon = icon
         self.title = title
@@ -39,25 +39,22 @@ struct PermissionRow: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                if status == .denied {
+                    Text("PERMISSION_DENIED_EXPLANATION")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
             Spacer()
-            if status == .denied {
-                Button("OPEN_SETTINGS") {
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                }
-                .font(.body.bold())
-                .buttonStyle(.plain)
-                .foregroundStyle(.accent)
-                .underline()
-            } else if status == .unknown {
-                Button("GRANT_PERMISSION") {
+            if status == .unknown {
+                Button("REQUEST_PERMISSION") {
                     requestAction()
                 }
                 .font(.body.bold())
                 .buttonStyle(.plain)
                 .foregroundStyle(.accent)
                 .underline()
-            } else {
+            } else if status == .granted || status == .limited {
                 Button("VIEW_SETTINGS") {
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }

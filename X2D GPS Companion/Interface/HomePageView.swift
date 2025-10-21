@@ -6,10 +6,20 @@
 //
 
 import MapKit
+import PhotosUI
 import SwiftUI
 
 struct HomePageView: View {
     @State private var model = ViewModel.shared
+    @State private var isPhotoPickerPresented: Bool = false
+
+    private func makePickerConfiguration() -> PHPickerConfiguration {
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        configuration.selectionLimit = 0
+        configuration.filter = .images
+        configuration.preferredAssetRepresentationMode = .current
+        return configuration
+    }
 
     var header: some View {
         Text("START_RECORDING_TO_CAPTURE_GPS_AND_AUTO_TAG_NEW_PHOTOS_FROM_YOUR_X2D")
@@ -22,7 +32,8 @@ struct HomePageView: View {
                 icon: "photo.on.rectangle",
                 title: "PHOTO_ACCESS",
                 status: model.photoAccess,
-                requestAction: { Task { await model.requestPhotos() } }
+                requestAction: { Task { await model.requestPhotos() } },
+                limitedExplanation: "PHOTO_ACCESS_LIMITED_EXPLANATION"
             )
             Divider()
                 .padding(.horizontal, -16)
@@ -33,6 +44,16 @@ struct HomePageView: View {
                 requestAction: { model.requestLocationAlways() },
                 limitedExplanation: "LOCATION_REQUIRES_ALWAYS_ACCESS_FOR_BACKGROUND_RECORDING"
             )
+            Divider()
+                .padding(.horizontal, -16)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("WHY_WE_NEED_THESE_PERMISSIONS")
+                    .font(.caption.bold())
+                    .foregroundStyle(.secondary)
+                Text("PERMISSIONS_EXPLANATION_DETAIL")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
             Map {
                 UserAnnotation()
             }
@@ -47,8 +68,21 @@ struct HomePageView: View {
         .glassEffect(.regular, in: .rect(cornerRadius: 16))
     }
 
-    var button: some View {
-        RecordingButton(model: model)
+    var buttons: some View {
+        HStack(spacing: 12) {
+            RecordingButton(model: model)
+
+            Button {
+                isPhotoPickerPresented = true
+            } label: {
+                AlignedLabel(icon: "photo.on.rectangle.angled", text: "MANUAL_TAG_PHOTOS")
+                    .padding(8)
+                    .frame(maxWidth: .infinity)
+            }
+            .foregroundStyle(.accent)
+            .buttonStyle(.glass)
+            .disabled(model.fillInProgress)
+        }
     }
 
     var footer: some View {
@@ -72,7 +106,7 @@ struct HomePageView: View {
         VStack(alignment: .leading, spacing: 32) {
             header
             card
-            button
+            buttons
             footer
         }
         .padding(16)
@@ -87,5 +121,24 @@ struct HomePageView: View {
         }
         .navigationTitle("X2D_GPS_COMPANION")
         .background(BackgroundGradient().ignoresSafeArea())
+        .sheet(isPresented: $isPhotoPickerPresented) {
+            UIKitPhotoPicker(configuration: makePickerConfiguration()) { identifiers in
+                isPhotoPickerPresented = false
+                guard !identifiers.isEmpty else {
+                    print("ℹ️ Picker dismissed without selecting assets")
+                    return
+                }
+
+                print("🧭 Running fill for \(identifiers.count) assets after picker dismissal")
+                Task { @MainActor [model] in
+                    await model.fillPhotos(using: identifiers)
+                }
+            }
+        }
+        .alert("FILL_COMPLETE", isPresented: $model.showFillAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(model.fillAlertMessage)
+        }
     }
 }

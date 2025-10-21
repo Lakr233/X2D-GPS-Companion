@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct RecordingButton: View {
     @Bindable var model: ViewModel
     @State var presentError: String = ""
+    @State var showPermissionAlert = false
+    @State var permissionAlertMessage = ""
 
     var isRecording: Bool { model.isRecording }
     var icon: String { isRecording ? "stop.fill" : "record.circle" }
@@ -34,6 +37,20 @@ struct RecordingButton: View {
         } message: {
             Text(presentError)
         }
+        .alert(
+            "PERMISSION_REQUIRED",
+            isPresented: $showPermissionAlert
+        ) {
+            Button("CANCEL", role: .cancel) {
+                showPermissionAlert = false
+            }
+            Button("OPEN_SETTINGS") {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                showPermissionAlert = false
+            }
+        } message: {
+            Text(permissionAlertMessage)
+        }
     }
 
     func execute() {
@@ -44,6 +61,11 @@ struct RecordingButton: View {
             case false:
                 try model.startRecording()
             }
+        } catch let error as RecordingError {
+            print("❌ Failed to toggle recording: \(error.localizedDescription)")
+            // Show permission alert with option to open settings
+            permissionAlertMessage = error.localizedDescription
+            showPermissionAlert = true
         } catch {
             print("❌ Failed to toggle recording: \(error.localizedDescription)")
             presentError = error.localizedDescription

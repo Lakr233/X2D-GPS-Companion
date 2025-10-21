@@ -12,6 +12,7 @@ import SwiftUI
 
 enum RecordingError: LocalizedError {
     case photoAccessDenied
+    case photoAccessLimited
     case locationAccessDenied
     case backgroundSessionFailed
 
@@ -19,6 +20,8 @@ enum RecordingError: LocalizedError {
         switch self {
         case .photoAccessDenied:
             String(localized: "PHOTO_ACCESS_IS_REQUIRED_TO_START_RECORDING")
+        case .photoAccessLimited:
+            String(localized: "FULL_PHOTO_ACCESS_REQUIRED_FOR_AUTO_RECORDING")
         case .locationAccessDenied:
             String(localized: "LOCATION_ACCESS_IS_REQUIRED_TO_START_RECORDING")
         case .backgroundSessionFailed:
@@ -30,7 +33,8 @@ enum RecordingError: LocalizedError {
 extension ViewModel {
     func startRecording() throws {
         defer { if !isRecording { stopRecording() } }
-        guard photoAccess == .granted else { throw RecordingError.photoAccessDenied }
+        guard photoAccess != .denied, photoAccess != .unknown else { throw RecordingError.photoAccessDenied }
+        guard photoAccess == .granted else { throw RecordingError.photoAccessLimited }
         guard locationAccess == .granted else { throw RecordingError.locationAccessDenied }
         try locationService.startBackgroundSessions()
         try photoLibraryService.beginMonitoring()
