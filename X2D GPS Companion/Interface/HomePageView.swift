@@ -44,24 +44,32 @@ struct HomePageView: View {
                 requestAction: { model.requestLocationAlways() },
                 limitedExplanation: "LOCATION_REQUIRES_ALWAYS_ACCESS_FOR_BACKGROUND_RECORDING"
             )
-            Divider()
+            if model.photoAccess == .unknown, model.locationAccess == .unknown {
+                Divider()
+                    .padding(.horizontal, -16)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("WHY_WE_NEED_THESE_PERMISSIONS")
+                        .font(.caption.bold())
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("PERMISSIONS_EXPLANATION_DETAIL")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            if model.locationAccess == .granted {
+                Map {
+                    UserAnnotation()
+                }
+                .mapControlVisibility(.hidden)
+                .mapStyle(.standard)
+                .frame(maxHeight: .infinity)
                 .padding(.horizontal, -16)
-            VStack(alignment: .leading, spacing: 8) {
-                Text("WHY_WE_NEED_THESE_PERMISSIONS")
-                    .font(.caption.bold())
-                    .foregroundStyle(.secondary)
-                Text("PERMISSIONS_EXPLANATION_DETAIL")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                .padding(.bottom, -16)
+                .transition(.opacity)
+                .frame(minHeight: 50, maxHeight: .infinity)
             }
-            Map {
-                UserAnnotation()
-            }
-            .mapControlVisibility(.hidden)
-            .mapStyle(.standard)
-            .frame(maxHeight: .infinity)
-            .padding(.horizontal, -16)
-            .padding(.bottom, -16)
         }
         .padding(16)
         .clipShape(.rect(cornerRadius: 16))
@@ -103,13 +111,19 @@ struct HomePageView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 32) {
+        VStack(alignment: .leading, spacing: 16) {
             header
             card
+                .fixedSize(horizontal: false, vertical: true)
+            if model.locationAccess != .granted {
+                Spacer()
+                    .frame(minHeight: 0, maxHeight: .infinity)
+            }
             buttons
             footer
         }
         .padding(16)
+        .animation(.interactiveSpring, value: model.locationAccess == .granted)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {
@@ -139,6 +153,14 @@ struct HomePageView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(model.fillAlertMessage)
+        }
+        .alert("RECORDING_STARTED_WITH_LIMITED_ACCESS", isPresented: .init(
+            get: { model.isRecording && model.photoAccess == .limited },
+            set: { _ in }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("LIMITED_PHOTO_ACCESS_RECORDING_INFO")
         }
     }
 }

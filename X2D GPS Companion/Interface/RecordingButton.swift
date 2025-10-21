@@ -54,18 +54,31 @@ struct RecordingButton: View {
     }
 
     func execute() {
-        do {
-            switch model.isRecording {
-            case true:
-                model.stopRecording()
-            case false:
-                try model.startRecording()
+        // If stopping, just stop
+        if model.isRecording {
+            model.stopRecording()
+            return
+        }
+
+        let needsPhotoPermission = model.photoAccess == .unknown
+        let needsLocationPermission = model.locationAccess == .unknown
+
+        if needsPhotoPermission || needsLocationPermission {
+            Task {
+                if needsPhotoPermission { await model.requestPhotos() }
+                if needsLocationPermission {
+                    model.requestLocationAlways()
+                    if model.locationAccess == .limited {
+                        model.requestLocationAlways()
+                    }
+                }
+                try? model.startRecording()
             }
-        } catch let error as RecordingError {
-            print("❌ Failed to toggle recording: \(error.localizedDescription)")
-            // Show permission alert with option to open settings
-            permissionAlertMessage = error.localizedDescription
-            showPermissionAlert = true
+            return
+        }
+
+        do {
+            try model.startRecording()
         } catch {
             print("❌ Failed to toggle recording: \(error.localizedDescription)")
             presentError = error.localizedDescription

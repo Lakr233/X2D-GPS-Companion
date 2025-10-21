@@ -43,6 +43,7 @@ struct PermissionRow: View {
                     Text("PERMISSION_DENIED_EXPLANATION")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             Spacer()
@@ -54,7 +55,7 @@ struct PermissionRow: View {
                 .buttonStyle(.plain)
                 .foregroundStyle(.accent)
                 .underline()
-            } else if status == .granted || status == .limited {
+            } else if status == .granted || status == .limited || status == .denied {
                 Button("VIEW_SETTINGS") {
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }
@@ -64,5 +65,6 @@ struct PermissionRow: View {
                 .underline()
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
 }

@@ -33,11 +33,28 @@ enum RecordingError: LocalizedError {
 extension ViewModel {
     func startRecording() throws {
         defer { if !isRecording { stopRecording() } }
-        guard photoAccess != .denied, photoAccess != .unknown else { throw RecordingError.photoAccessDenied }
-        guard photoAccess == .granted else { throw RecordingError.photoAccessLimited }
-        guard locationAccess == .granted else { throw RecordingError.locationAccessDenied }
+
+        // Log photo access status but allow recording regardless
+        switch photoAccess {
+        case .unknown, .denied:
+            print("ℹ️ Photo access not granted. GPS will be recorded. Grant photo access to enable automatic background photo updates or use 'Manual Tag Photos'.")
+        case .limited:
+            print("ℹ️ Photo access is limited. GPS will be recorded. Use 'Manual Tag Photos' to tag photos later.")
+        case .granted:
+            print("✅ Photo access granted. Automatic background photo updates enabled.")
+        }
+
+        guard locationAccess == .granted else {
+            throw RecordingError.locationAccessDenied
+        }
+
         try locationService.startBackgroundSessions()
-        try photoLibraryService.beginMonitoring()
+
+        // Only monitor photo library if we have some level of access
+        if photoAccess == .granted || photoAccess == .limited {
+            try photoLibraryService.beginMonitoring()
+        }
+
         defer { isRecording = true }
         locationService.startUpdatingLocation()
         liveActivity.start()

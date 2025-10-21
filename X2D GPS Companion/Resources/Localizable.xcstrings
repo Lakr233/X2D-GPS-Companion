@@ -694,7 +694,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "位置权限"
+            "value": "位置访问"
           }
         }
       }
@@ -764,7 +764,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "后台记录需要“始终允许”的位置权限，请在设置中更改。"
+            "value": "后台记录需要「始终」访问位置权限"
           }
         }
       }
@@ -939,7 +939,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "照片权限"
+            "value": "照片访问"
           }
         }
       }
@@ -1160,31 +1160,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aufnahme starten"
+            "value": "GPS-Aufzeichnung starten"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Start Recording"
+            "value": "Start Record GPS"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Démarrer l’enregistrement"
+            "value": "Démarrer l'enregistrement GPS"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "記録を開始"
+            "value": "GPS記録を開始"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "开始记录"
+            "value": "开始记录 GPS"
           }
         }
       }
@@ -1219,7 +1219,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "开始记录以捕捉 GPS 数据，并为您的 X2D 新照片自动添加地理标签。"
+            "value": "开始记录以捕获 GPS 坐标，并自动为您的 X2D 新照片添加位置信息"
           }
         }
       }
@@ -1230,31 +1230,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aufnahme stoppen"
+            "value": "GPS-Aufzeichnung stoppen"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stop Recording"
+            "value": "Stop Record GPS"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arrêter l’enregistrement"
+            "value": "Arrêter l'enregistrement GPS"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "記録を停止"
+            "value": "GPS記録を停止"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "停止记录"
+            "value": "停止记录 GPS"
           }
         }
       }
@@ -1895,31 +1895,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Diese Funktion erfordert diese Berechtigung. Sie können sie in den Einstellungen aktivieren, wenn Sie diese Funktion verwenden möchten."
+            "value": "Um automatische Hintergrund-Aktualisierung von Fotos zu verwenden, muss diese Berechtigung in den Einstellungen aktiviert werden."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This feature requires this permission. You can enable it in Settings if you want to use this feature."
+            "value": "To use automatic background photo updates, this permission must be enabled in Settings."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cette fonctionnalité nécessite cette autorisation. Vous pouvez l'activer dans les Réglages si vous souhaitez utiliser cette fonctionnalité."
+            "value": "Pour utiliser les mises à jour automatiques des photos en arrière-plan, cette autorisation doit être activée dans les Réglages."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "この機能にはこの権限が必要です。この機能を使用する場合は、設定で有効にできます。"
+            "value": "バックグラウンドでの自動写真更新を使用するには、設定でこの権限を有効にする必要があります。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "此功能需要该权限。如果您想使用此功能,可以在设置中启用。"
+            "value": "若要使用后台自动标记照片位置功能，请在设置中开启此权限。"
           }
         }
       }
@@ -2059,7 +2059,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "照片库：自动为您的 X2D 照片添加 GPS 数据。位置：在录制时捕获您的 GPS 坐标，即使应用在后台运行。"
+            "value": "照片库：自动为您的 X2D 照片添加 GPS 位置信息。位置：记录您的 GPS 坐标，即使应用在后台运行。"
           }
         }
       }
@@ -2070,31 +2070,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eingeschränkter Zugriff ermöglicht nur das Taggen ausgewählter Fotos. Für vollständige Funktionalität wird voller Zugriff empfohlen."
+            "value": "Eingeschränkter Zugriff ermöglicht GPS-Aufzeichnung und manuelle Foto-Markierung. Für automatische Hintergrund-Aktualisierung von Fotos wird voller Zugriff empfohlen."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Limited access only allows tagging selected photos. Full access is recommended for complete functionality."
+            "value": "Limited access allows GPS recording and manual photo tagging. Full access is recommended for automatic background photo updates."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'accès limité ne permet de taguer que les photos sélectionnées. L'accès complet est recommandé pour une fonctionnalité complète."
+            "value": "L'accès limité permet l'enregistrement GPS et le marquage manuel des photos. L'accès complet est recommandé pour les mises à jour automatiques des photos en arrière-plan."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "制限付きアクセスでは、選択した写真のみにタグ付けできます。完全な機能を使用するには、フルアクセスをお勧めします。"
+            "value": "制限付きアクセスでは、GPS記録と手動写真タグ付けが可能です。バックグラウンドでの自動写真更新には、フルアクセスをお勧めします。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "有限访问仅允许标记选定的照片。建议使用完全访问以获得完整功能。"
+            "value": "有限访问可以记录 GPS 并手动标记照片。若要启用后台自动标记照片位置，建议授予完全访问权限。"
           }
         }
       }
@@ -2140,31 +2140,101 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vollständiger Fotobibliothekszugriff ist erforderlich für die automatische Aufnahme. Mit eingeschränktem Zugriff können Sie die Funktion 'Fotos manuell taggen' verwenden."
+            "value": "Vollständiger Fotobibliothekszugriff ist erforderlich für automatische Hintergrund-Aktualisierung von Fotos. GPS-Aufzeichnung ist weiterhin verfügbar, und Sie können die Funktion 'Fotos manuell taggen' verwenden."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Full photo library access is required for automatic recording. With limited access, you can use the 'Manual Tag Photos' feature."
+            "value": "Full photo library access is required for automatic background photo updates. GPS recording is still available, and you can use the 'Manual Tag Photos' feature."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'accès complet à la bibliothèque de photos est requis pour l'enregistrement automatique. Avec un accès limité, vous pouvez utiliser la fonction 'Taguer manuellement les photos'."
+            "value": "L'accès complet à la bibliothèque de photos est requis pour les mises à jour automatiques des photos en arrière-plan. L'enregistrement GPS reste disponible et vous pouvez utiliser la fonction 'Taguer manuellement les photos'."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "自動記録にはフォトライブラリへの完全なアクセスが必要です。制限付きアクセスの場合は、「手動で写真にタグ付け」機能を使用できます。"
+            "value": "バックグラウンドでの自動写真更新には、フォトライブラリへの完全なアクセスが必要です。GPS記録は引き続き利用可能で、「手動で写真にタグ付け」機能を使用できます。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "自动录制需要完整的照片库访问权限。如果只有有限访问权限，您可以使用「手动标记照片」功能。"
+            "value": "后台自动标记照片位置需要完全访问照片库。GPS 记录功能仍可使用，您也可以使用「手动标记照片」功能。"
+          }
+        }
+      }
+    },
+    "RECORDING_STARTED_WITH_LIMITED_ACCESS": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufzeichnung mit eingeschränktem Zugriff gestartet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording Started with Limited Access"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrement démarré avec accès limité"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "制限付きアクセスで記録開始"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已开始记录（有限访问）"
+          }
+        }
+      }
+    },
+    "LIMITED_PHOTO_ACCESS_RECORDING_INFO": {
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS-Aufzeichnung ist aktiv. Aufgrund des eingeschränkten Fotobibliothekszugriffs werden Fotos nicht automatisch im Hintergrund aktualisiert. Verwenden Sie nach der Aufnahme die Funktion 'Fotos manuell taggen', um GPS-Daten zu Ihren Fotos hinzuzufügen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS recording is active. Due to limited photo library access, photos will not be automatically updated in the background. After shooting, use the 'Manual Tag Photos' feature to add GPS data to your photos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'enregistrement GPS est actif. En raison de l'accès limité à la bibliothèque de photos, les photos ne seront pas automatiquement mises à jour en arrière-plan. Après la prise de vue, utilisez la fonction 'Taguer manuellement les photos' pour ajouter des données GPS à vos photos."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS記録がアクティブです。フォトライブラリへのアクセスが制限されているため、写真はバックグラウンドで自動的に更新されません。撮影後、「手動で写真にタグ付け」機能を使用して、写真にGPSデータを追加してください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GPS 记录已激活。由于照片库访问权限有限，照片不会在后台自动标记位置。拍摄完成后，请使用「手动标记照片」功能为照片添加 GPS 位置信息。"
           }
         }
       }
