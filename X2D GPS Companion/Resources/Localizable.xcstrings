@@ -269,7 +269,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "データベースをリセットしました"
+            "value": "データベースリセット完了"
           }
         },
         "zh-Hans": {
@@ -425,7 +425,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fill Complete"
+            "value": "Ausfüllen abgeschlossen"
           }
         },
         "en": {
@@ -437,13 +437,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fill Complete"
+            "value": "Remplissage terminé"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fill Complete"
+            "value": "入力完了"
           }
         },
         "zh-Hans": {
@@ -495,7 +495,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "No photos found within the selected range."
+            "value": "Im ausgewählten Bereich keine Fotos gefunden."
           }
         },
         "en": {
@@ -507,13 +507,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "No photos found within the selected range."
+            "value": "Aucune photo trouvée dans la plage sélectionnée."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "No photos found within the selected range."
+            "value": "選択された範囲内に写真が見つかりません。"
           }
         },
         "zh-Hans": {
@@ -530,7 +530,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "No location history available for this range."
+            "value": "Für diesen Bereich ist kein Standortverlauf verfügbar."
           }
         },
         "en": {
@@ -542,13 +542,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "No location history available for this range."
+            "value": "Aucun historique de localisation disponible pour cette plage."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "No location history available for this range."
+            "value": "この範囲で利用可能な位置情報履歴はありません。"
           }
         },
         "zh-Hans": {
@@ -565,7 +565,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "No photos required location updates."
+            "value": "Keine Fotos erforderten Standort-Aktualisierungen."
           }
         },
         "en": {
@@ -577,13 +577,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "No photos required location updates."
+            "value": "Aucune photo ne nécessitait de mise à jour de l'emplacement."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "No photos required location updates."
+            "value": "位置情報の更新が必要な写真はありません。"
           }
         },
         "zh-Hans": {
@@ -740,7 +740,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Updated %@ photos with saved locations."
+            "value": "%@ Fotos mit gespeicherten Standorten aktualisiert."
           }
         },
         "en": {
@@ -752,13 +752,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Updated %@ photos with saved locations."
+            "value": "%@ photos mises à jour avec les emplacements enregistrés."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Updated %@ photos with saved locations."
+            "value": "保存された場所で%@枚の写真を更新しました。"
           }
         },
         "zh-Hans": {
@@ -1754,7 +1754,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset Location Database"
+            "value": "Standortdatenbank zurücksetzen"
           }
         },
         "en": {
@@ -1766,13 +1766,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset Location Database"
+            "value": "Réinitialiser la base de données de localisation"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset Location Database"
+            "value": "位置情報データベースをリセット"
           }
         },
         "zh-Hans": {
@@ -1824,7 +1824,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete all stored location samples. Data cannot be exported for security reasons."
+            "value": "Alle gespeicherten Standortproben löschen. Daten können aus Sicherheitsgründen nicht exportiert werden."
           }
         },
         "en": {
@@ -1836,13 +1836,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete all stored location samples. Data cannot be exported for security reasons."
+            "value": "Supprimer tous les échantillons de localisation stockés. Les données ne peuvent pas être exportées pour des raisons de sécurité."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete all stored location samples. Data cannot be exported for security reasons."
+            "value": "保存されているすべての位置情報サンプルを削除します。セキュリティ上の理由から、データはエクスポートできません。"
           }
         },
         "zh-Hans": {
@@ -1859,7 +1859,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cleared saved location history."
+            "value": "Gespeicherter Standortverlauf gelöscht."
           }
         },
         "en": {
@@ -1871,13 +1871,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cleared saved location history."
+            "value": "Historique des emplacements enregistrés effacé."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cleared saved location history."
+            "value": "保存された位置情報履歴を消去しました。"
           }
         },
         "zh-Hans": {
