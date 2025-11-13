@@ -43,7 +43,7 @@ The app requires two separate authorizations:
 
 ## Getting Started
 
-1. Download and install [**Phocus 2**](https://apps.apple.com/app/id1452280435) from the App Store to enable the Street Shot Assistant workflow
+1. Download and install [**Phocus 2**](https://apps.apple.com/app/id1452280435) from the App Store to enable the Street Shot Assistant workflow **and choose to save to the system photo library**
 2. Install **X2D GPS Companion** on your iOS device
 3. Grant the required location and photo library permissions when prompted
 4. Tap the recording button to begin location tracking

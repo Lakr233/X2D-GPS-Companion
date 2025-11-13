@@ -43,7 +43,7 @@
 
 ## 快速开始
 
-1. 从 App Store 下载并安装 [**Phocus 2**](https://apps.apple.com/app/id1452280435)，以使用街拍助手
+1. 从 App Store 下载并安装 [**Phocus 2**](https://apps.apple.com/app/id1452280435)，以使用街拍助手 **并选择保存到系统相册内**
 2. 在您的 iOS 设备上安装 **X2D GPS Companion**
 3. 根据提示授予所需的定位和照片库权限
 4. 点击记录按钮开始位置追踪
