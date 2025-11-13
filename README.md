@@ -4,7 +4,6 @@ A specialized iOS companion app for Hasselblad X2D camera users. Automatically g
 
 ## ⚠️ Important Notes
 
-- **X2D2 Users**: The Hasselblad X2D2 features a built-in GPS module. This app is not required for X2D2 owners.
 - **Mainland China Users**: Location data is recorded using the GCJ-02 coordinate system (Mars Coordinates) when operating in mainland China. Initial location previews in Apple Photos may appear offset. To resolve this, simply reopen the Photos app or tap the location for accurate positioning details.
 
 ## Key Features
