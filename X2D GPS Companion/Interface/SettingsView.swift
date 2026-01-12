@@ -33,6 +33,11 @@ struct SettingsView: View {
                 }
                 .disabled(isInProgress)
 
+                ExportGPXView(model: model) {
+                    AlignedLabel(icon: "square.and.arrow.up.on.square.fill", text: "EXPORT_GPX")
+                }
+                .disabled(isInProgress)
+
                 Toggle("OVERWRITE_EXISTING_LOCATION", isOn: $model.overwriteExistingLocation)
 
                 VStack(alignment: .leading, spacing: 8) {
