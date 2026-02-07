@@ -2377,6 +2377,111 @@
           }
         }
       }
+    },
+    "COMPATIBILITY_MODE": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compatibility Mode"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kompatibilitätsmodus"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode de compatibilité"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "互換モード"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "兼容模式"
+          }
+        }
+      }
+    },
+    "COMPATIBILITY_MODE_DESCRIPTION": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When using compatibility mode, photos are geotagged using the device's real-time location. Since photos may take several minutes to transfer from the camera to the photo library, the recorded location may be slightly shifted from where the photo was actually taken."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Im Kompatibilitätsmodus werden Fotos mit der Echtzeit-Position des Geräts geotaggt. Da die Übertragung von Fotos von der Kamera zur Fotobibliothek mehrere Minuten dauern kann, kann die aufgezeichnete Position leicht von der tatsächlichen Aufnahmeposition abweichen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En mode de compatibilité, les photos sont géolocalisées en utilisant la position en temps réel de l'appareil. Comme le transfert des photos de l'appareil photo vers la bibliothèque de photos peut prendre plusieurs minutes, la position enregistrée peut être légèrement décalée par rapport à l'endroit où la photo a été prise."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "互換モードでは、デバイスのリアルタイム位置情報を使用して写真にジオタグが付けられます。カメラからフォトライブラリに写真が転送されるまで数分かかることがあるため、記録された位置情報は実際に写真を撮影した場所から若干ずれている可能性があります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用兼容模式时，照片将使用设备的实时位置进行地理标记。由于照片从相机传输到照片库可能需要几分钟，因此记录的位置可能与实际拍摄照片的位置略有偏差。"
+          }
+        }
+      }
+    },
+    "ENABLE_COMPATIBILITY_MODE_IF_CAMERA_LACKS_COMPLETE_EXIF": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If your camera doesn't embed complete EXIF data, you can enable Compatibility Mode in Settings to bypass the EXIF check."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn Ihre Kamera keine vollständigen EXIF-Daten einbettet, können Sie in den Einstellungen den Kompatibilitätsmodus aktivieren, um die EXIF-Prüfung zu umgehen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si votre appareil photo n'intègre pas de données EXIF complètes, vous pouvez activer le mode de compatibilité dans les paramètres pour contourner la vérification EXIF."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラが完全なEXIFデータを埋め込まない場合は、設定で互換モードを有効にしてEXIFチェックをバイパスできます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果您的相机没有嵌入完整的EXIF数据，您可以在设置中启用兼容模式以绕过EXIF检查。"
+          }
+        }
+      }
     }
   },
   "version": "1.1"

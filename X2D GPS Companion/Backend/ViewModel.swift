@@ -12,6 +12,7 @@ import SwiftUI
 
 private let autoStartRecordingKey = "AutoStartRecording"
 private let overwriteExistingLocationKey = "OverwriteExistingLocation"
+private let bypassEXIFCheckKey = "BypassEXIFCheck"
 
 @MainActor
 @Observable
@@ -40,6 +41,13 @@ final class ViewModel: NSObject {
         }
     }
 
+    var bypassEXIFCheck: Bool = UserDefaults.standard.bool(forKey: bypassEXIFCheckKey) {
+        didSet {
+            UserDefaults.standard.set(bypassEXIFCheck, forKey: bypassEXIFCheckKey)
+            photoLibraryService.bypassEXIFCheck = bypassEXIFCheck
+        }
+    }
+
     let locationService = LocationService.shared
     let liveActivity = LiveActivityManager.shared
     let photoLibraryService = PhotoLibraryService.shared
@@ -49,6 +57,7 @@ final class ViewModel: NSObject {
         super.init()
         locationService.delegate = self
         photoLibraryService.delegate = self
+        photoLibraryService.bypassEXIFCheck = bypassEXIFCheck
         startPermissionCheck()
     }
 }

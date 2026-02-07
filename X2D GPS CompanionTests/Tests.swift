@@ -390,3 +390,43 @@ final class LocationInterpolationTests: XCTestCase {
         _ = try database.reset()
     }
 }
+
+// MARK: - Compatibility Mode Tests
+
+final class CompatibilityModeTests: XCTestCase {
+    @MainActor
+    func testBypassEXIFCheckDefaultValue() throws {
+        // Clear any previously stored value to test the actual default
+        UserDefaults.standard.removeObject(forKey: "BypassEXIFCheck")
+
+        // Create a fresh viewmodel state by accessing the current value
+        let viewModel = ViewModel.shared
+        // The default value should be false
+        XCTAssertFalse(viewModel.bypassEXIFCheck, "bypassEXIFCheck should default to false")
+    }
+
+    @MainActor
+    func testBypassEXIFCheckPersistence() throws {
+        let viewModel = ViewModel.shared
+        let photoLibraryService = PhotoLibraryService.shared
+
+        // Test that setting bypassEXIFCheck updates PhotoLibraryService
+        viewModel.bypassEXIFCheck = true
+        XCTAssertTrue(photoLibraryService.bypassEXIFCheck, "PhotoLibraryService should reflect bypassEXIFCheck = true")
+
+        viewModel.bypassEXIFCheck = false
+        XCTAssertFalse(photoLibraryService.bypassEXIFCheck, "PhotoLibraryService should reflect bypassEXIFCheck = false")
+    }
+
+    @MainActor
+    func testPhotoLibraryServiceBypassProperty() throws {
+        let service = PhotoLibraryService.shared
+
+        // Test that the property can be set directly
+        service.bypassEXIFCheck = true
+        XCTAssertTrue(service.bypassEXIFCheck, "bypassEXIFCheck should be true")
+
+        service.bypassEXIFCheck = false
+        XCTAssertFalse(service.bypassEXIFCheck, "bypassEXIFCheck should be false")
+    }
+}

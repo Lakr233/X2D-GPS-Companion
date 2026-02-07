@@ -22,6 +22,7 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
 
     private(set) var photoProcessedCount: Int = 0
     private(set) var isMonitoring: Bool = false
+    var bypassEXIFCheck: Bool = false
 
     weak var delegate: PhotoLibraryServiceDelegate?
     private let locationService = LocationService.shared
@@ -72,9 +73,11 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
             print("❌ Skipped photo [\(asset.localIdentifier)]: already has location data")
             return
         }
-        guard await asset.hasCameraEXIF() else {
-            print("❌ Skipped photo [\(asset.localIdentifier)]: missing camera EXIF data")
-            return
+        if !bypassEXIFCheck {
+            guard await asset.hasCameraEXIF() else {
+                print("❌ Skipped photo [\(asset.localIdentifier)]: missing camera EXIF data")
+                return
+            }
         }
         let interval: TimeInterval = 60
         guard asset.isCreationDateNearby(tolerance: interval) else {
