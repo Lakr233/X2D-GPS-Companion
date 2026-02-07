@@ -20,11 +20,6 @@ struct SettingsView: View {
                 Text("AUTOMATICALLY_START_RECORDING_WHEN_APP_OPENED")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-
-                Toggle("COMPATIBILITY_MODE", isOn: $model.bypassEXIFCheck)
-                Text("COMPATIBILITY_MODE_DESCRIPTION")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
 
             Section("MANUAL_FILL_SECTION_TITLE") {
@@ -67,6 +62,11 @@ struct SettingsView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.vertical, 4)
+
+                Toggle("COMPATIBILITY_MODE", isOn: $model.bypassEXIFCheck)
+                Text("COMPATIBILITY_MODE_DESCRIPTION")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
 
             Section("ABOUT") {
