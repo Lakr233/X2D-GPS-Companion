@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 DERIVED="$(pwd)/derived"
 mkdir -p "$DERIVED"
 
-swiftformat --swiftversion 6.0 . --indent 4
+swiftformat --swiftversion 6.2 . --indent 4
 
 CMD=(xcodebuild \
     -project *.xcodeproj \
