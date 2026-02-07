@@ -20,7 +20,7 @@ struct PermissionRow: View {
         title: LocalizedStringKey,
         status: AuthStatus,
         requestAction: @escaping () -> Void,
-        limitedExplanation: LocalizedStringKey? = nil
+        limitedExplanation: LocalizedStringKey? = nil,
     ) {
         self.icon = icon
         self.title = title

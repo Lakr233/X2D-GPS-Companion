@@ -9,9 +9,8 @@ import CoreData
 import CoreLocation
 import Photos
 import UIKit
-import XCTest
-
 @testable import X2D_GPS_Companion
+import XCTest
 
 final class DatabaseTests: XCTestCase {
     var database: LocationDatabase!
@@ -58,7 +57,7 @@ final class DatabaseTests: XCTestCase {
         }
         let interval = DateInterval(
             start: baseDate.addingTimeInterval(5 * 60),
-            end: baseDate.addingTimeInterval(10 * 60)
+            end: baseDate.addingTimeInterval(10 * 60),
         )
         let records = try database.records(in: interval)
         XCTAssertEqual(records.count, 10, "Should have 10 records in the interval")
@@ -93,7 +92,7 @@ final class DatabaseTests: XCTestCase {
             verticalAccuracy: 10.0,
             course: 0,
             speed: 1.0,
-            timestamp: baseDate
+            timestamp: baseDate,
         )
         let location2 = CLLocation(
             coordinate: CLLocationCoordinate2D(latitude: 37.7759, longitude: -122.4184),
@@ -102,7 +101,7 @@ final class DatabaseTests: XCTestCase {
             verticalAccuracy: 10.0,
             course: 90,
             speed: 2.0,
-            timestamp: baseDate.addingTimeInterval(120)
+            timestamp: baseDate.addingTimeInterval(120),
         )
 
         database.record(location1)
@@ -126,7 +125,7 @@ final class DatabaseTests: XCTestCase {
             altitude: 10.0,
             horizontalAccuracy: 5.0,
             verticalAccuracy: 10.0,
-            timestamp: baseDate
+            timestamp: baseDate,
         )
         database.record(location)
         let queryDate = baseDate.addingTimeInterval(120)
@@ -145,7 +144,7 @@ final class DatabaseTests: XCTestCase {
             altitude: 10.0,
             horizontalAccuracy: 5.0,
             verticalAccuracy: 10.0,
-            timestamp: baseDate.addingTimeInterval(120)
+            timestamp: baseDate.addingTimeInterval(120),
         )
 
         database.record(location)
@@ -164,7 +163,7 @@ final class DatabaseTests: XCTestCase {
             altitude: 10.0,
             horizontalAccuracy: 5.0,
             verticalAccuracy: 10.0,
-            timestamp: baseDate
+            timestamp: baseDate,
         )
 
         database.record(location)
@@ -229,7 +228,7 @@ final class DatabaseTests: XCTestCase {
                 verticalAccuracy: 10.0,
                 course: Double(i * 10 % 360),
                 speed: Double(i % 20),
-                timestamp: timestamp
+                timestamp: timestamp,
             )
 
             locations.append(location)
@@ -242,7 +241,7 @@ final class DatabaseTests: XCTestCase {
 // MARK: - Image Generation Tests
 
 final class ImageGenerationTests: XCTestCase {
-    func testGenerateWhiteImage() throws {
+    func testGenerateWhiteImage() {
         let image = generateWhiteImage(size: CGSize(width: 256, height: 256))
 
         XCTAssertNotNil(image)
@@ -264,7 +263,7 @@ final class ImageGenerationTests: XCTestCase {
         try? FileManager.default.removeItem(at: tempURL)
     }
 
-    func testGenerateMultipleImages() throws {
+    func testGenerateMultipleImages() {
         let images = (0 ..< 5).map { _ in
             generateWhiteImage(size: CGSize(width: 256, height: 256))
         }
@@ -280,11 +279,10 @@ final class ImageGenerationTests: XCTestCase {
 
     private func generateWhiteImage(size: CGSize) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
-        let image = renderer.image { context in
+        return renderer.image { context in
             UIColor.white.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
-        return image
     }
 
     private func saveImageToTemporaryFile(image: UIImage) throws -> URL {
@@ -317,7 +315,7 @@ final class LocationInterpolationTests: XCTestCase {
             verticalAccuracy: 10,
             course: 0,
             speed: 1.0,
-            timestamp: baseDate
+            timestamp: baseDate,
         )
 
         let location2 = CLLocation(
@@ -327,7 +325,7 @@ final class LocationInterpolationTests: XCTestCase {
             verticalAccuracy: 10,
             course: 90,
             speed: 2.0,
-            timestamp: baseDate.addingTimeInterval(120)
+            timestamp: baseDate.addingTimeInterval(120),
         )
 
         database.record(location1)
@@ -370,7 +368,7 @@ final class LocationInterpolationTests: XCTestCase {
                 verticalAccuracy: 10,
                 course: Double(i * 10),
                 speed: Double(i),
-                timestamp: baseDate.addingTimeInterval(TimeInterval(i * 60))
+                timestamp: baseDate.addingTimeInterval(TimeInterval(i * 60)),
             )
 
             database.record(location)
@@ -395,7 +393,7 @@ final class LocationInterpolationTests: XCTestCase {
 
 final class CompatibilityModeTests: XCTestCase {
     @MainActor
-    func testBypassEXIFCheckDefaultValue() throws {
+    func testBypassEXIFCheckDefaultValue() {
         // Clear any previously stored value to test the actual default
         UserDefaults.standard.removeObject(forKey: "BypassEXIFCheck")
 
@@ -406,7 +404,7 @@ final class CompatibilityModeTests: XCTestCase {
     }
 
     @MainActor
-    func testBypassEXIFCheckPersistence() throws {
+    func testBypassEXIFCheckPersistence() {
         let viewModel = ViewModel.shared
         let photoLibraryService = PhotoLibraryService.shared
 
@@ -419,7 +417,7 @@ final class CompatibilityModeTests: XCTestCase {
     }
 
     @MainActor
-    func testPhotoLibraryServiceBypassProperty() throws {
+    func testPhotoLibraryServiceBypassProperty() {
         let service = PhotoLibraryService.shared
 
         // Test that the property can be set directly

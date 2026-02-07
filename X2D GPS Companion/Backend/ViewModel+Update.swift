@@ -13,7 +13,7 @@ extension ViewModel {
         guard let location = locationService.location else { return }
         liveActivity.updateLocation(
             location,
-            photoProcessedCount: photoLibraryService.photoProcessedCount
+            photoProcessedCount: photoLibraryService.photoProcessedCount,
         )
     }
 
@@ -114,7 +114,7 @@ extension ViewModel {
             let (before, after) = locationDatabase.nearestRecords(
                 to: captureDate,
                 tolerance: tolerance,
-                records: records
+                records: records,
             )
 
             guard before != nil || after != nil else { continue }
@@ -181,7 +181,7 @@ extension ViewModel {
             verticalAccuracy: -1,
             course: -1,
             speed: -1,
-            timestamp: targetDate
+            timestamp: targetDate,
         )
     }
 }

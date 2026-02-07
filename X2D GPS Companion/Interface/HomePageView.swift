@@ -24,7 +24,7 @@ struct HomePageView: View {
                 title: "PHOTO_ACCESS",
                 status: model.photoAccess,
                 requestAction: { Task { await model.requestPhotos() } },
-                limitedExplanation: "PHOTO_ACCESS_LIMITED_EXPLANATION"
+                limitedExplanation: "PHOTO_ACCESS_LIMITED_EXPLANATION",
             )
             Divider()
                 .padding(.horizontal, -16)
@@ -33,7 +33,7 @@ struct HomePageView: View {
                 title: "LOCATION_ACCESS",
                 status: model.locationAccess,
                 requestAction: { model.requestLocationAlways() },
-                limitedExplanation: "LOCATION_REQUIRES_ALWAYS_ACCESS_FOR_BACKGROUND_RECORDING"
+                limitedExplanation: "LOCATION_REQUIRES_ALWAYS_ACCESS_FOR_BACKGROUND_RECORDING",
             )
             if model.photoAccess == .unknown, model.locationAccess == .unknown {
                 Divider()
@@ -133,7 +133,7 @@ struct HomePageView: View {
         }
         .alert("RECORDING_STARTED_WITH_LIMITED_ACCESS", isPresented: .init(
             get: { model.isRecording && model.photoAccess == .limited },
-            set: { _ in }
+            set: { _ in },
         )) {
             Button("OK", role: .cancel) {}
         } message: {

@@ -27,7 +27,7 @@ final class LiveActivityManager {
             let contentState = ActivityContent(state: content, staleDate: nil)
             let activity = try Activity.request(
                 attributes: GPSActivityAttributes(),
-                content: contentState
+                content: contentState,
             )
             self.activity = activity
             activityStateObserver = Task.detached(priority: .userInitiated) {
@@ -58,7 +58,7 @@ final class LiveActivityManager {
             longitude: location.coordinate.longitude,
             accuracy: location.horizontalAccuracy,
             timestamp: location.timestamp,
-            photoProcessedCount: photoProcessedCount
+            photoProcessedCount: photoProcessedCount,
         )
         let contentState = ActivityContent(state: content, staleDate: nil)
         Task.detached(priority: .userInitiated) {

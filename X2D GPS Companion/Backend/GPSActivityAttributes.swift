@@ -21,7 +21,7 @@ nonisolated struct GPSActivityAttributes: ActivityAttributes {
             longitude: Double? = nil,
             accuracy: Double? = nil,
             timestamp: Date = .init(),
-            photoProcessedCount: Int = 0
+            photoProcessedCount: Int = 0,
         ) {
             self.latitude = latitude
             self.longitude = longitude

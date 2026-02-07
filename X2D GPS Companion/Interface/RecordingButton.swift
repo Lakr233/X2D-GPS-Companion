@@ -14,9 +14,17 @@ struct RecordingButton: View {
     @State var showPermissionAlert = false
     @State var permissionAlertMessage = ""
 
-    var isRecording: Bool { model.isRecording }
-    var icon: String { isRecording ? "stop.fill" : "record.circle" }
-    var text: LocalizedStringKey { isRecording ? "STOP_RECORDING" : "START_RECORDING" }
+    var isRecording: Bool {
+        model.isRecording
+    }
+
+    var icon: String {
+        isRecording ? "stop.fill" : "record.circle"
+    }
+
+    var text: LocalizedStringKey {
+        isRecording ? "STOP_RECORDING" : "START_RECORDING"
+    }
 
     var body: some View {
         Button { execute() } label: {
@@ -30,8 +38,8 @@ struct RecordingButton: View {
             "ERROR",
             isPresented: .init(
                 get: { !presentError.isEmpty },
-                set: { newValue in if !newValue { presentError = "" } }
-            )
+                set: { newValue in if !newValue { presentError = "" } },
+            ),
         ) {
             Button("OK") { presentError = "" }
         } message: {
@@ -39,7 +47,7 @@ struct RecordingButton: View {
         }
         .alert(
             "PERMISSION_REQUIRED",
-            isPresented: $showPermissionAlert
+            isPresented: $showPermissionAlert,
         ) {
             Button("CANCEL", role: .cancel) {
                 showPermissionAlert = false

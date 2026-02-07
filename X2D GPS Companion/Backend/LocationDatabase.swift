@@ -28,7 +28,7 @@ struct LocationRecord: Identifiable {
             verticalAccuracy: verticalAccuracy,
             course: course,
             speed: speed,
-            timestamp: timestamp
+            timestamp: timestamp,
         )
     }
 }
@@ -58,7 +58,7 @@ final class LocationDatabase {
     private let container: NSPersistentContainer
     private let backgroundContext: NSManagedObjectContext
 
-    // Model version identifier - increment this when the data model changes
+    /// Model version identifier - increment this when the data model changes
     private static let currentModelVersion = 2
 
     private init() {
@@ -69,7 +69,7 @@ final class LocationDatabase {
         do {
             try FileManager.default.createDirectory(
                 at: storeURL.deletingLastPathComponent(),
-                withIntermediateDirectories: true
+                withIntermediateDirectories: true,
             )
         } catch {
             print("❌ Failed to create directory for CoreData store: \(error.localizedDescription)")
@@ -130,7 +130,7 @@ final class LocationDatabase {
     func location(at date: Date, tolerance: TimeInterval = 5 * 60) throws -> CLLocation? {
         let interval = DateInterval(
             start: date.addingTimeInterval(-tolerance),
-            end: date.addingTimeInterval(tolerance)
+            end: date.addingTimeInterval(tolerance),
         )
         let records = try records(in: interval)
 
@@ -165,7 +165,7 @@ final class LocationDatabase {
                 request.predicate = NSPredicate(
                     format: "timestamp >= %@ AND timestamp <= %@",
                     interval.start as NSDate,
-                    interval.end as NSDate
+                    interval.end as NSDate,
                 )
             }
 
@@ -180,7 +180,7 @@ final class LocationDatabase {
                     horizontalAccuracy: sample.horizontalAccuracy,
                     verticalAccuracy: sample.verticalAccuracy,
                     speed: sample.speed,
-                    course: sample.course
+                    course: sample.course,
                 )
             }
         }
@@ -201,7 +201,7 @@ final class LocationDatabase {
             if let objectIDs = result?.result as? [NSManagedObjectID] {
                 NSManagedObjectContext.mergeChanges(
                     fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
-                    into: [self.container.viewContext]
+                    into: [self.container.viewContext],
                 )
             }
             self.backgroundContext.reset()
@@ -324,7 +324,7 @@ final class LocationDatabase {
             verticalAccuracy: verticalAccuracy,
             course: course,
             speed: speed,
-            timestamp: date
+            timestamp: date,
         )
     }
 

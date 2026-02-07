@@ -76,7 +76,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         Task { @MainActor in
             self.delegate?.locationService(
                 self,
-                didChangeAuthorization: manager.authorizationStatus
+                didChangeAuthorization: manager.authorizationStatus,
             )
         }
     }

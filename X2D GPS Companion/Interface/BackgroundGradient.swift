@@ -15,7 +15,7 @@ struct BackgroundGradient: View {
                 Color(red: 0.08, green: 0.08, blue: 0.1),
             ]),
             startPoint: .topLeading,
-            endPoint: .bottomTrailing
+            endPoint: .bottomTrailing,
         )
         .ignoresSafeArea()
     }

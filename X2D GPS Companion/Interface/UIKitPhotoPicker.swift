@@ -52,9 +52,9 @@ struct UIKitPhotoPicker: UIViewControllerRepresentable {
         }
 
         private func resolveAssets(from results: [PHPickerResult]) async -> [PHAsset] {
-            let identifiers = results.compactMap { $0.assetIdentifier }
+            let identifiers = results.compactMap(\.assetIdentifier)
             guard !identifiers.isEmpty else { return [] }
-            
+
             return await withCheckedContinuation { continuation in
                 Task.detached(priority: .userInitiated) {
                     let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
