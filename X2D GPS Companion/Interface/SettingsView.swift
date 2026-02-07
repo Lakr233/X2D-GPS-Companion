@@ -20,6 +20,11 @@ struct SettingsView: View {
                 Text("AUTOMATICALLY_START_RECORDING_WHEN_APP_OPENED")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+
+                Toggle("COMPATIBILITY_MODE", isOn: $model.bypassEXIFCheck)
+                Text("COMPATIBILITY_MODE_DESCRIPTION")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
 
             Section("MANUAL_FILL_SECTION_TITLE") {
@@ -54,6 +59,10 @@ struct SettingsView: View {
                         .underline()
 
                     Text("SCREENSHOTS_EDITED_IMAGES_OR_PHOTOS_WITHOUT_COMPLETE_EXIF_DATA_WILL_NOT_BE_TAGGED")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    Text("ENABLE_COMPATIBILITY_MODE_IF_CAMERA_LACKS_COMPLETE_EXIF")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
