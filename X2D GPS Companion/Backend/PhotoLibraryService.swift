@@ -26,6 +26,7 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
 
     weak var delegate: PhotoLibraryServiceDelegate?
     private let locationService = LocationService.shared
+    private let locationDatabase = LocationDatabase.shared
     private var allPhotosCache: PHFetchResult<PHAsset>?
 
     override private init() {
@@ -79,20 +80,43 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
                 return
             }
         }
-        let interval: TimeInterval = 60
+        let interval: TimeInterval = 100
+        let timeDelta: TimeInterval? = if let cd = asset.creationDate {
+            abs(Date().timeIntervalSince(cd))
+        } else {
+            nil
+        }
         guard asset.isCreationDateNearby(tolerance: interval) else {
-            print("⏱️ Skipped photo [\(asset.localIdentifier)]: creation time not within ±\(interval)s window")
+            let deltaDesc = timeDelta.map { String(format: "%.1f", $0) } ?? "unknown"
+            print("⏱️ Skipped photo [\(asset.localIdentifier)]: creation time delta \(deltaDesc)s exceeds ±\(Int(interval))s window")
             return
         }
 
+        let deltaDesc = timeDelta.map { String(format: "%.1f", $0) } ?? "unknown"
+        print("⏱️ Photo [\(asset.localIdentifier)] creation time delta: \(deltaDesc)s (within ±\(Int(interval))s window)")
+
+        // Prefer database location matching the photo's creation timestamp,
+        // fall back to current device location if no database record found.
+        let resolvedLocation: CLLocation
+        let matchStrategy: String
+        if let creationDate = asset.creationDate,
+           let dbLocation = try? locationDatabase.location(at: creationDate, tolerance: interval)
+        {
+            resolvedLocation = dbLocation
+            matchStrategy = "database interpolation at \(creationDate)"
+        } else {
+            resolvedLocation = location
+            matchStrategy = "current device location (no database record within ±\(Int(interval))s)"
+        }
+
         do {
-            try await asset.writeGPSLocation(location)
+            try await asset.writeGPSLocation(resolvedLocation)
             photoProcessedCount += 1
             delegate?.photoLibraryService(self, didUpdatePhotoProcessedCount: photoProcessedCount)
-            let lat = String(format: "%.6f", location.coordinate.latitude)
-            let lon = String(format: "%.6f", location.coordinate.longitude)
-            let acc = String(format: "%.0f", location.horizontalAccuracy)
-            print("📍 Tagged photo [\(asset.localIdentifier)] with location: (\(lat), \(lon)) ±\(acc)m")
+            let lat = String(format: "%.6f", resolvedLocation.coordinate.latitude)
+            let lon = String(format: "%.6f", resolvedLocation.coordinate.longitude)
+            let acc = String(format: "%.0f", resolvedLocation.horizontalAccuracy)
+            print("📍 Tagged photo [\(asset.localIdentifier)] with location: (\(lat), \(lon)) ±\(acc)m [strategy: \(matchStrategy)]")
         } catch {
             print("❌ Failed to tag photo [\(asset.localIdentifier)]: \(error.localizedDescription)")
         }
@@ -106,7 +130,7 @@ final class PhotoLibraryService: NSObject, PHPhotoLibraryChangeObserver {
 }
 
 extension PHAsset {
-    /// Check if the asset's creation date is within ±60 seconds of the current time
+    /// Check if the asset's creation date is within the given tolerance of the current time
     func isCreationDateNearby(tolerance: TimeInterval) -> Bool {
         guard let creationDate else {
             print("⚠️ Asset [\(localIdentifier)] has no creation date, assuming it's nearby")

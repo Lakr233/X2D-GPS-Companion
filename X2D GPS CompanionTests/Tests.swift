@@ -389,6 +389,261 @@ final class LocationInterpolationTests: XCTestCase {
     }
 }
 
+// MARK: - Database-First Location Matching Tests
+
+final class DatabaseFirstMatchingTests: XCTestCase {
+    var database: LocationDatabase!
+
+    @MainActor
+    override func setUp() {
+        super.setUp()
+        ViewModel.shared.stopRecording()
+        database = LocationDatabase.shared
+        try! database.reset()
+    }
+
+    @MainActor
+    override func tearDown() {
+        try! database.reset()
+        super.tearDown()
+    }
+
+    @MainActor
+    func testDatabaseMatch_whenRecordExists_returnsInterpolatedLocation() throws {
+        let baseDate = Date()
+
+        let loc1 = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 40.0, longitude: 116.0),
+            altitude: 50,
+            horizontalAccuracy: 5,
+            verticalAccuracy: 10,
+            course: 0,
+            speed: 1,
+            timestamp: baseDate.addingTimeInterval(-30),
+        )
+        let loc2 = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 40.001, longitude: 116.001),
+            altitude: 55,
+            horizontalAccuracy: 5,
+            verticalAccuracy: 10,
+            course: 45,
+            speed: 2,
+            timestamp: baseDate.addingTimeInterval(30),
+        )
+
+        database.record(loc1)
+        database.record(loc2)
+
+        // Query at baseDate (midpoint) should interpolate
+        let result = try database.location(at: baseDate, tolerance: 100)
+        XCTAssertNotNil(result, "Should find interpolated location from database")
+        XCTAssertEqual(try XCTUnwrap(result?.coordinate.latitude), 40.0005, accuracy: 0.0001)
+        XCTAssertEqual(try XCTUnwrap(result?.coordinate.longitude), 116.0005, accuracy: 0.0001)
+    }
+
+    @MainActor
+    func testDatabaseMatch_whenNoRecord_returnsNil() throws {
+        // Empty database, query should return nil
+        let result = try database.location(at: Date(), tolerance: 100)
+        XCTAssertNil(result, "Should return nil when database is empty")
+    }
+
+    @MainActor
+    func testDatabaseMatch_whenRecordOutsideTolerance_returnsNil() throws {
+        let baseDate = Date()
+
+        let loc = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 40.0, longitude: 116.0),
+            altitude: 50,
+            horizontalAccuracy: 5,
+            verticalAccuracy: 10,
+            timestamp: baseDate.addingTimeInterval(-200),
+        )
+
+        database.record(loc)
+
+        // Query with 100s tolerance but record is 200s away
+        let result = try database.location(at: baseDate, tolerance: 100)
+        XCTAssertNil(result, "Should return nil when record is outside tolerance")
+    }
+
+    @MainActor
+    func testDatabaseMatch_withinExtendedTolerance_returnsLocation() throws {
+        let baseDate = Date()
+
+        let loc = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 40.0, longitude: 116.0),
+            altitude: 50,
+            horizontalAccuracy: 5,
+            verticalAccuracy: 10,
+            timestamp: baseDate.addingTimeInterval(-90),
+        )
+
+        database.record(loc)
+
+        // 90s away, within 100s tolerance (the new extended window)
+        let result = try database.location(at: baseDate, tolerance: 100)
+        XCTAssertNotNil(result, "Should find location within extended 100s tolerance")
+        XCTAssertEqual(try XCTUnwrap(result?.coordinate.latitude), 40.0, accuracy: 0.0001)
+    }
+
+    @MainActor
+    func testDatabaseMatch_at61Seconds_succeededWithNewTolerance() throws {
+        // This would have failed with the old 60s tolerance
+        let baseDate = Date()
+
+        let loc = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 35.6762, longitude: 139.6503),
+            altitude: 40,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 15,
+            timestamp: baseDate.addingTimeInterval(-61),
+        )
+
+        database.record(loc)
+
+        let result = try database.location(at: baseDate, tolerance: 100)
+        XCTAssertNotNil(result, "61s delta should succeed with 100s tolerance")
+    }
+
+    @MainActor
+    func testDatabaseMatch_prefersInterpolationOverSinglePoint() throws {
+        let baseDate = Date()
+
+        // Two points bracketing the query date
+        let loc1 = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 40.0, longitude: 116.0),
+            altitude: 50,
+            horizontalAccuracy: 5,
+            verticalAccuracy: 10,
+            course: 0,
+            speed: 1,
+            timestamp: baseDate.addingTimeInterval(-60),
+        )
+        let loc2 = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 40.002, longitude: 116.002),
+            altitude: 60,
+            horizontalAccuracy: 5,
+            verticalAccuracy: 10,
+            course: 90,
+            speed: 3,
+            timestamp: baseDate.addingTimeInterval(60),
+        )
+
+        database.record(loc1)
+        database.record(loc2)
+
+        let result = try database.location(at: baseDate, tolerance: 100)
+        XCTAssertNotNil(result)
+
+        // Should be midpoint (interpolated), not equal to either endpoint
+        XCTAssertEqual(try XCTUnwrap(result?.coordinate.latitude), 40.001, accuracy: 0.0001)
+        XCTAssertEqual(try XCTUnwrap(result?.coordinate.longitude), 116.001, accuracy: 0.0001)
+        XCTAssertEqual(try XCTUnwrap(result?.altitude), 55.0, accuracy: 0.1)
+    }
+
+    @MainActor
+    func testNearestRecords_binarySearchCorrectness() throws {
+        let baseDate = Date()
+
+        // Create records at 10s intervals
+        for i in 0 ..< 20 {
+            let loc = CLLocation(
+                coordinate: CLLocationCoordinate2D(
+                    latitude: 37.7749 + Double(i) * 0.0001,
+                    longitude: -122.4194 + Double(i) * 0.0001,
+                ),
+                altitude: 10,
+                horizontalAccuracy: 5,
+                verticalAccuracy: 10,
+                timestamp: baseDate.addingTimeInterval(TimeInterval(i * 10)),
+            )
+            database.record(loc)
+        }
+
+        let records = try database.records(in: nil)
+        XCTAssertEqual(records.count, 20)
+
+        // Query between records at index 5 and 6 (at 55s)
+        let queryDate = baseDate.addingTimeInterval(55)
+        let (before, after) = database.nearestRecords(to: queryDate, tolerance: 100, records: records)
+
+        XCTAssertNotNil(before)
+        XCTAssertNotNil(after)
+
+        // before should be record at 50s (index 5)
+        XCTAssertEqual(try XCTUnwrap(before?.latitude), 37.7749 + 5 * 0.0001, accuracy: 0.00001)
+        // after should be record at 60s (index 6)
+        XCTAssertEqual(try XCTUnwrap(after?.latitude), 37.7749 + 6 * 0.0001, accuracy: 0.00001)
+    }
+
+    @MainActor
+    func testNearestRecords_atExactRecordTimestamp() throws {
+        let baseDate = Date()
+
+        for i in 0 ..< 5 {
+            let loc = CLLocation(
+                coordinate: CLLocationCoordinate2D(
+                    latitude: 37.7749 + Double(i) * 0.001,
+                    longitude: -122.4194,
+                ),
+                altitude: 10,
+                horizontalAccuracy: 5,
+                verticalAccuracy: 10,
+                timestamp: baseDate.addingTimeInterval(TimeInterval(i * 60)),
+            )
+            database.record(loc)
+        }
+
+        let records = try database.records(in: nil)
+
+        // Query at exact timestamp of record at index 2 (120s)
+        let queryDate = baseDate.addingTimeInterval(120)
+        let (before, after) = database.nearestRecords(to: queryDate, tolerance: 100, records: records)
+
+        // Should find at least one match
+        XCTAssertTrue(before != nil || after != nil, "Should find at least one record at exact timestamp")
+    }
+}
+
+// MARK: - CreationDate Nearby Tests
+
+final class CreationDateNearbyTests: XCTestCase {
+    @MainActor
+    func testIsCreationDateNearby_withinTolerance() throws {
+        // We can't easily create a PHAsset in tests, but we can test the tolerance logic
+        // by verifying the database tolerance boundaries
+        let database = LocationDatabase.shared
+        try database.reset()
+
+        let now = Date()
+
+        // Record at exactly now
+        let loc = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 40.0, longitude: 116.0),
+            altitude: 50,
+            horizontalAccuracy: 5,
+            verticalAccuracy: 10,
+            timestamp: now,
+        )
+        database.record(loc)
+
+        // 99s away should be within 100s tolerance
+        let result99 = try? database.location(at: now.addingTimeInterval(99), tolerance: 100)
+        XCTAssertNotNil(result99, "99s should be within 100s tolerance")
+
+        // 100s away should be at boundary
+        let result100 = try? database.location(at: now.addingTimeInterval(100), tolerance: 100)
+        XCTAssertNotNil(result100, "100s should be at boundary of tolerance")
+
+        // 101s away should be outside tolerance
+        let result101 = try? database.location(at: now.addingTimeInterval(101), tolerance: 100)
+        XCTAssertNil(result101, "101s should be outside 100s tolerance")
+
+        try database.reset()
+    }
+}
+
 // MARK: - Compatibility Mode Tests
 
 final class CompatibilityModeTests: XCTestCase {
